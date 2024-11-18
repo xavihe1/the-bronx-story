@@ -3,30 +3,13 @@ class SpriteKind:
     twoPlayersButton = SpriteKind.create()
     storyButton = SpriteKind.create()
     mom = SpriteKind.create()
+    losa = SpriteKind.create()
 
 def on_on_overlap(sprite, otherSprite):
     cursor.say_text("Press A to play")
     if controller.A.is_pressed():
         storyMode()
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
-
-def on_on_overlap2(sprite2, otherSprite2):
-    player_1.say_text("Talk with mom")
-    if controller.A.is_pressed():
-        game.splash("Hello son, the mafia", "stole me, the guy")
-        game.splash("wore a red t-shirt")
-        game.splash("Son : I Gotta go outside rn")
-        if controller.A.is_pressed():
-            doMenu()
-sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap2)
-
-def on_on_overlap3(sprite3, otherSprite3):
-    cursor.say_text("Press A to play")
-    if controller.A.is_pressed():
-        TwoPlayersScreen()
-sprites.on_overlap(SpriteKind.player,
-    SpriteKind.twoPlayersButton,
-    on_on_overlap3)
 
 def storyModeDestroy():
     sprites.destroy(cursor)
@@ -145,7 +128,7 @@ def TwoPlayersScreen():
     sprites.destroy(single_player_button)
     sprites.destroy(cursor)
 def storyMode():
-    global player_1, mom2
+    global player_1, mom2, losa_suelo
     storyModeDestroy()
     scene.set_background_image(img("""
         ................................................................................................................................................................
@@ -316,6 +299,26 @@ def storyMode():
     tiles.place_on_tile(mom2, tiles.get_tile_location(15, 2))
     controller.move_sprite(player_1)
     scene.camera_follow_sprite(player_1)
+    losa_suelo = sprites.create(img("""
+            d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d 
+                    d d d d d d d d d d d d d d d d
+        """),
+        SpriteKind.losa)
+    tiles.place_on_tile(losa_suelo, tiles.get_tile_location(15, 5))
 def doMenu():
     global cursor, two_players_button, single_player_button
     scene.set_background_image(img("""
@@ -509,9 +512,43 @@ def doMenu():
         SpriteKind.storyButton)
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
+
+def on_on_overlap2(sprite2, otherSprite2):
+    global y_mom, x_mom
+    y_mom = mom2.y
+    x_mom = mom2.x
+    
+    def on_start_cutscene():
+        story.sprite_move_to_location(player_1, x_mom, y_mom + 15, 100)
+        story.show_player_choices("Get Out", "Stay")
+        if story.check_last_answer("Get Out"):
+            doMenu()
+        story.cancel_all_cutscenes()
+    story.start_cutscene(on_start_cutscene)
+    
+sprites.on_overlap(SpriteKind.player, SpriteKind.losa, on_on_overlap2)
+
+def on_on_overlap3(sprite3, otherSprite3):
+    cursor.say_text("Press A to play")
+    if controller.A.is_pressed():
+        TwoPlayersScreen()
+sprites.on_overlap(SpriteKind.player,
+    SpriteKind.twoPlayersButton,
+    on_on_overlap3)
+
+x_mom = 0
+y_mom = 0
+losa_suelo: Sprite = None
 mom2: Sprite = None
+player_1: Sprite = None
 two_players_button: Sprite = None
 single_player_button: Sprite = None
-player_1: Sprite = None
 cursor: Sprite = None
 doMenu()
+
+def on_on_update():
+    if story.is_menu_open():
+        controller.move_sprite(player_1, 0, 0)
+    else:
+        controller.move_sprite(player_1, 100, 100)
+game.on_update(on_on_update)
