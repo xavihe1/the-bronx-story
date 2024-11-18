@@ -513,31 +513,30 @@ def doMenu():
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
 
-def on_on_overlap2(sprite2, otherSprite2):
-    global y_mom, x_mom
-    y_mom = mom2.y
-    x_mom = mom2.x
-    
-    def on_start_cutscene():
-        story.sprite_move_to_location(player_1, x_mom, y_mom + 15, 100)
-        story.show_player_choices("Get Out", "Stay")
-        if story.check_last_answer("Get Out"):
-            doMenu()
-        story.cancel_all_cutscenes()
-    story.start_cutscene(on_start_cutscene)
-    
-sprites.on_overlap(SpriteKind.player, SpriteKind.losa, on_on_overlap2)
-
-def on_on_overlap3(sprite3, otherSprite3):
+def on_on_overlap2(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
     if controller.A.is_pressed():
         TwoPlayersScreen()
 sprites.on_overlap(SpriteKind.player,
     SpriteKind.twoPlayersButton,
-    on_on_overlap3)
+    on_on_overlap2)
 
-x_mom = 0
-y_mom = 0
+def on_on_overlap3(sprite2, otherSprite2):
+    global have_talked
+    if have_talked == False:
+        have_talked = True
+        game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
+    
+    def on_start_cutscene():
+        story.show_player_choices("Get Out", "Stay")
+        if story.check_last_answer("Get Out"):
+            game.show_long_text("Yendo a la calle...", DialogLayout.BOTTOM)
+        story.cancel_all_cutscenes()
+    story.start_cutscene(on_start_cutscene)
+    
+sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
+
+have_talked = False
 losa_suelo: Sprite = None
 mom2: Sprite = None
 player_1: Sprite = None

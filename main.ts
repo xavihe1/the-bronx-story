@@ -505,26 +505,26 @@ function doMenu () {
     single_player_button.setScale(1.5, ScaleAnchor.BottomLeft)
     single_player_button.setPosition(130, 90)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.losa, function (sprite2, otherSprite2) {
-    y_mom = mom2.y
-    x_mom = mom2.x
-    story.startCutscene(function () {
-        story.spriteMoveToLocation(player_1, x_mom, y_mom + 15, 100)
-        story.showPlayerChoices("Get Out", "Stay")
-        if (story.checkLastAnswer("Get Out")) {
-            doMenu()
-        }
-        story.cancelAllCutscenes()
-    })
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (sprite3, otherSprite3) {
     cursor.sayText("Press A to play")
     if (controller.A.isPressed()) {
         TwoPlayersScreen()
     }
 })
-let x_mom = 0
-let y_mom = 0
+sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSprite2) {
+    if (have_talked == false) {
+        have_talked = true
+        game.showLongText("Talk with mom", DialogLayout.Bottom)
+    }
+    story.startCutscene(function () {
+        story.showPlayerChoices("Get Out", "Stay")
+        if (story.checkLastAnswer("Get Out")) {
+            game.showLongText("Yendo a la calle...", DialogLayout.Bottom)
+        }
+        story.cancelAllCutscenes()
+    })
+})
+let have_talked = false
 let losa_suelo: Sprite = null
 let mom2: Sprite = null
 let player_1: Sprite = null
