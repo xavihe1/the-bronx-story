@@ -4,6 +4,7 @@ class SpriteKind:
     storyButton = SpriteKind.create()
     mom = SpriteKind.create()
     losa = SpriteKind.create()
+    Complete = SpriteKind.create()
 
 def on_on_overlap(sprite, otherSprite):
     cursor.say_text("Press A to play")
@@ -128,7 +129,7 @@ def TwoPlayersScreen():
     sprites.destroy(single_player_button)
     sprites.destroy(cursor)
 def storyMode():
-    global player_1, mom2, losa_suelo
+    global player_1, mom2, DialogMode
     storyModeDestroy()
     scene.set_background_image(img("""
         ................................................................................................................................................................
@@ -257,68 +258,49 @@ def storyMode():
         level2
     """))
     player_1 = sprites.create(img("""
-            . . . . f f f f . . . . . 
-                    . . f f f f f f f f . . . 
-                    . f f f f f f c f f f . . 
-                    f f f f f f c c f f f c . 
-                    f f f c f f f f f f f c . 
-                    c c c f f f e e f f c c . 
-                    f f f f f e e f f c c f . 
-                    f f f b f e e f b f f f . 
-                    . f 4 1 f 4 4 f 1 4 f . . 
-                    . f e 4 4 4 4 4 4 e f . . 
-                    . f f f e e e e f f f . . 
-                    f e f b 7 7 7 7 b f e f . 
-                    e 4 f 7 7 7 7 7 7 f 4 e . 
-                    e e f 6 6 6 6 6 6 f e e . 
-                    . . . f f f f f f . . . . 
+            . . . . f f f f . . . . .
+                    . . f f f f f f f f . . .
+                    . f f f f f f c f f f . .
+                    f f f f f f c c f f f c .
+                    f f f c f f f f f f f c .
+                    c c c f f f e e f f c c .
+                    f f f f f e e f f c c f .
+                    f f f b f e e f b f f f .
+                    . f 4 1 f 4 4 f 1 4 f . .
+                    . f e 4 4 4 4 4 4 e f . .
+                    . f f f e e e e f f f . .
+                    f e f b 7 7 7 7 b f e f .
+                    e 4 f 7 7 7 7 7 7 f 4 e .
+                    e e f 6 6 6 6 6 6 f e e .
+                    . . . f f f f f f . . . .
                     . . . f f . . f f . . . .
         """),
         SpriteKind.player)
     player_1.z = 100
     tiles.place_on_tile(player_1, tiles.get_tile_location(7, 12))
     mom2 = sprites.create(img("""
-            . . . . . . . f f . . . . . . . 
-                    . . . . . f f 4 4 f f . . . . . 
-                    . . . . f 5 4 5 5 4 5 f . . . . 
-                    . . . f e 4 5 5 5 5 4 e f . . . 
-                    . . f b 3 e 4 4 4 4 e 3 b f . . 
-                    . f e 3 3 3 3 3 3 3 3 3 3 e f . 
-                    . f 3 3 e b 3 e e 3 b e 3 3 f . 
-                    . f b 3 f f e e e e f f 3 b f . 
-                    f f b b f b f e e f b f b b f f 
-                    f b b b e 1 f 4 4 f 1 e b b b f 
-                    . f b b f 4 4 4 4 4 e e b b f . 
-                    . . f e f b d d d e 4 4 4 f . . 
-                    . . e 4 c d d d d e 4 4 e f . . 
-                    . . e f b b d b d d e e f . . . 
-                    . . . f f 1 1 d 1 d 1 f f . . . 
+            . . . . . . . f f . . . . . . .
+                    . . . . . f f 4 4 f f . . . . .
+                    . . . . f 5 4 5 5 4 5 f . . . .
+                    . . . f e 4 5 5 5 5 4 e f . . .
+                    . . f b 3 e 4 4 4 4 e 3 b f . .
+                    . f e 3 3 3 3 3 3 3 3 3 3 e f .
+                    . f 3 3 e b 3 e e 3 b e 3 3 f .
+                    . f b 3 f f e e e e f f 3 b f .
+                    f f b b f b f e e f b f b b f f
+                    f b b b e 1 f 4 4 f 1 e b b b f
+                    . f b b f 4 4 4 4 4 e e b b f .
+                    . . f e f b d d d e 4 4 4 f . .
+                    . . e 4 c d d d d e 4 4 e f . .
+                    . . e f b b d b d d e e f . . .
+                    . . . f f 1 1 d 1 d 1 f f . . .
                     . . . . . f b b f f f . . . . .
         """),
         SpriteKind.mom)
     tiles.place_on_tile(mom2, tiles.get_tile_location(15, 2))
     controller.move_sprite(player_1)
     scene.camera_follow_sprite(player_1)
-    losa_suelo = sprites.create(img("""
-            d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d 
-                    d d d d d d d d d d d d d d d d
-        """),
-        SpriteKind.losa)
-    tiles.place_on_tile(losa_suelo, tiles.get_tile_location(15, 5))
+    DialogMode = True
 def doMenu():
     global cursor, two_players_button, single_player_button
     scene.set_background_image(img("""
@@ -522,22 +504,37 @@ sprites.on_overlap(SpriteKind.player,
     on_on_overlap2)
 
 def on_on_overlap3(sprite2, otherSprite2):
-    global have_talked
-    if have_talked == False:
-        have_talked = True
-        game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
-    
-    def on_start_cutscene():
-        story.show_player_choices("Get Out", "Stay")
-        if story.check_last_answer("Get Out"):
-            game.show_long_text("Yendo a la calle...", DialogLayout.BOTTOM)
-        story.cancel_all_cutscenes()
-    story.start_cutscene(on_start_cutscene)
-    
+    global DialogMode, mom2
+    DialogMode = True
+    game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
+    story.show_player_choices("Get Out", "Stay")
+    if story.check_last_answer("Get Out"):
+        mom2.set_kind(SpriteKind.Complete)
+        game.show_long_text("Yendo a la calle...", DialogLayout.BOTTOM)
+    elif story.check_last_answer("Stay"):
+        mom2.set_kind(SpriteKind.Complete)
+        mom2 = sprites.create(img("""
+                . . . . . . . f f . . . . . . .
+                            . . . . . f f 4 4 f f . . . . .
+                            . . . . f 5 4 5 5 4 5 f . . . .
+                            . . . f e 4 5 5 5 5 4 e f . . .
+                            . . f b 3 e 4 4 4 4 e 3 b f . .
+                            . f e 3 3 3 3 3 3 3 3 3 3 e f .
+                            . f 3 3 e b 3 e e 3 b e 3 3 f .
+                            . f b 3 f f e e e e f f 3 b f .
+                            f f b b f b f e e f b f b b f f
+                            f b b b e 1 f 4 4 f 1 e b b b f
+                            . f b b f 4 4 4 4 4 e e b b f .
+                            . . f e f b d d d e 4 4 4 f . .
+                            . . e 4 c d d d d e 4 4 e f . .
+                            . . e f b b d b d d e e f . . .
+                            . . . f f 1 1 d 1 d 1 f f . . .
+                            . . . . . f b b f f f . . . . .
+            """),
+            SpriteKind.Complete)
 sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
 
-have_talked = False
-losa_suelo: Sprite = None
+DialogMode = False
 mom2: Sprite = None
 player_1: Sprite = None
 two_players_button: Sprite = None
