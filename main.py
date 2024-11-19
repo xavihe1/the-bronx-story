@@ -5,6 +5,7 @@ class SpriteKind:
     mom = SpriteKind.create()
     losa = SpriteKind.create()
     Complete = SpriteKind.create()
+    Building = SpriteKind.create()
 
 def on_on_overlap(sprite, otherSprite):
     cursor.say_text("Press A to play")
@@ -258,42 +259,42 @@ def storyMode():
         level2
     """))
     player_1 = sprites.create(img("""
-            . . . . f f f f . . . . .
-                    . . f f f f f f f f . . .
-                    . f f f f f f c f f f . .
-                    f f f f f f c c f f f c .
-                    f f f c f f f f f f f c .
-                    c c c f f f e e f f c c .
-                    f f f f f e e f f c c f .
-                    f f f b f e e f b f f f .
-                    . f 4 1 f 4 4 f 1 4 f . .
-                    . f e 4 4 4 4 4 4 e f . .
-                    . f f f e e e e f f f . .
-                    f e f b 7 7 7 7 b f e f .
-                    e 4 f 7 7 7 7 7 7 f 4 e .
-                    e e f 6 6 6 6 6 6 f e e .
-                    . . . f f f f f f . . . .
+            . . . . f f f f . . . . . 
+                    . . f f f f f f f f . . . 
+                    . f f f f f f c f f f . . 
+                    f f f f f f c c f f f c . 
+                    f f f c f f f f f f f c . 
+                    c c c f f f e e f f c c . 
+                    f f f f f e e f f c c f . 
+                    f f f b f e e f b f f f . 
+                    . f 4 1 f 4 4 f 1 4 f . . 
+                    . f e 4 4 4 4 4 4 e f . . 
+                    . f f f e e e e f f f . . 
+                    f e f b 7 7 7 7 b f e f . 
+                    e 4 f 7 7 7 7 7 7 f 4 e . 
+                    e e f 6 6 6 6 6 6 f e e . 
+                    . . . f f f f f f . . . . 
                     . . . f f . . f f . . . .
         """),
         SpriteKind.player)
     player_1.z = 100
     tiles.place_on_tile(player_1, tiles.get_tile_location(7, 12))
     mom2 = sprites.create(img("""
-            . . . . . . . f f . . . . . . .
-                    . . . . . f f 4 4 f f . . . . .
-                    . . . . f 5 4 5 5 4 5 f . . . .
-                    . . . f e 4 5 5 5 5 4 e f . . .
-                    . . f b 3 e 4 4 4 4 e 3 b f . .
-                    . f e 3 3 3 3 3 3 3 3 3 3 e f .
-                    . f 3 3 e b 3 e e 3 b e 3 3 f .
-                    . f b 3 f f e e e e f f 3 b f .
-                    f f b b f b f e e f b f b b f f
-                    f b b b e 1 f 4 4 f 1 e b b b f
-                    . f b b f 4 4 4 4 4 e e b b f .
-                    . . f e f b d d d e 4 4 4 f . .
-                    . . e 4 c d d d d e 4 4 e f . .
-                    . . e f b b d b d d e e f . . .
-                    . . . f f 1 1 d 1 d 1 f f . . .
+            . . . . . . . f f . . . . . . . 
+                    . . . . . f f 4 4 f f . . . . . 
+                    . . . . f 5 4 5 5 4 5 f . . . . 
+                    . . . f e 4 5 5 5 5 4 e f . . . 
+                    . . f b 3 e 4 4 4 4 e 3 b f . . 
+                    . f e 3 3 3 3 3 3 3 3 3 3 e f . 
+                    . f 3 3 e b 3 e e 3 b e 3 3 f . 
+                    . f b 3 f f e e e e f f 3 b f . 
+                    f f b b f b f e e f b f b b f f 
+                    f b b b e 1 f 4 4 f 1 e b b b f 
+                    . f b b f 4 4 4 4 4 e e b b f . 
+                    . . f e f b d d d e 4 4 4 f . . 
+                    . . e 4 c d d d d e 4 4 e f . . 
+                    . . e f b b d b d d e e f . . . 
+                    . . . f f 1 1 d 1 d 1 f f . . . 
                     . . . . . f b b f f f . . . . .
         """),
         SpriteKind.mom)
@@ -494,6 +495,104 @@ def doMenu():
         SpriteKind.storyButton)
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
+def mapLevel():
+    global tienda, edificio
+    destroyLevelOne()
+    tiles.set_current_tilemap(tilemap("""
+        level4
+    """))
+    tienda = sprites.create(img("""
+            ....ffffffffffffffffffffff....
+                    ...f8998989989899898998989f...
+                    ..f998899988999889998899988f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ...f8888c888888888888c8888f...
+                    ...f6666c666666666666c6666f...
+                    ...f666dddddddddddddddd666f...
+                    ...f666dbbdbbdbdddd777d666f...
+                    ...f666dbbdbddbbdd777dd666f...
+                    ...f666dddddddddddddddd666f...
+                    ...f6666888888888888888866f...
+                    ...f6666666666666666666666f...
+                    ...f666666666ccccc66666666f...
+                    ...f66999666ccc9ccc8669996f...
+                    ...f66939366cc999cc8639993f...
+                    ...f63979766cc999cc8679397f...
+                    ...f6eeeee66ccc9ccc86eeeeef...
+                    ...f6eeeee66ccccccc86eeeeef...
+                    ...f66666666ccccccc8666666f...
+                    ...f66666666ccccccc8666666f...
+                    ...ffffffffffffffffffffffff...
+        """),
+        SpriteKind.Building)
+    edificio = sprites.create(img("""
+            ....................
+                    dddddddddddddddddddd
+                    dddddddddddddddddddd
+                    d9d9d9d9d9d9d9d9d9dd
+                    dddddddddddddddddddd
+                    cccccccccccccccccccc
+                    dddddddddddddddddddd
+                    dd9d9d9d9d9d9d9d9d9d
+                    dddddddddddddddddddd
+                    cccccccccccccccccccc
+                    dddddddddddddddddddd
+                    d9d9d9d9d9d9d9d9d9dd
+                    dddddddddddddddddddd
+                    cccccccccccccccccccc
+                    dddddddddddddddddddd
+                    dd9d9d9d9d9d9d9d9d9d
+                    dddddddddddddddddddd
+                    cccccccccccccccccccc
+                    dddddddddddddddddddd
+                    d9d9d9d9d9d9d9d9d9dd
+                    dddddddddddddddddddd
+                    cccccccccccccccccccc
+                    dddddddddeeddddddddd
+                    d9d9d9ddd99ddd9d9d9d
+                    dddddddddeeddddddddd
+        """),
+        SpriteKind.Building)
+    tileUtil.create_sprites_on_tiles(assets.tile("""
+            myTile13
+        """),
+        img("""
+            ....ffffffffffffffffffffff....
+                    ...f8998989989899898998989f...
+                    ..f998899988999889998899988f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ..f999999999999999999999999f..
+                    ...f8888c888888888888c8888f...
+                    ...f6666c666666666666c6666f...
+                    ...f666dddddddddddddddd666f...
+                    ...f666dbbdbbdbdddd777d666f...
+                    ...f666dbbdbddbbdd777dd666f...
+                    ...f666dddddddddddddddd666f...
+                    ...f6666888888888888888866f...
+                    ...f6666666666666666666666f...
+                    ...f666666666ccccc66666666f...
+                    ...f66999666ccc9ccc8669996f...
+                    ...f66939366cc999cc8639993f...
+                    ...f63979766cc999cc8679397f...
+                    ...f6eeeee66ccc9ccc86eeeeef...
+                    ...f6eeeee66ccccccc86eeeeef...
+                    ...f66666666ccccccc8666666f...
+                    ...f66666666ccccccc8666666f...
+                    ...ffffffffffffffffffffffff...
+        """),
+        SpriteKind.Building)
+    tiles.place_on_random_tile(tienda, assets.tile("""
+        myTile13
+    """))
+    tiles.place_on_tile(player_1, tiles.get_tile_location(1, 9))
+    scene.camera_follow_sprite(player_1)
 
 def on_on_overlap2(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
@@ -511,29 +610,34 @@ def on_on_overlap3(sprite2, otherSprite2):
     if story.check_last_answer("Get Out"):
         mom2.set_kind(SpriteKind.Complete)
         game.show_long_text("Yendo a la calle...", DialogLayout.BOTTOM)
+        mapLevel()
     elif story.check_last_answer("Stay"):
         mom2.set_kind(SpriteKind.Complete)
         mom2 = sprites.create(img("""
-                . . . . . . . f f . . . . . . .
-                            . . . . . f f 4 4 f f . . . . .
-                            . . . . f 5 4 5 5 4 5 f . . . .
-                            . . . f e 4 5 5 5 5 4 e f . . .
-                            . . f b 3 e 4 4 4 4 e 3 b f . .
-                            . f e 3 3 3 3 3 3 3 3 3 3 e f .
-                            . f 3 3 e b 3 e e 3 b e 3 3 f .
-                            . f b 3 f f e e e e f f 3 b f .
-                            f f b b f b f e e f b f b b f f
-                            f b b b e 1 f 4 4 f 1 e b b b f
-                            . f b b f 4 4 4 4 4 e e b b f .
-                            . . f e f b d d d e 4 4 4 f . .
-                            . . e 4 c d d d d e 4 4 e f . .
-                            . . e f b b d b d d e e f . . .
-                            . . . f f 1 1 d 1 d 1 f f . . .
+                . . . . . . . f f . . . . . . . 
+                            . . . . . f f 4 4 f f . . . . . 
+                            . . . . f 5 4 5 5 4 5 f . . . . 
+                            . . . f e 4 5 5 5 5 4 e f . . . 
+                            . . f b 3 e 4 4 4 4 e 3 b f . . 
+                            . f e 3 3 3 3 3 3 3 3 3 3 e f . 
+                            . f 3 3 e b 3 e e 3 b e 3 3 f . 
+                            . f b 3 f f e e e e f f 3 b f . 
+                            f f b b f b f e e f b f b b f f 
+                            f b b b e 1 f 4 4 f 1 e b b b f 
+                            . f b b f 4 4 4 4 4 e e b b f . 
+                            . . f e f b d d d e 4 4 4 f . . 
+                            . . e 4 c d d d d e 4 4 e f . . 
+                            . . e f b b d b d d e e f . . . 
+                            . . . f f 1 1 d 1 d 1 f f . . . 
                             . . . . . f b b f f f . . . . .
             """),
             SpriteKind.Complete)
 sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
 
+def destroyLevelOne():
+    sprites.destroy(mom2)
+edificio: Sprite = None
+tienda: Sprite = None
 DialogMode = False
 mom2: Sprite = None
 player_1: Sprite = None

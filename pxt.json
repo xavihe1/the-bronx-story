@@ -7,7 +7,9 @@
         "multiplayer": "*",
         "sprite-scaling": "*",
         "arcade-story": "github:microsoft/arcade-storytelling#v1.0.3",
-        "arcade-mini-menu": "github:riknoll/arcade-mini-menu#v0.0.1"
+        "arcade-mini-menu": "github:riknoll/arcade-mini-menu#v0.0.1",
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0",
+        "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.2.0"
     },
     "files": [
         "main.blocks",
