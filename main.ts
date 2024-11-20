@@ -132,6 +132,7 @@ function TwoPlayersScreen () {
 }
 function storyMode () {
     storyModeDestroy()
+    mainName = game.askForString("Username : ")
     scene.setBackgroundImage(img`
         ................................................................................................................................................................
         ................................................................................................................................................................
@@ -586,31 +587,17 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (spri
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSprite2) {
     DialogMode = true
     game.showLongText("Talk with mom", DialogLayout.Bottom)
+    story.printCharacterText("" + mainName + "!" + " They took it... They took everything from me!", "Mom")
+    story.printCharacterText("\"Who, Ma? What happened?\"", mainName)
+    story.printCharacterText("\"That gang... Those thieves! They stormed in, took my jewelry, my savings... everything! You gotta do something!\"", "Mom")
+    story.printCharacterText("\"Don't worry, Ma. I'll find them. They won't get away with this.\"", mainName)
     story.showPlayerChoices("Get Out", "Stay")
     if (story.checkLastAnswer("Get Out")) {
         mom2.setKind(SpriteKind.Complete)
         game.showLongText("Yendo a la calle...", DialogLayout.Bottom)
         mapLevel()
     } else if (story.checkLastAnswer("Stay")) {
-        mom2.setKind(SpriteKind.Complete)
-        mom2 = sprites.create(img`
-            . . . . . . . f f . . . . . . . 
-            . . . . . f f 4 4 f f . . . . . 
-            . . . . f 5 4 5 5 4 5 f . . . . 
-            . . . f e 4 5 5 5 5 4 e f . . . 
-            . . f b 3 e 4 4 4 4 e 3 b f . . 
-            . f e 3 3 3 3 3 3 3 3 3 3 e f . 
-            . f 3 3 e b 3 e e 3 b e 3 3 f . 
-            . f b 3 f f e e e e f f 3 b f . 
-            f f b b f b f e e f b f b b f f 
-            f b b b e 1 f 4 4 f 1 e b b b f 
-            . f b b f 4 4 4 4 4 e e b b f . 
-            . . f e f b d d d e 4 4 4 f . . 
-            . . e 4 c d d d d e 4 4 e f . . 
-            . . e f b b d b d d e e f . . . 
-            . . . f f 1 1 d 1 d 1 f f . . . 
-            . . . . . f b b f f f . . . . . 
-            `, SpriteKind.Complete)
+        pause(1000)
     }
 })
 function destroyLevelOne () {
@@ -621,6 +608,7 @@ let tienda: Sprite = null
 let DialogMode = false
 let mom2: Sprite = null
 let player_1: Sprite = null
+let mainName = ""
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
 let cursor: Sprite = null
