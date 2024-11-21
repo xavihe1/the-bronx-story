@@ -11,8 +11,10 @@ def on_on_overlap(sprite, otherSprite):
     global mainName
     cursor.say_text("Press A to play")
     if controller.A.is_pressed():
-        if mainName == "" or mainName == "undefined":
-            mainName = game.ask_for_string("Username", 8)
+        if mainName.is_empty() or mainName == "undefined":
+            mainName = game.ask_for_string("Username", 7)
+            if mainName.is_empty() or mainName == "":
+                mainName = "Kyrie"
         storyMode()
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
 
@@ -133,7 +135,7 @@ def TwoPlayersScreen():
     sprites.destroy(single_player_button)
     sprites.destroy(cursor)
 def storyMode():
-    global mom2, DialogMode
+    global mom2, isTalking
     storyModeDestroy()
     createPlayer()
     scene.set_background_image(img("""
@@ -283,7 +285,7 @@ def storyMode():
         """),
         SpriteKind.mom)
     tiles.place_on_tile(mom2, tiles.get_tile_location(15, 2))
-    DialogMode = True
+    isTalking = False
 def doMenu():
     global cursor, two_players_button, single_player_button
     scene.set_background_image(img("""
@@ -731,9 +733,9 @@ sprites.on_overlap(SpriteKind.player,
     on_on_overlap2)
 
 def on_on_overlap3(sprite2, otherSprite2):
-    global DialogMode
-    DialogMode = True
+    global isTalking
     game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
+    isTalking = True
     story.print_character_text("" + mainName + "!" + " They took it... They took everything from me!",
         "Mom")
     story.print_character_text("\"Who, Ma? What happened?\"", mainName)
@@ -744,8 +746,10 @@ def on_on_overlap3(sprite2, otherSprite2):
     story.show_player_choices("Get Out", "Stay")
     if story.check_last_answer("Get Out"):
         mom2.set_kind(SpriteKind.Complete)
+        isTalking = False
         mapLevel()
     elif story.check_last_answer("Stay"):
+        isTalking = False
         pause(1000)
 sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
 
@@ -753,7 +757,7 @@ def destroyLevelOne():
     sprites.destroy(mom2)
 edificio: Sprite = None
 tienda: Sprite = None
-DialogMode = False
+isTalking = False
 mom2: Sprite = None
 player_1: Sprite = None
 two_players_button: Sprite = None
@@ -763,7 +767,7 @@ cursor: Sprite = None
 doMenu()
 
 def on_on_update():
-    if story.is_menu_open():
+    if isTalking:
         controller.move_sprite(player_1, 0, 0)
     else:
         controller.move_sprite(player_1, 100, 100)

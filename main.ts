@@ -9,8 +9,11 @@ namespace SpriteKind {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, otherSprite) {
     cursor.sayText("Press A to play")
     if (controller.A.isPressed()) {
-        if (mainName == "" || mainName == "undefined") {
-            mainName = game.askForString("Username", 8)
+        if (mainName.isEmpty() || mainName == "undefined") {
+            mainName = game.askForString("Username", 7)
+            if (mainName.isEmpty() || mainName == "") {
+                mainName = "Kyrie"
+            }
         }
         storyMode()
     }
@@ -280,7 +283,7 @@ function storyMode () {
         . . . . . f b b f f f . . . . . 
         `, SpriteKind.mom)
     tiles.placeOnTile(mom2, tiles.getTileLocation(15, 2))
-    DialogMode = true
+    isTalking = false
 }
 function doMenu () {
     scene.setBackgroundImage(img`
@@ -710,8 +713,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (spri
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSprite2) {
-    DialogMode = true
     game.showLongText("Talk with mom", DialogLayout.Bottom)
+    isTalking = true
     story.printCharacterText("" + mainName + "!" + " They took it... They took everything from me!", "Mom")
     story.printCharacterText("\"Who, Ma? What happened?\"", mainName)
     story.printCharacterText("\"That gang... Those thieves! They stormed in, took my jewelry, my savings... everything! You gotta do something!\"", "Mom")
@@ -719,8 +722,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSpr
     story.showPlayerChoices("Get Out", "Stay")
     if (story.checkLastAnswer("Get Out")) {
         mom2.setKind(SpriteKind.Complete)
+        isTalking = false
         mapLevel()
     } else if (story.checkLastAnswer("Stay")) {
+        isTalking = false
         pause(1000)
     }
 })
@@ -729,7 +734,7 @@ function destroyLevelOne () {
 }
 let edificio: Sprite = null
 let tienda: Sprite = null
-let DialogMode = false
+let isTalking = false
 let mom2: Sprite = null
 let player_1: Sprite = null
 let two_players_button: Sprite = null
@@ -738,7 +743,7 @@ let mainName = ""
 let cursor: Sprite = null
 doMenu()
 game.onUpdate(function () {
-    if (story.isMenuOpen()) {
+    if (isTalking) {
         controller.moveSprite(player_1, 0, 0)
     } else {
         controller.moveSprite(player_1, 100, 100)
