@@ -18,12 +18,45 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, o
         storyMode()
     }
 })
+mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
+    if (isDuel) {
+        resetDuel()
+        if (canShoot) {
+            mp.changePlayerStateBy(player2, MultiplayerState.score, 1)
+        } else {
+            mp.changePlayerStateBy(player2, MultiplayerState.score, -1)
+        }
+        if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) < mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
+            game.showLongText("Player 2" + "Wins", DialogLayout.Bottom)
+        } else if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) == mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
+            game.showLongText("Both Players " + "Wins", DialogLayout.Bottom)
+        } else {
+            game.showLongText("Player 1" + "Wins", DialogLayout.Bottom)
+        }
+        isDuel = false
+        pause(1000)
+        destroy1v1()
+        doMenu()
+    }
+})
+info.onCountdownEnd(function () {
+    textSprite = textsprite.create("YA", 15, 2)
+    canShoot = true
+})
+function resetDuel () {
+    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score, 0)
+    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score, 0)
+}
 function storyModeDestroy () {
     sprites.destroy(cursor)
     sprites.destroy(single_player_button)
     sprites.destroy(two_players_button)
 }
 function TwoPlayersScreen () {
+    canShoot = false
+    isDuel = true
+    randomTime = randint(1, 10)
+    info.startCountdown(randomTime)
     scene.setBackgroundImage(img`
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff11fffffffffffff111
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbfffffffffffffbbbbbbbbbbbbbbb1111111fffffffffffff1111111111ffffffffffffff1111
@@ -135,6 +168,44 @@ function TwoPlayersScreen () {
     sprites.destroy(two_players_button)
     sprites.destroy(single_player_button)
     sprites.destroy(cursor)
+    mp.setPlayerSprite(mp.playerSelector(mp.PlayerNumber.One), sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . f f e e e e f 2 f . . . . 
+        . . f f e e e e f 2 2 2 f . . . 
+        . . f e e e f f e e e e f . . . 
+        . . f f f f e e 2 2 2 2 e f . . 
+        . . f e 2 2 2 f f f f e 2 f . . 
+        . f f f f f f f e e e f f f . . 
+        . f f e 4 4 e b f 4 4 e e f . . 
+        . f e e 4 d 4 1 f d d e f f . . 
+        . . f e e e 4 d d d d f d d f . 
+        . . . . f e e 4 e e e f b b f . 
+        . . . . f 2 2 2 4 d d e b b f . 
+        . . . f f 4 4 4 e d d e b f . . 
+        . . . f f f f f f e e f f . . . 
+        . . . . f f . . . f f f . . . . 
+        `, SpriteKind.Player))
+    mp.setPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two), sprites.create(img`
+        . . . . . f f f f f . . . . 
+        . . . . f e e e e e f f . . 
+        . . . f e e e e e e e f f . 
+        . . f e e e e e e e f f f f 
+        . . f e e 4 e e e f f f f f 
+        . . f e e 4 4 e e e f f f f 
+        . . f f e 4 4 4 4 4 f f f f 
+        . . f f e 4 4 f f 4 e 4 f f 
+        . . . f f d d d d 4 d 4 f . 
+        . . . . f b b d d 4 f f f . 
+        . . . . f e 4 4 4 e e f . . 
+        f f f d d 1 1 1 e d d 4 . . 
+        . . f . f 1 1 1 e d d e . . 
+        . . . . f 6 6 6 f e e f . . 
+        . . . . . f f f f f f . . . 
+        . . . . . . . f f f . . . . 
+        `, SpriteKind.Player))
+    mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)).setPosition(40, 90)
+    mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)).setPosition(120, 90)
 }
 function storyMode () {
     storyModeDestroy()
@@ -706,6 +777,11 @@ function createPlayer () {
     controller.moveSprite(player_1)
     scene.cameraFollowSprite(player_1)
 }
+function destroy1v1 () {
+    carnival.showTimer(false)
+    sprites.destroy(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)))
+    sprites.destroy(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)))
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (sprite3, otherSprite3) {
     cursor.sayText("Press A to play")
     if (controller.A.isPressed()) {
@@ -737,8 +813,12 @@ let tienda: Sprite = null
 let isTalking = false
 let mom2: Sprite = null
 let player_1: Sprite = null
+let randomTime = 0
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
+let textSprite: TextSprite = null
+let canShoot = false
+let isDuel = false
 let mainName = ""
 let cursor: Sprite = null
 doMenu()

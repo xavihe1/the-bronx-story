@@ -18,11 +18,55 @@ def on_on_overlap(sprite, otherSprite):
         storyMode()
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
 
+def on_button_multiplayer_a_pressed(player2):
+    global isDuel
+    if isDuel:
+        resetDuel()
+        if canShoot:
+            mp.change_player_state_by(player2, MultiplayerState.score, 1)
+        else:
+            mp.change_player_state_by(player2, MultiplayerState.score, -1)
+        if mp.get_player_state(mp.player_selector(mp.PlayerNumber.ONE),
+            MultiplayerState.score) < mp.get_player_state(mp.player_selector(mp.PlayerNumber.TWO),
+            MultiplayerState.score):
+            game.show_long_text("Player 2" + "Wins", DialogLayout.BOTTOM)
+        elif mp.get_player_state(mp.player_selector(mp.PlayerNumber.ONE),
+            MultiplayerState.score) == mp.get_player_state(mp.player_selector(mp.PlayerNumber.TWO),
+            MultiplayerState.score):
+            game.show_long_text("Both Players " + "Wins", DialogLayout.BOTTOM)
+        else:
+            game.show_long_text("Player 1" + "Wins", DialogLayout.BOTTOM)
+        isDuel = False
+        pause(1000)
+        destroy1v1()
+        doMenu()
+mp.on_button_event(mp.MultiplayerButton.A,
+    ControllerButtonEvent.PRESSED,
+    on_button_multiplayer_a_pressed)
+
+def on_countdown_end():
+    global textSprite, canShoot
+    textSprite = textsprite.create("YA", 15, 2)
+    canShoot = True
+info.on_countdown_end(on_countdown_end)
+
+def resetDuel():
+    mp.set_player_state(mp.player_selector(mp.PlayerNumber.ONE),
+        MultiplayerState.score,
+        0)
+    mp.set_player_state(mp.player_selector(mp.PlayerNumber.TWO),
+        MultiplayerState.score,
+        0)
 def storyModeDestroy():
     sprites.destroy(cursor)
     sprites.destroy(single_player_button)
     sprites.destroy(two_players_button)
 def TwoPlayersScreen():
+    global canShoot, isDuel, randomTime
+    canShoot = False
+    isDuel = True
+    randomTime = randint(1, 10)
+    info.start_countdown(randomTime)
     scene.set_background_image(img("""
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff11fffffffffffff111
                 fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbfffffffffffffbbbbbbbbbbbbbbb1111111fffffffffffff1111111111ffffffffffffff1111
@@ -134,6 +178,48 @@ def TwoPlayersScreen():
     sprites.destroy(two_players_button)
     sprites.destroy(single_player_button)
     sprites.destroy(cursor)
+    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.ONE),
+        sprites.create(img("""
+                . . . . . . . . . . . . . . . . 
+                        . . . . . f f f f f f . . . . . 
+                        . . . f f e e e e f 2 f . . . . 
+                        . . f f e e e e f 2 2 2 f . . . 
+                        . . f e e e f f e e e e f . . . 
+                        . . f f f f e e 2 2 2 2 e f . . 
+                        . . f e 2 2 2 f f f f e 2 f . . 
+                        . f f f f f f f e e e f f f . . 
+                        . f f e 4 4 e b f 4 4 e e f . . 
+                        . f e e 4 d 4 1 f d d e f f . . 
+                        . . f e e e 4 d d d d f d d f . 
+                        . . . . f e e 4 e e e f b b f . 
+                        . . . . f 2 2 2 4 d d e b b f . 
+                        . . . f f 4 4 4 e d d e b f . . 
+                        . . . f f f f f f e e f f . . . 
+                        . . . . f f . . . f f f . . . .
+            """),
+            SpriteKind.player))
+    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.TWO),
+        sprites.create(img("""
+                . . . . . f f f f f . . . . 
+                        . . . . f e e e e e f f . . 
+                        . . . f e e e e e e e f f . 
+                        . . f e e e e e e e f f f f 
+                        . . f e e 4 e e e f f f f f 
+                        . . f e e 4 4 e e e f f f f 
+                        . . f f e 4 4 4 4 4 f f f f 
+                        . . f f e 4 4 f f 4 e 4 f f 
+                        . . . f f d d d d 4 d 4 f . 
+                        . . . . f b b d d 4 f f f . 
+                        . . . . f e 4 4 4 e e f . . 
+                        f f f d d 1 1 1 e d d 4 . . 
+                        . . f . f 1 1 1 e d d e . . 
+                        . . . . f 6 6 6 f e e f . . 
+                        . . . . . f f f f f f . . . 
+                        . . . . . . . f f f . . . .
+            """),
+            SpriteKind.player))
+    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_position(40, 90)
+    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_position(120, 90)
 def storyMode():
     global mom2, isTalking
     storyModeDestroy()
@@ -723,6 +809,10 @@ def createPlayer():
     player_1.z = 100
     controller.move_sprite(player_1)
     scene.camera_follow_sprite(player_1)
+def destroy1v1():
+    carnival.show_timer(False)
+    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)))
+    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)))
 
 def on_on_overlap2(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
@@ -760,8 +850,12 @@ tienda: Sprite = None
 isTalking = False
 mom2: Sprite = None
 player_1: Sprite = None
+randomTime = 0
 two_players_button: Sprite = None
 single_player_button: Sprite = None
+textSprite: TextSprite = None
+canShoot = False
+isDuel = False
 mainName = ""
 cursor: Sprite = None
 doMenu()
