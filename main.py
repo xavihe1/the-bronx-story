@@ -134,6 +134,7 @@ def TwoPlayersScreen():
 def storyMode():
     global mom2, DialogMode
     storyModeDestroy()
+    mainName = game.ask_for_string("Username : ")
     scene.set_background_image(img("""
         ................................................................................................................................................................
                 ................................................................................................................................................................
@@ -781,6 +782,7 @@ tienda: Sprite = None
 DialogMode = False
 mom2: Sprite = None
 player_1: Sprite = None
+mainName = ""
 two_players_button: Sprite = None
 single_player_button: Sprite = None
 mainName = ""
