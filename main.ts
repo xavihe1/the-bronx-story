@@ -476,7 +476,7 @@ function doMenu () {
     single_player_button.setPosition(130, 90)
 }
 function mapLevel () {
-    destroyLevelOne()
+    scene.setBackgroundColor(7)
     tiles.setCurrentTilemap(tilemap`level4`)
     tienda = sprites.create(img`
         ....ffffffffffffffffffffff....
