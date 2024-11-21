@@ -371,9 +371,9 @@ function doMenu () {
         ccbbffffffffff5f5fffff8fffffbbb4eeffffffffc66cccfffffffffffffffffcce4ebccccccccfcffffcffffffffffccccccfffbb333ffbbbbbbbbbbffcfffb3efffffffffffffcffffffffebbfff
         ccccffffffffffffffffff55ffffbbbbbecfcccffff6ccccfffffffffffffffffcce4ebccccccccffccccccccccccccfccccccfffbfbbfffffffffffffffcfffbbefffffffffffffcffffffffcccfff
         ccccffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffcffffffffffffff
-        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111fff111111111111111111
+        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-        111fff1111ffffffffffffffffffffffffffffffffffff11fff1111ffff1111fff1111ffff1111fff1111ffff1111fff1111ffff1111fff11ffffffffffffffffffffffffffffffffffff1111fff111
+        111fff1111ffffffffffffffffffffffffffffffffffff11fff1111ffff1111fff1111ffff1111fff1111ffff1111fff1111ffff1111fff111fffffffffffffffffffffffffffffffffff1111fff111
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         `)
@@ -381,27 +381,27 @@ function doMenu () {
         ......................fff
         .....................ff1f
         ...................ff11f.
-        ..................f611ef.
-        .................f611ee..
-        ................f6f1eee..
-        ...............f611ee....
-        ..............f6f11e.....
-        .............f6111ee.....
-        ............f6f11fe......
+        ..................f6112f.
+        .................f61122..
+        ................f6f1222..
+        ...............f61122....
+        ..............f6f112.....
+        .............f611122.....
+        ............f6f11f2......
         ...........f6111f........
         .....ff...f6f11f.........
         .....fffff6111f..........
-        .....fffff11ff...........
-        .....fffffff.............
-        .......fffff.............
-        ......f1fffff............
-        .....fffffffff...........
-        ....f1fff.ffff...........
-        ...fffff...fff...........
-        ..f1fff....fff...........
-        ffffff....fff............
-        f11ff.....ff.............
-        f11ff....................
+        .....ff1ff11ff...........
+        .....fff1fff.............
+        .......ff1ff.............
+        ......f1ff1ff............
+        .....f111ff1ff...........
+        ....f111f.ff1f...........
+        ...f111f...f1f...........
+        ..f111f....fff...........
+        ff111f....fff............
+        fff1f.....ff.............
+        f1fff....................
         ffff.....................
         `, SpriteKind.Player)
     cursor.z = 1000
@@ -422,21 +422,21 @@ function doMenu () {
         ........................
         ........................
         ...cccccccccccccccccc...
-        ..cd5555555555555555dc..
+        ..c555555555555555555c..
         .c55555555555555555555c.
-        .c55333333333333333355c.
-        .c53333333333333333335c.
-        .c53333333333333333335c.
-        c333cccccccccccccccc333c
-        c55c3555555555555553c55c
+        .c55555555555555555555c.
+        .c55555555555555555555c.
+        .c55555555555555555555c.
+        c555cccccccccccccccc555c
         c55c5555555555555555c55c
         c55c5555555555555555c55c
         c55c5555555555555555c55c
-        c35c5555555555555555c53c
-        cc33333333333333333333cc
-        cc33333333333333333333cc
+        c55c5555555555555555c55c
+        c55c5555555555555555c55c
+        cc55555555555555555555cc
+        cc55555555555555555555cc
         cccccccccccccccccccccccc
-        ..cbbc............cbbc..
+        ..ceec............ceec..
         `, SpriteKind.twoPlayersButton)
     two_players_button.setScale(1.5, ScaleAnchor.BottomLeft)
     two_players_button.setPosition(30, 90)
@@ -462,15 +462,15 @@ function doMenu () {
         ....2242222222222c22....
         ...2cc42222222222ccc2...
         .22ccc44444444422ccc422d
-        .22c22eeeeeeeeeeebcc4222
-        .222eebbbebbbbbeeebb4222
-        .22ebbbbbebbbbbbbe222222
-        .eee22222e22222222ee2222
-        .eeeeeeeeeffeeeeefee2ddd
-        .eeeeeeeeeffeeeffeeee22d
-        .eeeeeeeeefffffeeeeeeeee
-        .eeffffffeeeeeefffffeeee
-        ...f11111feeeef11111fee.
+        .22c2222222222222bcc4222
+        .22222bbb2bbbbb222bb4222
+        .222bbbbb2bbbbbbb2222222
+        .22222222222222222222222
+        .222222222ff22222f222ddd
+        .222222222ff222ff222222d
+        .222222222fffff222222222
+        .22ffffff222222fffff2222
+        ...f11111f2222f11111f22.
         `, SpriteKind.storyButton)
     single_player_button.setScale(1.5, ScaleAnchor.BottomLeft)
     single_player_button.setPosition(130, 90)
@@ -693,12 +693,12 @@ function createPlayer () {
         c c c f f f e e f f c c . 
         f f f f f e e f f c c f . 
         f f f b f e e f b f f f . 
-        . f 4 1 f 4 4 f 1 4 f . . 
+        . f e 1 f 4 4 f 1 e f . . 
         . f e 4 4 4 4 4 4 e f . . 
         . f f f e e e e f f f . . 
-        f e f b 7 7 7 7 b f e f . 
-        e 4 f 7 7 7 7 7 7 f 4 e . 
-        e e f 6 6 6 6 6 6 f e e . 
+        f f f e f e e f e f f f . 
+        e e f e e e e e e f e e . 
+        e e f e e e e e e f e e . 
         . . . f f f f f f . . . . 
         . . . f f . . f f . . . . 
         `, SpriteKind.Player)
