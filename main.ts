@@ -18,6 +18,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, o
         storyMode()
     }
 })
+info.onCountdownEnd(function () {
+    textSprite = textsprite.create("YA", 15, 2)
+    canShoot = true
+})
+function resetDuel () {
+    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score, 0)
+    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score, 0)
+}
 mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
     if (isDuel) {
         resetDuel()
@@ -39,14 +47,6 @@ mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function
         doMenu()
     }
 })
-info.onCountdownEnd(function () {
-    textSprite = textsprite.create("YA", 15, 2)
-    canShoot = true
-})
-function resetDuel () {
-    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score, 0)
-    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score, 0)
-}
 function storyModeDestroy () {
     sprites.destroy(cursor)
     sprites.destroy(single_player_button)
@@ -816,9 +816,9 @@ let player_1: Sprite = null
 let randomTime = 0
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
-let textSprite: TextSprite = null
-let canShoot = false
 let isDuel = false
+let canShoot = false
+let textSprite: TextSprite = null
 let mainName = ""
 let cursor: Sprite = null
 doMenu()
