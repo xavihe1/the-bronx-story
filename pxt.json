@@ -11,7 +11,8 @@
         "tilemaps": "github:microsoft/pxt-tilemaps#v1.12.0",
         "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.2.0",
         "arcade-text": "github:microsoft/arcade-text#v1.3.0",
-        "carnival": "github:microsoft/arcade-carnival#v0.0.7"
+        "carnival": "github:microsoft/arcade-carnival#v0.0.7",
+        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1"
     },
     "files": [
         "main.blocks",

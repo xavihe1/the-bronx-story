@@ -118,6 +118,67 @@ def escena_campo_futbol():
         """),
         SpriteKind.player)
 
+def on_up_pressed():
+    if isPlayerLive:
+        animation.run_image_animation(player_1,
+            [img("""
+                    . . . . f f f f . . . . . 
+                                . . f f c c c c f f . . . 
+                                . f f c c c c c c f f . . 
+                                f f c c c c c c c c f f . 
+                                f f c c f c c c c c c f . 
+                                f f f f f c c c f c c f . 
+                                f f f f c c c f c c f f . 
+                                f f f f f f f f f f f f . 
+                                f f f f f f f f f f f f . 
+                                . f f f f f f f f f f . . 
+                                . f f f f f f f f f f . . 
+                                f e f f f f f f f f e f . 
+                                e 4 f e e e e e e c 4 e . 
+                                e e f f e e e e f f e e . 
+                                . . . f f f f f f . . . . 
+                                . . . f f . . f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f c c c c f f . . 
+                                . f f f c c c c c c f f . 
+                                f f c c c c c c c c c f f 
+                                f c c c c f c c c c c c f 
+                                . f f f f c c c c f c c f 
+                                . f f f f c c f c c c f f 
+                                . f f f f f f f f f f f f 
+                                . f f f f f f f f f f f f 
+                                . . f f f f f f f f f f . 
+                                . . e f f f f f f f f f . 
+                                . . e f f f f f f f f e f 
+                                . . 4 c e e e e e e 4 4 e 
+                                . . e f f f f f f f e e . 
+                                . . . f f f . . . . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f c c c c f f . . 
+                                . . f f c c c c c c f f . 
+                                . f f f c c c c c c c f f 
+                                f f f c c c c c c c c c f 
+                                f f c c c f c c c c c c f 
+                                . f f f f f c c c f c f f 
+                                . f f f f c c f f c f f f 
+                                . . f f f f f f f f f f f 
+                                . . f f f f f f f f f f . 
+                                . . f f f f f f f f f e . 
+                                . f e f f f f f f f f e . 
+                                . e 4 4 e e e e e e c 4 . 
+                                . . e e f f f f f f f e . 
+                                . . . . . . . . f f f . .
+                """)],
+            500,
+            False)
+controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
+
 def on_on_overlap(sprite, otherSprite):
     global mainName
     cursor.say_text("Press A to play")
@@ -128,20 +189,6 @@ def on_on_overlap(sprite, otherSprite):
                 mainName = "Kyrie"
         storyMode()
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
-
-def on_countdown_end():
-    global textSprite, canShoot
-    textSprite = textsprite.create("YA", 15, 2)
-    canShoot = True
-info.on_countdown_end(on_countdown_end)
-
-def resetDuel():
-    mp.set_player_state(mp.player_selector(mp.PlayerNumber.ONE),
-        MultiplayerState.score,
-        0)
-    mp.set_player_state(mp.player_selector(mp.PlayerNumber.TWO),
-        MultiplayerState.score,
-        0)
 
 def on_button_multiplayer_a_pressed(player2):
     global isDuel
@@ -162,17 +209,214 @@ def on_button_multiplayer_a_pressed(player2):
         else:
             game.show_long_text("Player 1" + "Wins", DialogLayout.BOTTOM)
         isDuel = False
-        pause(1000)
         destroy1v1()
         doMenu()
 mp.on_button_event(mp.MultiplayerButton.A,
     ControllerButtonEvent.PRESSED,
     on_button_multiplayer_a_pressed)
 
+def on_left_pressed():
+    if isPlayerLive:
+        animation.run_image_animation(player_1,
+            [img("""
+                    . . . . . f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . . f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . . f f e e f b f e e f f 
+                                . . . f 4 4 f 1 e 4 e f . 
+                                . . . f 4 4 4 4 e f f f . 
+                                . . . f f e e e e e f . . 
+                                . . . f e f e e e 4 e . . 
+                                . . . f e e e e e 4 e . . 
+                                . . . f f f f f e e f . . 
+                                . . . . f f f f f f . . . 
+                                . . . . . . f f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . f f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . . f f e e f b f e e f f 
+                                . . f f 4 4 f 1 e 4 e f . 
+                                . . . f 4 4 4 e e f f f . 
+                                . . . f f e e 4 4 e f . . 
+                                . . . f e f e 4 4 e f . . 
+                                . . f f f f f e e f f f . 
+                                . . f f f f f f f f f f . 
+                                . . . f f f . . . f f . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . f f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . f f f e e f b f e e f f 
+                                . . f f 4 4 f 1 e 4 e f f 
+                                . . . f 4 4 4 4 e f f f . 
+                                . . . f f e e e e 4 4 4 . 
+                                . . . f e f e e e 4 4 e . 
+                                . . f f f f f f f e e f . 
+                                . . f f f f f f f f f f . 
+                                . . . f f f . . . f f . .
+                """)],
+            500,
+            True)
+controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
+
+def on_countdown_end():
+    global textSprite, canShoot
+    textSprite = textsprite.create("YA", 15, 2)
+    canShoot = True
+info.on_countdown_end(on_countdown_end)
+
+def resetDuel():
+    mp.set_player_state(mp.player_selector(mp.PlayerNumber.ONE),
+        MultiplayerState.score,
+        0)
+    mp.set_player_state(mp.player_selector(mp.PlayerNumber.TWO),
+        MultiplayerState.score,
+        0)
+
+def on_right_pressed():
+    if isPlayerLive:
+        animation.run_image_animation(player_1,
+            [img("""
+                    . . . . . . . . . . . . . 
+                                . . . f f f f f f . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f f . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f f . 
+                                f f e 4 e 1 f 4 4 f f . . 
+                                . f f f e 4 4 4 4 f . . . 
+                                . 4 4 4 e 4 4 4 f f . . . 
+                                . e 4 4 e e e f e f . . . 
+                                . f e e f e e e e f f . . 
+                                . f f f f f f f f f f . . 
+                                . . f f . . . f f f . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . f f f f f f . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f f . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f . . 
+                                . f e 4 e 1 f 4 4 f f . . 
+                                . f f f e e 4 4 4 f . . . 
+                                . . f 4 4 f 4 4 f f . . . 
+                                . . f 4 4 f e f e f . . . 
+                                . f f f f e e e e f f . . 
+                                . f f f f f f f f f f . . 
+                                . . f f . . . f f f . . .
+                """),
+                img("""
+                    . . . f f f f f . . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f . . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f . . 
+                                . f e 4 e 1 f 4 4 f . . . 
+                                . f f f e 4 4 4 4 f . . . 
+                                . . f e f f e e f f . . . 
+                                . . f 4 4 f e e e f . . . 
+                                . . f 4 4 e e f e f . . . 
+                                . . f f f f e e e f . . . 
+                                . . . f f f f f f . . . . 
+                                . . . . f f f . . . . . .
+                """)],
+            500,
+            True)
+controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
+
 def storyModeDestroy():
     sprites.destroy(cursor)
     sprites.destroy(single_player_button)
     sprites.destroy(two_players_button)
+
+def on_down_pressed():
+    if isPlayerLive:
+        animation.run_image_animation(player_1,
+            [img("""
+                    . . . . f f f f . . . . . 
+                                . . f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f f f c c f f f c . 
+                                f f f c f f f f f f f c . 
+                                c c c f f f e e f f c c . 
+                                f f f f f e e f f c c f . 
+                                f f f b f e e f b f f f . 
+                                . f 4 1 f 4 4 f 1 4 f . . 
+                                . f e 4 4 4 4 4 4 e f . . 
+                                . f f f e e e e f f f . . 
+                                f e f e f e e f e f e f . 
+                                e 4 f e e e e e e f 4 e . 
+                                e e f f f f f f f f e e . 
+                                . . . f f f f f f . . . . 
+                                . . . f f . . f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f f f f f f f . . 
+                                . . f f f f f f c f f f . 
+                                f f f f f f f c c f f f c 
+                                f f f f c f f f f f f f c 
+                                . c c c f f f e e f f c c 
+                                . f f f f f e e f f c c f 
+                                . f f f b f e e f b f f f 
+                                . f f 4 1 f 4 4 f 1 4 f f 
+                                . . f e 4 4 4 4 4 e e f e 
+                                . f e f e f e e f 4 4 4 e 
+                                . e 4 f e e e e e 4 4 e . 
+                                . . . f f f f f f e e . . 
+                                . . . f f f f f f f . . . 
+                                . . . f f f . . . . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f . . . . . 
+                                . . f f f f f f f f . . . 
+                                . f f f c f f f f f f . . 
+                                c f f f c c f f f f f f f 
+                                c f f f f f f f c f f f f 
+                                c c f f e e f f f c c c . 
+                                f c c f f e e f f f f f . 
+                                f f f b f e e f b f f f . 
+                                f f 4 1 f 4 4 f 1 4 f f . 
+                                e f e e 4 4 4 4 4 e f . . 
+                                e 4 4 4 f e e f e f e f . 
+                                . e 4 4 e e e e e f 4 e . 
+                                . . e e f f f f f f . . . 
+                                . . . f f f f f f f . . . 
+                                . . . . . . . f f f . . .
+                """)],
+            500,
+            False)
+controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
+
 def TwoPlayersScreen():
     global canShoot, isDuel, randomTime
     canShoot = False
@@ -678,7 +922,8 @@ def doMenu():
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
 def mapLevel():
-    global tienda, edificio
+    global showMinimap, tienda, edificio
+    showMinimap = True
     scene.set_background_color(7)
     tiles.set_current_tilemap(tilemap("""
         level4
@@ -898,7 +1143,8 @@ def mapLevel():
     tiles.place_on_tile(player_1, tiles.get_tile_location(1, 9))
     scene.camera_follow_sprite(player_1)
 def createPlayer():
-    global player_1
+    global isPlayerLive, player_1
+    isPlayerLive = True
     player_1 = sprites.create(img("""
             . . . . f f f f . . . . . 
                     . . f f f f f f f f . . . 
@@ -1007,9 +1253,12 @@ def escena_fabrica():
         """),
         SpriteKind.player)
 def destroy1v1():
+    pause(1000)
     carnival.show_timer(False)
     sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)))
     sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)))
+    info.stop_countdown()
+    sprites.destroy(textSprite)
 
 def on_on_overlap2(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
@@ -1042,22 +1291,45 @@ sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
 
 def destroyLevelOne():
     sprites.destroy(mom2)
+myMinimap: minimap.Minimap = None
 fabrica: Sprite = None
 edificio: Sprite = None
 tienda: Sprite = None
+showMinimap = False
 isTalking = False
 mom2: Sprite = None
-player_1: Sprite = None
 randomTime = 0
 two_players_button: Sprite = None
 single_player_button: Sprite = None
-isDuel = False
-canShoot = False
 textSprite: TextSprite = None
+canShoot = False
+isDuel = False
 mainName = ""
 cursor: Sprite = None
+player_1: Sprite = None
+isPlayerLive = False
 escena_futbol: Sprite = None
 doMenu()
+isPlayerLive = False
+miniMapa = sprites.create(img("""
+        . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
+    """),
+    SpriteKind.player)
 
 def on_on_update():
     if isTalking:
@@ -1065,3 +1337,13 @@ def on_on_update():
     else:
         controller.move_sprite(player_1, 100, 100)
 game.on_update(on_on_update)
+
+def on_update_interval():
+    global myMinimap
+    if showMinimap:
+        myMinimap = minimap.minimap(MinimapScale.SIXTEENTH, 2, 15)
+        minimap.include_sprite(myMinimap, player_1, MinimapSpriteScale.OCTUPLE)
+        miniMapa.set_image(minimap.get_image(myMinimap))
+        miniMapa.set_position(scene.camera_property(CameraProperty.RIGHT) - 33,
+            scene.camera_property(CameraProperty.TOP) + 35)
+game.on_update_interval(100, on_update_interval)
