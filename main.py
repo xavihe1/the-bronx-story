@@ -122,57 +122,57 @@ def on_up_pressed():
     if isPlayerLive:
         animation.run_image_animation(player_1,
             [img("""
-                    . . . . f f f f . . . . . 
-                                . . f f c c c c f f . . . 
-                                . f f c c c c c c f f . . 
-                                f f c c c c c c c c f f . 
-                                f f c c f c c c c c c f . 
-                                f f f f f c c c f c c f . 
-                                f f f f c c c f c c f f . 
-                                f f f f f f f f f f f f . 
-                                f f f f f f f f f f f f . 
-                                . f f f f f f f f f f . . 
-                                . f f f f f f f f f f . . 
-                                f e f f f f f f f f e f . 
-                                e 4 f e e e e e e c 4 e . 
-                                e e f f e e e e f f e e . 
-                                . . . f f f f f f . . . . 
+                    . . . . f f f f . . . . .
+                                . . f f c c c c f f . . .
+                                . f f c c c c c c f f . .
+                                f f c c c c c c c c f f .
+                                f f c c f c c c c c c f .
+                                f f f f f c c c f c c f .
+                                f f f f c c c f c c f f .
+                                f f f f f f f f f f f f .
+                                f f f f f f f f f f f f .
+                                . f f f f f f f f f f . .
+                                . f f f f f f f f f f . .
+                                f e f f f f f f f f e f .
+                                e 4 f e e e e e e c 4 e .
+                                e e f f e e e e f f e e .
+                                . . . f f f f f f . . . .
                                 . . . f f . . f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f c c c c f f . . 
-                                . f f f c c c c c c f f . 
-                                f f c c c c c c c c c f f 
-                                f c c c c f c c c c c c f 
-                                . f f f f c c c c f c c f 
-                                . f f f f c c f c c c f f 
-                                . f f f f f f f f f f f f 
-                                . f f f f f f f f f f f f 
-                                . . f f f f f f f f f f . 
-                                . . e f f f f f f f f f . 
-                                . . e f f f f f f f f e f 
-                                . . 4 c e e e e e e 4 4 e 
-                                . . e f f f f f f f e e . 
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f c c c c f f . .
+                                . f f f c c c c c c f f .
+                                f f c c c c c c c c c f f
+                                f c c c c f c c c c c c f
+                                . f f f f c c c c f c c f
+                                . f f f f c c f c c c f f
+                                . f f f f f f f f f f f f
+                                . f f f f f f f f f f f f
+                                . . f f f f f f f f f f .
+                                . . e f f f f f f f f f .
+                                . . e f f f f f f f f e f
+                                . . 4 c e e e e e e 4 4 e
+                                . . e f f f f f f f e e .
                                 . . . f f f . . . . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f c c c c f f . . 
-                                . . f f c c c c c c f f . 
-                                . f f f c c c c c c c f f 
-                                f f f c c c c c c c c c f 
-                                f f c c c f c c c c c c f 
-                                . f f f f f c c c f c f f 
-                                . f f f f c c f f c f f f 
-                                . . f f f f f f f f f f f 
-                                . . f f f f f f f f f f . 
-                                . . f f f f f f f f f e . 
-                                . f e f f f f f f f f e . 
-                                . e 4 4 e e e e e e c 4 . 
-                                . . e e f f f f f f f e . 
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f c c c c f f . .
+                                . . f f c c c c c c f f .
+                                . f f f c c c c c c c f f
+                                f f f c c c c c c c c c f
+                                f f c c c f c c c c c c f
+                                . f f f f f c c c f c f f
+                                . f f f f c c f f c f f f
+                                . . f f f f f f f f f f f
+                                . . f f f f f f f f f f .
+                                . . f f f f f f f f f e .
+                                . f e f f f f f f f f e .
+                                . e 4 4 e e e e e e c 4 .
+                                . . e e f f f f f f f e .
                                 . . . . . . . . f f f . .
                 """)],
             500,
@@ -219,57 +219,57 @@ def on_left_pressed():
     if isPlayerLive:
         animation.run_image_animation(player_1,
             [img("""
-                    . . . . . f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . . f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . . f f e e f b f e e f f 
-                                . . . f 4 4 f 1 e 4 e f . 
-                                . . . f 4 4 4 4 e f f f . 
-                                . . . f f e e e e e f . . 
-                                . . . f e f e e e 4 e . . 
-                                . . . f e e e e e 4 e . . 
-                                . . . f f f f f e e f . . 
-                                . . . . f f f f f f . . . 
+                    . . . . . f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . . f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . . f f e e f b f e e f f
+                                . . . f 4 4 f 1 e 4 e f .
+                                . . . f 4 4 4 4 e f f f .
+                                . . . f f e e e e e f . .
+                                . . . f e f e e e 4 e . .
+                                . . . f e e e e e 4 e . .
+                                . . . f f f f f e e f . .
+                                . . . . f f f f f f . . .
                                 . . . . . . f f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . f f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . . f f e e f b f e e f f 
-                                . . f f 4 4 f 1 e 4 e f . 
-                                . . . f 4 4 4 e e f f f . 
-                                . . . f f e e 4 4 e f . . 
-                                . . . f e f e 4 4 e f . . 
-                                . . f f f f f e e f f f . 
-                                . . f f f f f f f f f f . 
+                    . . . . . . . . . . . . .
+                                . . . . f f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . f f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . . f f e e f b f e e f f
+                                . . f f 4 4 f 1 e 4 e f .
+                                . . . f 4 4 4 e e f f f .
+                                . . . f f e e 4 4 e f . .
+                                . . . f e f e 4 4 e f . .
+                                . . f f f f f e e f f f .
+                                . . f f f f f f f f f f .
                                 . . . f f f . . . f f . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . f f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . f f f e e f b f e e f f 
-                                . . f f 4 4 f 1 e 4 e f f 
-                                . . . f 4 4 4 4 e f f f . 
-                                . . . f f e e e e 4 4 4 . 
-                                . . . f e f e e e 4 4 e . 
-                                . . f f f f f f f e e f . 
-                                . . f f f f f f f f f f . 
+                    . . . . . . . . . . . . .
+                                . . . . f f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . f f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . f f f e e f b f e e f f
+                                . . f f 4 4 f 1 e 4 e f f
+                                . . . f 4 4 4 4 e f f f .
+                                . . . f f e e e e 4 4 4 .
+                                . . . f e f e e e 4 4 e .
+                                . . f f f f f f f e e f .
+                                . . f f f f f f f f f f .
                                 . . . f f f . . . f f . .
                 """)],
             500,
@@ -294,57 +294,57 @@ def on_right_pressed():
     if isPlayerLive:
         animation.run_image_animation(player_1,
             [img("""
-                    . . . . . . . . . . . . . 
-                                . . . f f f f f f . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f f . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f f . 
-                                f f e 4 e 1 f 4 4 f f . . 
-                                . f f f e 4 4 4 4 f . . . 
-                                . 4 4 4 e 4 4 4 f f . . . 
-                                . e 4 4 e e e f e f . . . 
-                                . f e e f e e e e f f . . 
-                                . f f f f f f f f f f . . 
+                    . . . . . . . . . . . . .
+                                . . . f f f f f f . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f f .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f f .
+                                f f e 4 e 1 f 4 4 f f . .
+                                . f f f e 4 4 4 4 f . . .
+                                . 4 4 4 e 4 4 4 f f . . .
+                                . e 4 4 e e e f e f . . .
+                                . f e e f e e e e f f . .
+                                . f f f f f f f f f f . .
                                 . . f f . . . f f f . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . f f f f f f . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f f . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f . . 
-                                . f e 4 e 1 f 4 4 f f . . 
-                                . f f f e e 4 4 4 f . . . 
-                                . . f 4 4 f 4 4 f f . . . 
-                                . . f 4 4 f e f e f . . . 
-                                . f f f f e e e e f f . . 
-                                . f f f f f f f f f f . . 
+                    . . . . . . . . . . . . .
+                                . . . f f f f f f . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f f .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f . .
+                                . f e 4 e 1 f 4 4 f f . .
+                                . f f f e e 4 4 4 f . . .
+                                . . f 4 4 f 4 4 f f . . .
+                                . . f 4 4 f e f e f . . .
+                                . f f f f e e e e f f . .
+                                . f f f f f f f f f f . .
                                 . . f f . . . f f f . . .
                 """),
                 img("""
-                    . . . f f f f f . . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f . . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f . . 
-                                . f e 4 e 1 f 4 4 f . . . 
-                                . f f f e 4 4 4 4 f . . . 
-                                . . f e f f e e f f . . . 
-                                . . f 4 4 f e e e f . . . 
-                                . . f 4 4 e e f e f . . . 
-                                . . f f f f e e e f . . . 
-                                . . . f f f f f f . . . . 
+                    . . . f f f f f . . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f . .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f . .
+                                . f e 4 e 1 f 4 4 f . . .
+                                . f f f e 4 4 4 4 f . . .
+                                . . f e f f e e f f . . .
+                                . . f 4 4 f e e e f . . .
+                                . . f 4 4 e e f e f . . .
+                                . . f f f f e e e f . . .
+                                . . . f f f f f f . . . .
                                 . . . . f f f . . . . . .
                 """)],
             500,
@@ -360,57 +360,57 @@ def on_down_pressed():
     if isPlayerLive:
         animation.run_image_animation(player_1,
             [img("""
-                    . . . . f f f f . . . . . 
-                                . . f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f f f c c f f f c . 
-                                f f f c f f f f f f f c . 
-                                c c c f f f e e f f c c . 
-                                f f f f f e e f f c c f . 
-                                f f f b f e e f b f f f . 
-                                . f 4 1 f 4 4 f 1 4 f . . 
-                                . f e 4 4 4 4 4 4 e f . . 
-                                . f f f e e e e f f f . . 
-                                f e f e f e e f e f e f . 
-                                e 4 f e e e e e e f 4 e . 
-                                e e f f f f f f f f e e . 
-                                . . . f f f f f f . . . . 
+                    . . . . f f f f . . . . .
+                                . . f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f f f c c f f f c .
+                                f f f c f f f f f f f c .
+                                c c c f f f e e f f c c .
+                                f f f f f e e f f c c f .
+                                f f f b f e e f b f f f .
+                                . f 4 1 f 4 4 f 1 4 f . .
+                                . f e 4 4 4 4 4 4 e f . .
+                                . f f f e e e e f f f . .
+                                f e f e f e e f e f e f .
+                                e 4 f e e e e e e f 4 e .
+                                e e f f f f f f f f e e .
+                                . . . f f f f f f . . . .
                                 . . . f f . . f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f f f f f f f . . 
-                                . . f f f f f f c f f f . 
-                                f f f f f f f c c f f f c 
-                                f f f f c f f f f f f f c 
-                                . c c c f f f e e f f c c 
-                                . f f f f f e e f f c c f 
-                                . f f f b f e e f b f f f 
-                                . f f 4 1 f 4 4 f 1 4 f f 
-                                . . f e 4 4 4 4 4 e e f e 
-                                . f e f e f e e f 4 4 4 e 
-                                . e 4 f e e e e e 4 4 e . 
-                                . . . f f f f f f e e . . 
-                                . . . f f f f f f f . . . 
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f f f f f f f . .
+                                . . f f f f f f c f f f .
+                                f f f f f f f c c f f f c
+                                f f f f c f f f f f f f c
+                                . c c c f f f e e f f c c
+                                . f f f f f e e f f c c f
+                                . f f f b f e e f b f f f
+                                . f f 4 1 f 4 4 f 1 4 f f
+                                . . f e 4 4 4 4 4 e e f e
+                                . f e f e f e e f 4 4 4 e
+                                . e 4 f e e e e e 4 4 e .
+                                . . . f f f f f f e e . .
+                                . . . f f f f f f f . . .
                                 . . . f f f . . . . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f . . . . . 
-                                . . f f f f f f f f . . . 
-                                . f f f c f f f f f f . . 
-                                c f f f c c f f f f f f f 
-                                c f f f f f f f c f f f f 
-                                c c f f e e f f f c c c . 
-                                f c c f f e e f f f f f . 
-                                f f f b f e e f b f f f . 
-                                f f 4 1 f 4 4 f 1 4 f f . 
-                                e f e e 4 4 4 4 4 e f . . 
-                                e 4 4 4 f e e f e f e f . 
-                                . e 4 4 e e e e e f 4 e . 
-                                . . e e f f f f f f . . . 
-                                . . . f f f f f f f . . . 
+                    . . . . . . . . . . . . .
+                                . . . . f f f f . . . . .
+                                . . f f f f f f f f . . .
+                                . f f f c f f f f f f . .
+                                c f f f c c f f f f f f f
+                                c f f f f f f f c f f f f
+                                c c f f e e f f f c c c .
+                                f c c f f e e f f f f f .
+                                f f f b f e e f b f f f .
+                                f f 4 1 f 4 4 f 1 4 f f .
+                                e f e e 4 4 4 4 4 e f . .
+                                e 4 4 4 f e e f e f e f .
+                                . e 4 4 e e e e e f 4 e .
+                                . . e e f f f f f f . . .
+                                . . . f f f f f f f . . .
                                 . . . . . . . f f f . . .
                 """)],
             500,
@@ -536,41 +536,41 @@ def TwoPlayersScreen():
     sprites.destroy(cursor)
     mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.ONE),
         sprites.create(img("""
-                . . . . . . . . . . . . . . . . 
-                        . . . . . f f f f f f . . . . . 
-                        . . . f f e e e e f 2 f . . . . 
-                        . . f f e e e e f 2 2 2 f . . . 
-                        . . f e e e f f e e e e f . . . 
-                        . . f f f f e e 2 2 2 2 e f . . 
-                        . . f e 2 2 2 f f f f e 2 f . . 
-                        . f f f f f f f e e e f f f . . 
-                        . f f e 4 4 e b f 4 4 e e f . . 
-                        . f e e 4 d 4 1 f d d e f f . . 
-                        . . f e e e 4 d d d d f d d f . 
-                        . . . . f e e 4 e e e f b b f . 
-                        . . . . f 2 2 2 4 d d e b b f . 
-                        . . . f f 4 4 4 e d d e b f . . 
-                        . . . f f f f f f e e f f . . . 
+                . . . . . . . . . . . . . . . .
+                        . . . . . f f f f f f . . . . .
+                        . . . f f e e e e f 2 f . . . .
+                        . . f f e e e e f 2 2 2 f . . .
+                        . . f e e e f f e e e e f . . .
+                        . . f f f f e e 2 2 2 2 e f . .
+                        . . f e 2 2 2 f f f f e 2 f . .
+                        . f f f f f f f e e e f f f . .
+                        . f f e 4 4 e b f 4 4 e e f . .
+                        . f e e 4 d 4 1 f d d e f f . .
+                        . . f e e e 4 d d d d f d d f .
+                        . . . . f e e 4 e e e f b b f .
+                        . . . . f 2 2 2 4 d d e b b f .
+                        . . . f f 4 4 4 e d d e b f . .
+                        . . . f f f f f f e e f f . . .
                         . . . . f f . . . f f f . . . .
             """),
             SpriteKind.player))
     mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.TWO),
         sprites.create(img("""
-                . . . . . f f f f f . . . . 
-                        . . . . f e e e e e f f . . 
-                        . . . f e e e e e e e f f . 
-                        . . f e e e e e e e f f f f 
-                        . . f e e 4 e e e f f f f f 
-                        . . f e e 4 4 e e e f f f f 
-                        . . f f e 4 4 4 4 4 f f f f 
-                        . . f f e 4 4 f f 4 e 4 f f 
-                        . . . f f d d d d 4 d 4 f . 
-                        . . . . f b b d d 4 f f f . 
-                        . . . . f e 4 4 4 e e f . . 
-                        f f f d d 1 1 1 e d d 4 . . 
-                        . . f . f 1 1 1 e d d e . . 
-                        . . . . f 6 6 6 f e e f . . 
-                        . . . . . f f f f f f . . . 
+                . . . . . f f f f f . . . .
+                        . . . . f e e e e e f f . .
+                        . . . f e e e e e e e f f .
+                        . . f e e e e e e e f f f f
+                        . . f e e 4 e e e f f f f f
+                        . . f e e 4 4 e e e f f f f
+                        . . f f e 4 4 4 4 4 f f f f
+                        . . f f e 4 4 f f 4 e 4 f f
+                        . . . f f d d d d 4 d 4 f .
+                        . . . . f b b d d 4 f f f .
+                        . . . . f e 4 4 4 e e f . .
+                        f f f d d 1 1 1 e d d 4 . .
+                        . . f . f 1 1 1 e d d e . .
+                        . . . . f 6 6 6 f e e f . .
+                        . . . . . f f f f f f . . .
                         . . . . . . . f f f . . . .
             """),
             SpriteKind.player))
@@ -708,21 +708,21 @@ def storyMode():
     """))
     tiles.place_on_tile(player_1, tiles.get_tile_location(7, 12))
     mom2 = sprites.create(img("""
-            . . . . . . . f f . . . . . . . 
-                    . . . . . f f 3 3 f f . . . . . 
-                    . . . . f 3 3 3 3 3 3 f . . . . 
-                    . . . f 3 3 3 3 3 3 3 3 f . . . 
-                    . . f 3 3 3 3 3 3 3 3 3 3 f . . 
-                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
-                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
-                    . f 3 3 f f e e e e f f 3 3 f . 
-                    f f 3 3 f b f e e f b f 3 3 f f 
-                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
-                    . f 3 3 f e e e e e e e 3 3 f . 
-                    . . f e f d d d d d d d e f . . 
-                    . . e e c d d d d d d d e e . . 
-                    . . e f b d d d d d d d f e . . 
-                    . . . f f 1 d d 1 d 1 f f . . . 
+            . . . . . . . f f . . . . . . .
+                    . . . . . f f 3 3 f f . . . . .
+                    . . . . f 3 3 3 3 3 3 f . . . .
+                    . . . f 3 3 3 3 3 3 3 3 f . . .
+                    . . f 3 3 3 3 3 3 3 3 3 3 f . .
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f .
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f .
+                    . f 3 3 f f e e e e f f 3 3 f .
+                    f f 3 3 f b f e e f b f 3 3 f f
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f
+                    . f 3 3 f e e e e e e e 3 3 f .
+                    . . f e f d d d d d d d e f . .
+                    . . e e c d d d d d d d e e . .
+                    . . e f b d d d d d d d f e . .
+                    . . . f f 1 d d 1 d 1 f f . . .
                     . . . . . f f f f f f . . . . .
         """),
         SpriteKind.mom)
@@ -1146,21 +1146,21 @@ def createPlayer():
     global isPlayerLive, player_1
     isPlayerLive = True
     player_1 = sprites.create(img("""
-            . . . . f f f f . . . . . 
-                    . . f f f f f f f f . . . 
-                    . f f f f f f c f f f . . 
-                    f f f f f f c c f f f c . 
-                    f f f c f f f f f f f c . 
-                    c c c f f f e e f f c c . 
-                    f f f f f e e f f c c f . 
-                    f f f b f e e f b f f f . 
-                    . f e 1 f 4 4 f 1 e f . . 
-                    . f e 4 4 4 4 4 4 e f . . 
-                    . f f f e e e e f f f . . 
-                    f f f e f e e f e f f f . 
-                    e e f e e e e e e f e e . 
-                    e e f e e e e e e f e e . 
-                    . . . f f f f f f . . . . 
+            . . . . f f f f . . . . .
+                    . . f f f f f f f f . . .
+                    . f f f f f f c f f f . .
+                    f f f f f f c c f f f c .
+                    f f f c f f f f f f f c .
+                    c c c f f f e e f f c c .
+                    f f f f f e e f f c c f .
+                    f f f b f e e f b f f f .
+                    . f e 1 f 4 4 f 1 e f . .
+                    . f e 4 4 4 4 4 4 e f . .
+                    . f f f e e e e f f f . .
+                    f f f e f e e f e f f f .
+                    e e f e e e e e e f e e .
+                    e e f e e e e e e f e e .
+                    . . . f f f f f f . . . .
                     . . . f f . . f f . . . .
         """),
         SpriteKind.player)
@@ -1312,21 +1312,21 @@ escena_futbol: Sprite = None
 doMenu()
 isPlayerLive = False
 miniMapa = sprites.create(img("""
-        . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.player)
