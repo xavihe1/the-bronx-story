@@ -6,6 +6,67 @@ namespace SpriteKind {
     export const Complete = SpriteKind.create()
     export const Building = SpriteKind.create()
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (isPlayerLive) {
+        animation.runImageAnimation(
+        player_1,
+        [img`
+            . . . . f f f f . . . . . 
+            . . f f c c c c f f . . . 
+            . f f c c c c c c f f . . 
+            f f c c c c c c c c f f . 
+            f f c c f c c c c c c f . 
+            f f f f f c c c f c c f . 
+            f f f f c c c f c c f f . 
+            f f f f f f f f f f f f . 
+            f f f f f f f f f f f f . 
+            . f f f f f f f f f f . . 
+            . f f f f f f f f f f . . 
+            f e f f f f f f f f e f . 
+            e 4 f e e e e e e c 4 e . 
+            e e f f e e e e f f e e . 
+            . . . f f f f f f . . . . 
+            . . . f f . . f f . . . . 
+            `,img`
+            . . . . . . . . . . . . . 
+            . . . . . f f f f . . . . 
+            . . . f f c c c c f f . . 
+            . f f f c c c c c c f f . 
+            f f c c c c c c c c c f f 
+            f c c c c f c c c c c c f 
+            . f f f f c c c c f c c f 
+            . f f f f c c f c c c f f 
+            . f f f f f f f f f f f f 
+            . f f f f f f f f f f f f 
+            . . f f f f f f f f f f . 
+            . . e f f f f f f f f f . 
+            . . e f f f f f f f f e f 
+            . . 4 c e e e e e e 4 4 e 
+            . . e f f f f f f f e e . 
+            . . . f f f . . . . . . . 
+            `,img`
+            . . . . . . . . . . . . . 
+            . . . . . f f f f . . . . 
+            . . . f f c c c c f f . . 
+            . . f f c c c c c c f f . 
+            . f f f c c c c c c c f f 
+            f f f c c c c c c c c c f 
+            f f c c c f c c c c c c f 
+            . f f f f f c c c f c f f 
+            . f f f f c c f f c f f f 
+            . . f f f f f f f f f f f 
+            . . f f f f f f f f f f . 
+            . . f f f f f f f f f e . 
+            . f e f f f f f f f f e . 
+            . e 4 4 e e e e e e c 4 . 
+            . . e e f f f f f f f e . 
+            . . . . . . . . f f f . . 
+            `],
+        500,
+        false
+        )
+    }
+})
 function escena_campo_futbol () {
     escena_futbol = sprites.create(img`
         777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -128,126 +189,102 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, o
         storyMode()
     }
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive) {
-        animation.runImageAnimation(
-        player_1,
-        [img`
-            . . . . f f f f . . . . . 
-            . . f f f f f f f f . . . 
-            . f f f f f f c f f f . . 
-            f f f f f f c c f f f c . 
-            f f f c f f f f f f f c . 
-            c c c f f f e e f f c c . 
-            f f f f f e e f f c c f . 
-            f f f b f e e f b f f f . 
-            . f 4 1 f 4 4 f 1 4 f . . 
-            . f e 4 4 4 4 4 4 e f . . 
-            . f f f e e e e f f f . . 
-            f e f e f e e f e f e f . 
-            e 4 f e e e e e e f 4 e . 
-            e e f f f f f f f f e e . 
-            . . . f f f f f f . . . . 
-            . . . f f . . f f . . . . 
-            `,img`
-            . . . . . . . . . . . . . 
-            . . . . . f f f f . . . . 
-            . . . f f f f f f f f . . 
-            . . f f f f f f c f f f . 
-            f f f f f f f c c f f f c 
-            f f f f c f f f f f f f c 
-            . c c c f f f e e f f c c 
-            . f f f f f e e f f c c f 
-            . f f f b f e e f b f f f 
-            . f f 4 1 f 4 4 f 1 4 f f 
-            . . f e 4 4 4 4 4 e e f e 
-            . f e f e f e e f 4 4 4 e 
-            . e 4 f e e e e e 4 4 e . 
-            . . . f f f f f f e e . . 
-            . . . f f f f f f f . . . 
-            . . . f f f . . . . . . . 
-            `,img`
-            . . . . . . . . . . . . . 
-            . . . . f f f f . . . . . 
-            . . f f f f f f f f . . . 
-            . f f f c f f f f f f . . 
-            c f f f c c f f f f f f f 
-            c f f f f f f f c f f f f 
-            c c f f e e f f f c c c . 
-            f c c f f e e f f f f f . 
-            f f f b f e e f b f f f . 
-            f f 4 1 f 4 4 f 1 4 f f . 
-            e f e e 4 4 4 4 4 e f . . 
-            e 4 4 4 f e e f e f e f . 
-            . e 4 4 e e e e e f 4 e . 
-            . . e e f f f f f f . . . 
-            . . . f f f f f f f . . . 
-            . . . . . . . f f f . . . 
-            `],
-        500,
-        false
-        )
-    }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    showMinimap = true
 })
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive) {
-        animation.runImageAnimation(
-        player_1,
-        [img`
-            . . . . . . . . . . . . . 
-            . . . f f f f f f . . . . 
-            . f f f f f f f f f . . . 
-            . f f f f f f c f f f . . 
-            f f f f c f f f c f f f . 
-            f c f f c c f f f c c f f 
-            f c c f f f f e f f f f f 
-            f f f f f f f e e f f f . 
-            f f e e f b f e e f f f . 
-            f f e 4 e 1 f 4 4 f f . . 
-            . f f f e 4 4 4 4 f . . . 
-            . 4 4 4 e 4 4 4 f f . . . 
-            . e 4 4 e e e f e f . . . 
-            . f e e f e e e e f f . . 
-            . f f f f f f f f f f . . 
-            . . f f . . . f f f . . . 
-            `,img`
-            . . . . . . . . . . . . . 
-            . . . f f f f f f . . . . 
-            . f f f f f f f f f . . . 
-            . f f f f f f c f f f . . 
-            f f f f c f f f c f f f . 
-            f c f f c c f f f c c f f 
-            f c c f f f f e f f f f f 
-            f f f f f f f e e f f f . 
-            f f e e f b f e e f f . . 
-            . f e 4 e 1 f 4 4 f f . . 
-            . f f f e e 4 4 4 f . . . 
-            . . f 4 4 f 4 4 f f . . . 
-            . . f 4 4 f e f e f . . . 
-            . f f f f e e e e f f . . 
-            . f f f f f f f f f f . . 
-            . . f f . . . f f f . . . 
-            `,img`
-            . . . f f f f f . . . . . 
-            . f f f f f f f f f . . . 
-            . f f f f f f c f f f . . 
-            f f f f c f f f c f f . . 
-            f c f f c c f f f c c f f 
-            f c c f f f f e f f f f f 
-            f f f f f f f e e f f f . 
-            f f e e f b f e e f f . . 
-            . f e 4 e 1 f 4 4 f . . . 
-            . f f f e 4 4 4 4 f . . . 
-            . . f e f f e e f f . . . 
-            . . f 4 4 f e e e f . . . 
-            . . f 4 4 e e f e f . . . 
-            . . f f f f e e e f . . . 
-            . . . f f f f f f . . . . 
-            . . . . f f f . . . . . . 
-            `],
-        500,
-        true
-        )
+mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
+    if (isDuel) {
+        resetDuel()
+        if (canShoot) {
+            mp.changePlayerStateBy(player2, MultiplayerState.score, 1)
+        } else {
+            mp.changePlayerStateBy(player2, MultiplayerState.score, -1)
+        }
+        if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) < mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . 2 2 2 2 . . . . . . . . . 
+                . . 2 1 1 1 1 2 2 . . . . . . . 
+                . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                . . 2 1 1 1 1 3 2 2 . . . . . . 
+                . . . 2 2 2 2 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), -50, 0)
+            pause(1500)
+            game.showLongText("Player 2" + "Wins", DialogLayout.Bottom)
+        } else if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) == mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . 2 2 2 2 . . . 
+                . . . . . . . 2 2 1 1 1 1 2 . . 
+                . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                . . . . . . 2 2 3 1 1 1 1 2 . . 
+                . . . . . . . . . 2 2 2 2 . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), 50, 0)
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . 2 2 2 2 . . . . . . . . . 
+                . . 2 1 1 1 1 2 2 . . . . . . . 
+                . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                . . 2 1 1 1 1 3 2 2 . . . . . . 
+                . . . 2 2 2 2 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), -50, 0)
+            pause(1500)
+            game.showLongText("Both Players " + "Wins", DialogLayout.Bottom)
+        } else {
+            projectile = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . 2 2 2 2 . . . 
+                . . . . . . . 2 2 1 1 1 1 2 . . 
+                . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                . . . . . . 2 2 3 1 1 1 1 2 . . 
+                . . . . . . . . . 2 2 2 2 . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), 50, 0)
+            pause(1500)
+            game.showLongText("Player 1" + "Wins", DialogLayout.Bottom)
+        }
+        isDuel = false
+        destroy1v1()
+        doMenu()
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -313,91 +350,73 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 info.onCountdownEnd(function () {
     textSprite = textsprite.create("YA", 15, 2)
+    textSprite.setScale(4, ScaleAnchor.Middle)
+    textSprite.setPosition(80, 31)
     canShoot = true
 })
 function resetDuel () {
     mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score, 0)
     mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score, 0)
 }
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isPlayerLive) {
         animation.runImageAnimation(
         player_1,
         [img`
-            . . . . f f f f . . . . . 
-            . . f f c c c c f f . . . 
-            . f f c c c c c c f f . . 
-            f f c c c c c c c c f f . 
-            f f c c f c c c c c c f . 
-            f f f f f c c c f c c f . 
-            f f f f c c c f c c f f . 
-            f f f f f f f f f f f f . 
-            f f f f f f f f f f f f . 
-            . f f f f f f f f f f . . 
-            . f f f f f f f f f f . . 
-            f e f f f f f f f f e f . 
-            e 4 f e e e e e e c 4 e . 
-            e e f f e e e e f f e e . 
+            . . . . . . . . . . . . . 
             . . . f f f f f f . . . . 
-            . . . f f . . f f . . . . 
+            . f f f f f f f f f . . . 
+            . f f f f f f c f f f . . 
+            f f f f c f f f c f f f . 
+            f c f f c c f f f c c f f 
+            f c c f f f f e f f f f f 
+            f f f f f f f e e f f f . 
+            f f e e f b f e e f f f . 
+            f f e 4 e 1 f 4 4 f f . . 
+            . f f f e 4 4 4 4 f . . . 
+            . 4 4 4 e 4 4 4 f f . . . 
+            . e 4 4 e e e f e f . . . 
+            . f e e f e e e e f f . . 
+            . f f f f f f f f f f . . 
+            . . f f . . . f f f . . . 
             `,img`
             . . . . . . . . . . . . . 
-            . . . . . f f f f . . . . 
-            . . . f f c c c c f f . . 
-            . f f f c c c c c c f f . 
-            f f c c c c c c c c c f f 
-            f c c c c f c c c c c c f 
-            . f f f f c c c c f c c f 
-            . f f f f c c f c c c f f 
-            . f f f f f f f f f f f f 
-            . f f f f f f f f f f f f 
-            . . f f f f f f f f f f . 
-            . . e f f f f f f f f f . 
-            . . e f f f f f f f f e f 
-            . . 4 c e e e e e e 4 4 e 
-            . . e f f f f f f f e e . 
-            . . . f f f . . . . . . . 
+            . . . f f f f f f . . . . 
+            . f f f f f f f f f . . . 
+            . f f f f f f c f f f . . 
+            f f f f c f f f c f f f . 
+            f c f f c c f f f c c f f 
+            f c c f f f f e f f f f f 
+            f f f f f f f e e f f f . 
+            f f e e f b f e e f f . . 
+            . f e 4 e 1 f 4 4 f f . . 
+            . f f f e e 4 4 4 f . . . 
+            . . f 4 4 f 4 4 f f . . . 
+            . . f 4 4 f e f e f . . . 
+            . f f f f e e e e f f . . 
+            . f f f f f f f f f f . . 
+            . . f f . . . f f f . . . 
             `,img`
-            . . . . . . . . . . . . . 
-            . . . . . f f f f . . . . 
-            . . . f f c c c c f f . . 
-            . . f f c c c c c c f f . 
-            . f f f c c c c c c c f f 
-            f f f c c c c c c c c c f 
-            f f c c c f c c c c c c f 
-            . f f f f f c c c f c f f 
-            . f f f f c c f f c f f f 
-            . . f f f f f f f f f f f 
-            . . f f f f f f f f f f . 
-            . . f f f f f f f f f e . 
-            . f e f f f f f f f f e . 
-            . e 4 4 e e e e e e c 4 . 
-            . . e e f f f f f f f e . 
-            . . . . . . . . f f f . . 
+            . . . f f f f f . . . . . 
+            . f f f f f f f f f . . . 
+            . f f f f f f c f f f . . 
+            f f f f c f f f c f f . . 
+            f c f f c c f f f c c f f 
+            f c c f f f f e f f f f f 
+            f f f f f f f e e f f f . 
+            f f e e f b f e e f f . . 
+            . f e 4 e 1 f 4 4 f . . . 
+            . f f f e 4 4 4 4 f . . . 
+            . . f e f f e e f f . . . 
+            . . f 4 4 f e e e f . . . 
+            . . f 4 4 e e f e f . . . 
+            . . f f f f e e e f . . . 
+            . . . f f f f f f . . . . 
+            . . . . f f f . . . . . . 
             `],
         500,
-        false
+        true
         )
-    }
-})
-mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
-    if (isDuel) {
-        resetDuel()
-        if (canShoot) {
-            mp.changePlayerStateBy(player2, MultiplayerState.score, 1)
-        } else {
-            mp.changePlayerStateBy(player2, MultiplayerState.score, -1)
-        }
-        if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) < mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
-            game.showLongText("Player 2" + "Wins", DialogLayout.Bottom)
-        } else if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) == mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
-            game.showLongText("Both Players " + "Wins", DialogLayout.Bottom)
-        } else {
-            game.showLongText("Player 1" + "Wins", DialogLayout.Bottom)
-        }
-        isDuel = false
-        destroy1v1()
-        doMenu()
     }
 })
 function storyModeDestroy () {
@@ -405,6 +424,67 @@ function storyModeDestroy () {
     sprites.destroy(single_player_button)
     sprites.destroy(two_players_button)
 }
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (isPlayerLive) {
+        animation.runImageAnimation(
+        player_1,
+        [img`
+            . . . . f f f f . . . . . 
+            . . f f f f f f f f . . . 
+            . f f f f f f c f f f . . 
+            f f f f f f c c f f f c . 
+            f f f c f f f f f f f c . 
+            c c c f f f e e f f c c . 
+            f f f f f e e f f c c f . 
+            f f f b f e e f b f f f . 
+            . f 4 1 f 4 4 f 1 4 f . . 
+            . f e 4 4 4 4 4 4 e f . . 
+            . f f f e e e e f f f . . 
+            f e f e f e e f e f e f . 
+            e 4 f e e e e e e f 4 e . 
+            e e f f f f f f f f e e . 
+            . . . f f f f f f . . . . 
+            . . . f f . . f f . . . . 
+            `,img`
+            . . . . . . . . . . . . . 
+            . . . . . f f f f . . . . 
+            . . . f f f f f f f f . . 
+            . . f f f f f f c f f f . 
+            f f f f f f f c c f f f c 
+            f f f f c f f f f f f f c 
+            . c c c f f f e e f f c c 
+            . f f f f f e e f f c c f 
+            . f f f b f e e f b f f f 
+            . f f 4 1 f 4 4 f 1 4 f f 
+            . . f e 4 4 4 4 4 e e f e 
+            . f e f e f e e f 4 4 4 e 
+            . e 4 f e e e e e 4 4 e . 
+            . . . f f f f f f e e . . 
+            . . . f f f f f f f . . . 
+            . . . f f f . . . . . . . 
+            `,img`
+            . . . . . . . . . . . . . 
+            . . . . f f f f . . . . . 
+            . . f f f f f f f f . . . 
+            . f f f c f f f f f f . . 
+            c f f f c c f f f f f f f 
+            c f f f f f f f c f f f f 
+            c c f f e e f f f c c c . 
+            f c c f f e e f f f f f . 
+            f f f b f e e f b f f f . 
+            f f 4 1 f 4 4 f 1 4 f f . 
+            e f e e 4 4 4 4 4 e f . . 
+            e 4 4 4 f e e f e f e f . 
+            . e 4 4 e e e e e f 4 e . 
+            . . e e f f f f f f . . . 
+            . . . f f f f f f f . . . 
+            . . . . . . . f f f . . . 
+            `],
+        500,
+        false
+        )
+    }
+})
 function TwoPlayersScreen () {
     canShoot = false
     isDuel = true
@@ -900,7 +980,7 @@ function doMenu () {
     single_player_button.setPosition(130, 90)
 }
 function mapLevel () {
-    showMinimap = true
+    showMinimap = false
     scene.setBackgroundColor(7)
     tiles.setCurrentTilemap(tilemap`level4`)
     tienda = sprites.create(img`
@@ -1217,7 +1297,7 @@ function escena_fabrica () {
         `, SpriteKind.Player)
 }
 function destroy1v1 () {
-    pause(1000)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
     carnival.showTimer(false)
     sprites.destroy(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)))
     sprites.destroy(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)))
@@ -1250,23 +1330,25 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSpr
 function destroyLevelOne () {
     sprites.destroy(mom2)
 }
+let exit_hint: TextSprite = null
 let myMinimap: minimap.Minimap = null
 let fabrica: Sprite = null
 let edificio: Sprite = null
 let tienda: Sprite = null
-let showMinimap = false
 let isTalking = false
 let mom2: Sprite = null
 let randomTime = 0
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
-let isDuel = false
-let canShoot = false
 let textSprite: TextSprite = null
-let player_1: Sprite = null
+let projectile: Sprite = null
+let canShoot = false
+let isDuel = false
+let showMinimap = false
 let mainName = ""
 let cursor: Sprite = null
 let escena_futbol: Sprite = null
+let player_1: Sprite = null
 let isPlayerLive = false
 doMenu()
 isPlayerLive = false
@@ -1297,9 +1379,35 @@ game.onUpdate(function () {
 })
 game.onUpdateInterval(100, function () {
     if (showMinimap) {
-        myMinimap = minimap.minimap(MinimapScale.Sixteenth, 2, 15)
+        isTalking = true
+        myMinimap = minimap.minimap(MinimapScale.Eighth, 2, 15)
         minimap.includeSprite(myMinimap, player_1, MinimapSpriteScale.Octuple)
         miniMapa.setImage(minimap.getImage(myMinimap))
-        miniMapa.setPosition(scene.cameraProperty(CameraProperty.Right) - 33, scene.cameraProperty(CameraProperty.Top) + 35)
+        miniMapa.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
+        miniMapa.z = 1000
+        exit_hint = textsprite.create("Press A to exit")
+        exit_hint.setPosition(scene.cameraProperty(CameraProperty.Left), scene.cameraProperty(CameraProperty.Top))
+        if (controller.A.isPressed()) {
+            isTalking = false
+            miniMapa.setImage(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `)
+            showMinimap = false
+        }
     }
 })
