@@ -6,6 +6,9 @@ class SpriteKind:
     losa = SpriteKind.create()
     Complete = SpriteKind.create()
     Building = SpriteKind.create()
+def destroy_multiplayer_sprites():
+    for value in mp.all_players():
+        pass
 
 def on_up_pressed():
     if isPlayerLive:
@@ -196,117 +199,34 @@ def on_b_pressed():
     showMinimap = True
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
-def on_button_multiplayer_a_pressed(player2):
-    global projectile, isDuel
-    if isDuel:
-        resetDuel()
-        if canShoot:
-            mp.change_player_state_by(player2, MultiplayerState.score, 1)
-        else:
-            mp.change_player_state_by(player2, MultiplayerState.score, -1)
-        if mp.get_player_state(mp.player_selector(mp.PlayerNumber.ONE),
-            MultiplayerState.score) < mp.get_player_state(mp.player_selector(mp.PlayerNumber.TWO),
-            MultiplayerState.score):
-            projectile = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . 2 1 1 1 1 2 2 . . . . . . . 
-                                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                                    . . 2 1 1 1 1 3 2 2 . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . .
-                """),
-                mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
-                -50,
-                0)
-            pause(1500)
-            game.show_long_text("Player 2" + "Wins", DialogLayout.BOTTOM)
-        elif mp.get_player_state(mp.player_selector(mp.PlayerNumber.ONE),
-            MultiplayerState.score) == mp.get_player_state(mp.player_selector(mp.PlayerNumber.TWO),
-            MultiplayerState.score):
-            projectile = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . 2 2 2 2 . . . 
-                                    . . . . . . . 2 2 1 1 1 1 2 . . 
-                                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                                    . . . . . . 2 2 3 1 1 1 1 2 . . 
-                                    . . . . . . . . . 2 2 2 2 . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . .
-                """),
-                mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
-                50,
-                0)
-            projectile = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . 2 1 1 1 1 2 2 . . . . . . . 
-                                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                                    . . 2 1 1 1 1 3 2 2 . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . .
-                """),
-                mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
-                -50,
-                0)
-            pause(1500)
-            game.show_long_text("Both Players " + "Wins", DialogLayout.BOTTOM)
-        else:
-            projectile = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . 2 2 2 2 . . . 
-                                    . . . . . . . 2 2 1 1 1 1 2 . . 
-                                    . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                                    . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                                    . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                                    . . . . . . 2 2 3 1 1 1 1 2 . . 
-                                    . . . . . . . . . 2 2 2 2 . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . .
-                """),
-                mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
-                50,
-                0)
-            pause(1500)
-            game.show_long_text("Player 1" + "Wins", DialogLayout.BOTTOM)
-        isDuel = False
-        destroy1v1()
-        doMenu()
-mp.on_button_event(mp.MultiplayerButton.A,
+def on_player2_button_a_pressed():
+    global player_2_bullet, player_2_can_shoot
+    if player_2_can_shoot:
+        player_2_bullet = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . 2 2 2 2 . . . . . . . . . 
+                            . . 2 1 1 1 1 2 2 . . . . . . . 
+                            . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                            . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                            . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                            . . 2 1 1 1 1 3 2 2 . . . . . . 
+                            . . . 2 2 2 2 . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . .
+            """),
+            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            -50,
+            0)
+        player_2_can_shoot = False
+controller.player2.on_button_event(ControllerButton.A,
     ControllerButtonEvent.PRESSED,
-    on_button_multiplayer_a_pressed)
+    on_player2_button_a_pressed)
 
 def on_left_pressed():
     if isPlayerLive:
@@ -369,21 +289,69 @@ def on_left_pressed():
             True)
 controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
 
+def on_on_overlap2(sprite2, otherSprite2):
+    if otherSprite2 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite2:
+        sprites.destroy(otherSprite2, effects.fire, 500)
+        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
+            . . . . . . . . . . . . . . . . 
+                        . . . . 2 2 2 2 2 . f f f . . . 
+                        . . 2 2 2 f f f f f d b b f . . 
+                        . 2 2 f f e 2 f e f d b b b f . 
+                        2 2 f 2 e 2 e f e e f f e e f f 
+                        2 f 2 2 e 2 f e 4 d d e d d e f 
+                        2 f f 2 e 2 f e 4 d d e d d e f 
+                        2 f f 2 2 2 f e f 4 f e 4 e f 2 
+                        2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
+                        2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
+                        2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
+                        2 2 2 e e f 2 f 4 4 4 f f f f f 
+                        2 2 f f e f e f e e f f 2 f f 2 
+                        2 2 2 f f 2 2 f f e f 2 2 2 2 2 
+                        2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
+                        2 . 2 2 2 2 2 2 2 2 2 . 2 2 . .
+        """))
+        game.splash("Player 2 Wins!")
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            "X.X")
+        pause(1000)
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            "Aggh ffs")
+        ask_wanna_play_again()
+    elif otherSprite2 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite2:
+        sprites.destroy(otherSprite2, effects.fire, 500)
+        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
+            . . . . f . . . . . . . . . . . 
+                        . . . . f . . . . 2 2 2 2 . . . 
+                        . . . f f . . 2 f f f f f 2 2 . 
+                        . . . . d 2 2 f f f e e e f 2 . 
+                        . . f f d f f f e e e e e e f 2 
+                        2 2 6 1 1 e b d 4 4 4 4 e e e 2 
+                        2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
+                        f f 6 1 1 4 d d f 4 e e e 2 2 f 
+                        f f f e e 4 d f 4 f e e 2 2 2 f 
+                        f f e d d e 4 4 4 4 e f 2 2 2 f 
+                        2 f e d d e f d e f f 2 2 e 2 . 
+                        2 2 f e 4 f f 4 4 f f 2 f f 2 2 
+                        2 2 2 2 2 2 f f f f 2 2 f f . 2 
+                        . . 2 2 2 . . . f f 2 f f . . 2
+        """))
+        game.splash("Player 1 Wins!")
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            "X.X")
+        pause(1000)
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            "Aggh ffs")
+        ask_wanna_play_again()
+sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap2)
+
 def on_countdown_end():
-    global textSprite, canShoot
+    global textSprite, player_1_can_shoot, player_2_can_shoot
     textSprite = textsprite.create("YA", 15, 2)
     textSprite.set_scale(4, ScaleAnchor.MIDDLE)
     textSprite.set_position(80, 31)
-    canShoot = True
+    player_1_can_shoot = True
+    player_2_can_shoot = True
 info.on_countdown_end(on_countdown_end)
-
-def resetDuel():
-    mp.set_player_state(mp.player_selector(mp.PlayerNumber.ONE),
-        MultiplayerState.score,
-        0)
-    mp.set_player_state(mp.player_selector(mp.PlayerNumber.TWO),
-        MultiplayerState.score,
-        0)
 
 def on_right_pressed():
     if isPlayerLive:
@@ -509,12 +477,14 @@ def on_down_pressed():
                                 . . . . . . . f f f . . .
                 """)],
             500,
-            False)
+            True)
 controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
 
 def TwoPlayersScreen():
-    global canShoot, isDuel, randomTime
+    global canShoot, player_1_can_shoot, player_2_can_shoot, isDuel, randomTime
     canShoot = False
+    player_1_can_shoot = False
+    player_2_can_shoot = False
     isDuel = True
     randomTime = randint(1, 10)
     info.start_countdown(randomTime)
@@ -671,6 +641,45 @@ def TwoPlayersScreen():
             SpriteKind.player))
     mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_position(40, 90)
     mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_position(120, 90)
+def ask_wanna_play_again():
+    story.show_player_choices("Go Menu", "Replay")
+    if story.check_last_answer("Go Menu"):
+        doMenu()
+        destroy_multiplayer_sprites()
+    else:
+        sprites.destroy_all_sprites_of_kind(SpriteKind.player)
+        destroy_multiplayer_sprites()
+        TwoPlayersScreen()
+
+def on_player1_button_a_pressed():
+    global player_1_bullet, player_1_can_shoot
+    if player_1_can_shoot:
+        player_1_bullet = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . 2 2 1 1 1 1 2 . . 
+                            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                            . . . . . . 2 2 3 1 1 1 1 2 . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . .
+            """),
+            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            50,
+            0)
+        player_1_can_shoot = False
+controller.player1.on_button_event(ControllerButton.A,
+    ControllerButtonEvent.PRESSED,
+    on_player1_button_a_pressed)
+
 def storyMode():
     global mom2, isTalking
     storyModeDestroy()
@@ -1355,15 +1364,15 @@ def destroy1v1():
     info.stop_countdown()
     sprites.destroy(textSprite)
 
-def on_on_overlap2(sprite3, otherSprite3):
+def on_on_overlap3(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
     if controller.A.is_pressed():
         TwoPlayersScreen()
 sprites.on_overlap(SpriteKind.player,
     SpriteKind.twoPlayersButton,
-    on_on_overlap2)
+    on_on_overlap3)
 
-def on_on_overlap3(sprite2, otherSprite2):
+def on_on_overlap4(sprite22, otherSprite22):
     global isTalking
     game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
     isTalking = True
@@ -1382,7 +1391,7 @@ def on_on_overlap3(sprite2, otherSprite2):
     elif story.check_last_answer("Stay"):
         isTalking = False
         pause(1000)
-sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
+sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap4)
 
 def destroyLevelOne():
     sprites.destroy(mom2)
@@ -1394,12 +1403,15 @@ tienda: Sprite = None
 isTalking = False
 mom2: Sprite = None
 randomTime = 0
+isDuel = False
+canShoot = False
 two_players_button: Sprite = None
 single_player_button: Sprite = None
+player_1_can_shoot = False
 textSprite: TextSprite = None
-projectile: Sprite = None
-canShoot = False
-isDuel = False
+player_1_bullet: Sprite = None
+player_2_bullet: Sprite = None
+player_2_can_shoot = False
 showMinimap = False
 mainName = ""
 cursor: Sprite = None

@@ -192,99 +192,27 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, o
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     showMinimap = true
 })
-mp.onButtonEvent(mp.MultiplayerButton.A, ControllerButtonEvent.Pressed, function (player2) {
-    if (isDuel) {
-        resetDuel()
-        if (canShoot) {
-            mp.changePlayerStateBy(player2, MultiplayerState.score, 1)
-        } else {
-            mp.changePlayerStateBy(player2, MultiplayerState.score, -1)
-        }
-        if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) < mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
-            projectile = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . 2 2 2 2 . . . . . . . . . 
-                . . 2 1 1 1 1 2 2 . . . . . . . 
-                . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                . . 2 1 1 1 1 3 2 2 . . . . . . 
-                . . . 2 2 2 2 . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), -50, 0)
-            pause(1500)
-            game.showLongText("Player 2" + "Wins", DialogLayout.Bottom)
-        } else if (mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score) == mp.getPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score)) {
-            projectile = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . 2 2 2 2 . . . 
-                . . . . . . . 2 2 1 1 1 1 2 . . 
-                . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                . . . . . . 2 2 3 1 1 1 1 2 . . 
-                . . . . . . . . . 2 2 2 2 . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), 50, 0)
-            projectile = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . 2 2 2 2 . . . . . . . . . 
-                . . 2 1 1 1 1 2 2 . . . . . . . 
-                . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                . . 2 1 1 1 1 3 2 2 . . . . . . 
-                . . . 2 2 2 2 . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), -50, 0)
-            pause(1500)
-            game.showLongText("Both Players " + "Wins", DialogLayout.Bottom)
-        } else {
-            projectile = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . 2 2 2 2 . . . 
-                . . . . . . . 2 2 1 1 1 1 2 . . 
-                . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                . . . . . . 2 2 3 1 1 1 1 2 . . 
-                . . . . . . . . . 2 2 2 2 . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), 50, 0)
-            pause(1500)
-            game.showLongText("Player 1" + "Wins", DialogLayout.Bottom)
-        }
-        isDuel = false
-        destroy1v1()
-        doMenu()
+controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    if (player_2_can_shoot) {
+        player_2_bullet = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . 2 2 2 2 . . . . . . . . . 
+            . . 2 1 1 1 1 2 2 . . . . . . . 
+            . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+            . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+            . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+            . . 2 1 1 1 1 3 2 2 . . . . . . 
+            . . . 2 2 2 2 . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), -50, 0)
+        player_2_can_shoot = false
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -348,16 +276,64 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         )
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite2, otherSprite2) {
+    if (otherSprite2 == player_2_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)) == sprite2) {
+        sprites.destroy(otherSprite2, effects.fire, 500)
+        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)).setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . 2 2 2 2 2 . f f f . . . 
+            . . 2 2 2 f f f f f d b b f . . 
+            . 2 2 f f e 2 f e f d b b b f . 
+            2 2 f 2 e 2 e f e e f f e e f f 
+            2 f 2 2 e 2 f e 4 d d e d d e f 
+            2 f f 2 e 2 f e 4 d d e d d e f 
+            2 f f 2 2 2 f e f 4 f e 4 e f 2 
+            2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
+            2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
+            2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
+            2 2 2 e e f 2 f 4 4 4 f f f f f 
+            2 2 f f e f e f e e f f 2 f f 2 
+            2 2 2 f f 2 2 f f e f 2 2 2 2 2 
+            2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
+            2 . 2 2 2 2 2 2 2 2 2 . 2 2 . . 
+            `)
+        game.splash("Player 2 Wins!")
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "X.X")
+        pause(1000)
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "Aggh ffs")
+        ask_wanna_play_again()
+    } else if (otherSprite2 == player_1_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)) == sprite2) {
+        sprites.destroy(otherSprite2, effects.fire, 500)
+        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)).setImage(img`
+            . . . . f . . . . . . . . . . . 
+            . . . . f . . . . 2 2 2 2 . . . 
+            . . . f f . . 2 f f f f f 2 2 . 
+            . . . . d 2 2 f f f e e e f 2 . 
+            . . f f d f f f e e e e e e f 2 
+            2 2 6 1 1 e b d 4 4 4 4 e e e 2 
+            2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
+            f f 6 1 1 4 d d f 4 e e e 2 2 f 
+            f f f e e 4 d f 4 f e e 2 2 2 f 
+            f f e d d e 4 4 4 4 e f 2 2 2 f 
+            2 f e d d e f d e f f 2 2 e 2 . 
+            2 2 f e 4 f f 4 4 f f 2 f f 2 2 
+            2 2 2 2 2 2 f f f f 2 2 f f . 2 
+            . . 2 2 2 . . . f f 2 f f . . 2 
+            `)
+        game.splash("Player 1 Wins!")
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "X.X")
+        pause(1000)
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "Aggh ffs")
+        ask_wanna_play_again()
+    }
+})
 info.onCountdownEnd(function () {
     textSprite = textsprite.create("YA", 15, 2)
     textSprite.setScale(4, ScaleAnchor.Middle)
     textSprite.setPosition(80, 31)
-    canShoot = true
+    player_1_can_shoot = true
+    player_2_can_shoot = true
 })
-function resetDuel () {
-    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.One), MultiplayerState.score, 0)
-    mp.setPlayerState(mp.playerSelector(mp.PlayerNumber.Two), MultiplayerState.score, 0)
-}
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isPlayerLive) {
         animation.runImageAnimation(
@@ -481,12 +457,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . f f f . . . 
             `],
         500,
-        false
+        true
         )
     }
 })
 function TwoPlayersScreen () {
     canShoot = false
+    player_1_can_shoot = false
+    player_2_can_shoot = false
     isDuel = true
     randomTime = randint(1, 10)
     info.startCountdown(randomTime)
@@ -640,6 +618,39 @@ function TwoPlayersScreen () {
     mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)).setPosition(40, 90)
     mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)).setPosition(120, 90)
 }
+function ask_wanna_play_again () {
+    story.showPlayerChoices("Go Menu", "Replay")
+    if (story.checkLastAnswer("Go Menu")) {
+        destroy1v1()
+        doMenu()
+    } else {
+        destroy1v1()
+        TwoPlayersScreen()
+    }
+}
+controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+    if (player_1_can_shoot) {
+        player_1_bullet = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . 2 2 2 2 . . . 
+            . . . . . . . 2 2 1 1 1 1 2 . . 
+            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+            . . . . . . 2 2 3 1 1 1 1 2 . . 
+            . . . . . . . . . 2 2 2 2 . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), 50, 0)
+        player_1_can_shoot = false
+    }
+})
 function storyMode () {
     storyModeDestroy()
     createPlayer()
@@ -1310,7 +1321,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (spri
         TwoPlayersScreen()
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite2, otherSprite2) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite22, otherSprite22) {
     game.showLongText("Talk with mom", DialogLayout.Bottom)
     isTalking = true
     story.printCharacterText("" + mainName + "!" + " They took it... They took everything from me!", "Mom")
@@ -1338,12 +1349,15 @@ let tienda: Sprite = null
 let isTalking = false
 let mom2: Sprite = null
 let randomTime = 0
+let isDuel = false
+let canShoot = false
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
+let player_1_can_shoot = false
 let textSprite: TextSprite = null
-let projectile: Sprite = null
-let canShoot = false
-let isDuel = false
+let player_1_bullet: Sprite = null
+let player_2_bullet: Sprite = null
+let player_2_can_shoot = false
 let showMinimap = false
 let mainName = ""
 let cursor: Sprite = null
