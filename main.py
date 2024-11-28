@@ -68,7 +68,7 @@ def on_up_pressed():
                                 . . . . . . . . f f f . .
                 """)],
             500,
-            False)
+            True)
 controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
 
 def escena_campo_futbol():
@@ -196,7 +196,8 @@ sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
 
 def on_b_pressed():
     global showMinimap
-    showMinimap = True
+    if is_on_map_level:
+        showMinimap = True
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
 def on_player2_button_a_pressed():
@@ -1026,7 +1027,8 @@ def doMenu():
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
 def mapLevel():
-    global showMinimap, tienda, edificio
+    global is_on_map_level, showMinimap, tienda, edificio
+    is_on_map_level = True
     showMinimap = False
     scene.set_background_color(7)
     tiles.set_current_tilemap(tilemap("""
@@ -1417,6 +1419,7 @@ mainName = ""
 cursor: Sprite = None
 escena_futbol: Sprite = None
 player_1: Sprite = None
+is_on_map_level = False
 isPlayerLive = False
 doMenu()
 isPlayerLive = False
@@ -1439,6 +1442,7 @@ miniMapa = sprites.create(img("""
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.player)
+is_on_map_level = False
 
 def on_on_update():
     if isTalking:

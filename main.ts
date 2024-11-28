@@ -6,6 +6,11 @@ namespace SpriteKind {
     export const Complete = SpriteKind.create()
     export const Building = SpriteKind.create()
 }
+function destroy_multiplayer_sprites () {
+    for (let value of mp.allPlayers()) {
+    	
+    }
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isPlayerLive) {
         animation.runImageAnimation(
@@ -63,7 +68,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . f f f . . 
             `],
         500,
-        false
+        true
         )
     }
 })
@@ -190,7 +195,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, o
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    showMinimap = true
+    if (is_on_map_level) {
+        showMinimap = true
+    }
 })
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     if (player_2_can_shoot) {
@@ -621,10 +628,11 @@ function TwoPlayersScreen () {
 function ask_wanna_play_again () {
     story.showPlayerChoices("Go Menu", "Replay")
     if (story.checkLastAnswer("Go Menu")) {
-        destroy1v1()
         doMenu()
+        destroy_multiplayer_sprites()
     } else {
-        destroy1v1()
+        sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+        destroy_multiplayer_sprites()
         TwoPlayersScreen()
     }
 }
@@ -991,6 +999,7 @@ function doMenu () {
     single_player_button.setPosition(130, 90)
 }
 function mapLevel () {
+    is_on_map_level = true
     showMinimap = false
     scene.setBackgroundColor(7)
     tiles.setCurrentTilemap(tilemap`level4`)
@@ -1363,6 +1372,7 @@ let mainName = ""
 let cursor: Sprite = null
 let escena_futbol: Sprite = null
 let player_1: Sprite = null
+let is_on_map_level = false
 let isPlayerLive = false
 doMenu()
 isPlayerLive = false
@@ -1384,6 +1394,7 @@ let miniMapa = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
+is_on_map_level = false
 game.onUpdate(function () {
     if (isTalking) {
         controller.moveSprite(player_1, 0, 0)
