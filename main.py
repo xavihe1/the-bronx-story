@@ -288,7 +288,9 @@ def on_left_pressed():
 controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
 
 def on_on_overlap2(sprite2, otherSprite2):
-    if otherSprite2 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite2:
+    global is_shoot_done
+    if otherSprite2 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite2 and not (is_shoot_done):
+        is_shoot_done = True
         sprites.destroy(otherSprite2, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
             . . . . . . . . . . . . . . . . 
@@ -315,7 +317,8 @@ def on_on_overlap2(sprite2, otherSprite2):
         story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
             "Aggh ffs")
         ask_wanna_play_again()
-    elif otherSprite2 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite2:
+    elif otherSprite2 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite2 and not (is_shoot_done):
+        is_shoot_done = True
         sprites.destroy(otherSprite2, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
             . . . . f . . . . . . . . . . . 
@@ -479,7 +482,8 @@ def on_down_pressed():
 controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
 
 def TwoPlayersScreen():
-    global canShoot, player_1_can_shoot, player_2_can_shoot, isDuel, randomTime
+    global is_shoot_done, canShoot, player_1_can_shoot, player_2_can_shoot, isDuel, randomTime
+    is_shoot_done = False
     canShoot = False
     player_1_can_shoot = False
     player_2_can_shoot = False
@@ -642,8 +646,10 @@ def TwoPlayersScreen():
 def ask_wanna_play_again():
     story.show_player_choices("Go Menu", "Replay")
     if story.check_last_answer("Go Menu"):
+        destroy1v1()
         doMenu()
     else:
+        destroy1v1()
         TwoPlayersScreen()
 
 def on_player1_button_a_pressed():
@@ -1406,6 +1412,7 @@ single_player_button: Sprite = None
 player_1_can_shoot = False
 textSprite: TextSprite = None
 player_1_bullet: Sprite = None
+is_shoot_done = False
 player_2_bullet: Sprite = None
 player_2_can_shoot = False
 showMinimap = False
