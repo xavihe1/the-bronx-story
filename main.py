@@ -6,10 +6,12 @@ class SpriteKind:
     losa = SpriteKind.create()
     Complete = SpriteKind.create()
     Building = SpriteKind.create()
+    Npc = SpriteKind.create()
+    drawable_map_npc = SpriteKind.create()
 
 def on_up_pressed():
-    if isPlayerLive:
-        animation.run_image_animation(player_1,
+    if isPlayerLive and not (isTalking):
+        animation.run_image_animation(main_character,
             [img("""
                     . . . . f f f f . . . . . 
                                 . . f f c c c c f f . . . 
@@ -192,10 +194,66 @@ def on_on_overlap(sprite, otherSprite):
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap)
 
 def on_b_pressed():
-    global showMinimap
+    global can_show_minimap, showMinimap, isTalking, myMinimap
     if is_on_map_level:
-        showMinimap = True
+        can_show_minimap = not (can_show_minimap)
+        if can_show_minimap:
+            showMinimap = True
+            isTalking = True
+            myMinimap = minimap.minimap(MinimapScale.EIGHTH, 2, 15)
+            minimap.include_sprite(myMinimap, main_character, MinimapSpriteScale.OCTUPLE)
+            minimap.include_sprite(myMinimap, npc_start, MinimapSpriteScale.QUADRUPLE)
+            if show_npc_football_map:
+                minimap.include_sprite(myMinimap, npc_football, MinimapSpriteScale.QUADRUPLE)
+            elif show_npc_building:
+                minimap.include_sprite(myMinimap, npc_building, MinimapSpriteScale.QUADRUPLE)
+            miniMapa.set_image(minimap.get_image(myMinimap))
+            miniMapa.set_position(scene.camera_property(CameraProperty.X),
+                scene.camera_property(CameraProperty.Y))
+            miniMapa.z = 999
+        else:
+            isTalking = False
+            miniMapa.set_image(img("""
+                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . .
+            """))
+            showMinimap = False
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
+
+def on_on_overlap2(sprite222, otherSprite222):
+    global isTalking
+    game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
+    isTalking = True
+    story.print_character_text("" + mainName + "!" + " They took it... They took everything from me!",
+        "Mom")
+    story.print_character_text("\"Who, Ma? What happened?\"", mainName)
+    story.print_character_text("\"That gang... Those thieves! They stormed in, took my jewelry, my savings... everything! You gotta do something!\"",
+        "Mom")
+    story.print_character_text("\"Don't worry, Ma. I'll find them. They won't get away with this.\"",
+        mainName)
+    story.show_player_choices("Get Out", "Stay")
+    if story.check_last_answer("Get Out"):
+        mom2.set_kind(SpriteKind.Complete)
+        isTalking = False
+        mapLevel()
+    elif story.check_last_answer("Stay"):
+        isTalking = False
+        pause(1000)
+sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap2)
 
 def on_player2_button_a_pressed():
     global player_2_bullet, player_2_can_shoot
@@ -227,8 +285,8 @@ controller.player2.on_button_event(ControllerButton.A,
     on_player2_button_a_pressed)
 
 def on_left_pressed():
-    if isPlayerLive:
-        animation.run_image_animation(player_1,
+    if isPlayerLive and not (isTalking):
+        animation.run_image_animation(main_character,
             [img("""
                     . . . . . f f f f f . . . 
                                 . . . f f f f f f f f f . 
@@ -287,11 +345,85 @@ def on_left_pressed():
             True)
 controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
 
-def on_on_overlap2(sprite2, otherSprite2):
+def instantiate_npcs():
+    global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start
+    npc_football = sprites.create(img("""
+            . . . . f f f f . . . . 
+                    . . f f e e e e f f . . 
+                    . f f e e e e e e f f . 
+                    f e e e 4 e e e e e f f 
+                    f e e 4 4 4 e e e e e f 
+                    f e e 4 4 4 4 e e e e e 
+                    f e e f f 4 4 f f e e e 
+                    f e 4 f d 4 4 f d 4 4 e 
+                    f e 4 4 4 4 4 4 4 4 e f 
+                    . f e 4 4 2 2 4 4 e f . 
+                    . f f e 4 4 4 4 e f f . 
+                    e 4 f 8 2 8 2 8 2 f 4 e 
+                    4 d f 8 2 8 2 5 2 f d 4 
+                    4 4 f 8 2 8 2 8 2 f 4 4 
+                    . . . f f f f f f . . . 
+                    . . . f f . . f f . . .
+        """),
+        SpriteKind.Npc)
+    show_npc_football_map = False
+    tiles.place_on_tile(npc_football, tiles.get_tile_location(39, 8))
+    npc_building = sprites.create(img("""
+            . . . . f f f f . . . . 
+                    . . f f f f f f f f . . 
+                    . f f f f f f f f f f . 
+                    f f f f f f f f f f f f 
+                    f f f e e e e e f f f f 
+                    f f e e e e e e e e f f 
+                    f e e f f e e f f e f f 
+                    f e e f d e e f d e f f 
+                    f e e e e e e e e e e f 
+                    . f e e e 2 2 e e e f . 
+                    . f f e e e e e e f f . 
+                    e e f f f e e 8 f f e e 
+                    e d f f f f 8 2 f f d e 
+                    e e f f f f 8 8 f f e e 
+                    . . . f f f f f f . . . 
+                    . . . f f . . f f . . .
+        """),
+        SpriteKind.Npc)
+    show_npc_building = False
+    tiles.place_on_tile(npc_building, tiles.get_tile_location(9, 46))
+    npc_start = sprites.create(img("""
+            . f f f . f f f f . f f f . 
+                    f f f f f c c c c f f f f f 
+                    f f f f b c c c c b f f f f 
+                    f f f c 3 c c c c 3 c f f f 
+                    . f 3 3 c c c c c c 3 3 f . 
+                    . f c c c c 4 4 c c c c f . 
+                    . f f c c 4 4 4 4 c c f f . 
+                    . f f f b f 4 4 f b f f f . 
+                    . f f 4 1 f d d f 1 4 f f . 
+                    . . f f d d d d d d f f . . 
+                    . . e f e 4 4 4 4 e f e . . 
+                    . e 4 f b 3 3 3 3 b f 4 e . 
+                    . 4 d f 3 3 3 3 3 3 c d 4 . 
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+                    . . . . f f f f f f . . . . 
+                    . . . . f f . . f f . . . .
+        """),
+        SpriteKind.Npc)
+    tiles.place_on_tile(npc_start, tiles.get_tile_location(6, 7))
+
+def on_countdown_end():
+    global textSprite, player_1_can_shoot, player_2_can_shoot
+    textSprite = textsprite.create("YA", 15, 2)
+    textSprite.set_scale(4, ScaleAnchor.MIDDLE)
+    textSprite.set_position(80, 31)
+    player_1_can_shoot = True
+    player_2_can_shoot = True
+info.on_countdown_end(on_countdown_end)
+
+def on_on_overlap3(sprite22, otherSprite22):
     global is_shoot_done
-    if otherSprite2 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite2 and not (is_shoot_done):
+    if otherSprite22 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite22 and not (is_shoot_done):
         is_shoot_done = True
-        sprites.destroy(otherSprite2, effects.fire, 500)
+        sprites.destroy(otherSprite22, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
             . . . . . . . . . . . . . . . . 
                         . . . . 2 2 2 2 2 . f f f . . . 
@@ -317,9 +449,9 @@ def on_on_overlap2(sprite2, otherSprite2):
         story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
             "Aggh ffs")
         ask_wanna_play_again()
-    elif otherSprite2 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite2 and not (is_shoot_done):
+    elif otherSprite22 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite22 and not (is_shoot_done):
         is_shoot_done = True
-        sprites.destroy(otherSprite2, effects.fire, 500)
+        sprites.destroy(otherSprite22, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
             . . . . f . . . . . . . . . . . 
                         . . . . f . . . . 2 2 2 2 . . . 
@@ -343,20 +475,11 @@ def on_on_overlap2(sprite2, otherSprite2):
         story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
             "Aggh ffs")
         ask_wanna_play_again()
-sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap2)
-
-def on_countdown_end():
-    global textSprite, player_1_can_shoot, player_2_can_shoot
-    textSprite = textsprite.create("YA", 15, 2)
-    textSprite.set_scale(4, ScaleAnchor.MIDDLE)
-    textSprite.set_position(80, 31)
-    player_1_can_shoot = True
-    player_2_can_shoot = True
-info.on_countdown_end(on_countdown_end)
+sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap3)
 
 def on_right_pressed():
-    if isPlayerLive:
-        animation.run_image_animation(player_1,
+    if isPlayerLive and not (isTalking):
+        animation.run_image_animation(main_character,
             [img("""
                     . . . . . . . . . . . . . 
                                 . . . f f f f f f . . . . 
@@ -415,14 +538,41 @@ def on_right_pressed():
             True)
 controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
 
+def on_on_overlap4(sprite2, otherSprite2):
+    global isTalking, show_npc_football_map
+    if not (showMinimap) and is_on_map_level:
+        main_character.say_text("A to Talk", 500, False)
+        if not (showMinimap) and controller.A.is_pressed():
+            isTalking = True
+            if otherSprite2 == npc_start and not (showMinimap):
+                story.print_character_text("Hola, sé lo que ha pasado con tu madre...", "Emily")
+                story.print_character_text("Vi a unos chavales con camisetas de futbol", "Emily")
+                story.print_character_text("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?",
+                    mainName)
+                story.print_character_text("Uno debería de estar en el campo de futbol con una Camiseta del Farça, no me gusta mucho ese equipo pero menos me gusta ese mezquino",
+                    "Emily")
+                story.print_character_text("De verdad, te lo agradezco", mainName)
+                story.print_character_text("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres",
+                    "Emily")
+                show_npc_football_map = True
+                story.print_dialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
+            elif otherSprite2 == npc_football and not (showMinimap):
+                story.print_character_text("¡¡Eres uno de los que irrumpió y robo a mi madre!!",
+                    mainName)
+                story.print_character_text("Que hablas, yo estoy del chill jugando fuchibol", "Pedro")
+                story.print_character_text("No te hagas el tonto y devuélvelo!!", mainName)
+                escena_campo_futbol()
+            isTalking = False
+sprites.on_overlap(SpriteKind.player, SpriteKind.Npc, on_on_overlap4)
+
 def storyModeDestroy():
     sprites.destroy(cursor)
     sprites.destroy(single_player_button)
     sprites.destroy(two_players_button)
 
 def on_down_pressed():
-    if isPlayerLive:
-        animation.run_image_animation(player_1,
+    if isPlayerLive and not (isTalking):
+        animation.run_image_animation(main_character,
             [img("""
                     . . . . f f f f . . . . . 
                                 . . f f f f f f f f . . . 
@@ -811,7 +961,7 @@ def storyMode():
     tiles.set_current_tilemap(tilemap("""
         level2
     """))
-    tiles.place_on_tile(player_1, tiles.get_tile_location(7, 12))
+    tiles.place_on_tile(main_character, tiles.get_tile_location(7, 12))
     mom2 = sprites.create(img("""
             . . . . . . . f f . . . . . . . 
                     . . . . . f f 3 3 f f . . . . . 
@@ -1027,7 +1177,9 @@ def doMenu():
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
 def mapLevel():
-    global is_on_map_level, showMinimap, tienda, edificio
+    global can_show_minimap, can_talk, is_on_map_level, showMinimap, tienda, edificio
+    can_show_minimap = False
+    can_talk = True
     is_on_map_level = True
     showMinimap = False
     scene.set_background_color(7)
@@ -1246,12 +1398,13 @@ def mapLevel():
                     ddddddddddddddddddddddddddeeeeedddddddddddddddddddddddddd.
         """),
         SpriteKind.Building)
-    tiles.place_on_tile(player_1, tiles.get_tile_location(1, 9))
-    scene.camera_follow_sprite(player_1)
+    tiles.place_on_tile(main_character, tiles.get_tile_location(1, 9))
+    scene.camera_follow_sprite(main_character)
+    instantiate_npcs()
 def createPlayer():
-    global isPlayerLive, player_1
+    global isPlayerLive, main_character
     isPlayerLive = True
-    player_1 = sprites.create(img("""
+    main_character = sprites.create(img("""
             . . . . f f f f . . . . . 
                     . . f f f f f f f f . . . 
                     . f f f f f f c f f f . . 
@@ -1270,9 +1423,9 @@ def createPlayer():
                     . . . f f . . f f . . . .
         """),
         SpriteKind.player)
-    player_1.z = 100
-    controller.move_sprite(player_1)
-    scene.camera_follow_sprite(player_1)
+    main_character.z = 100
+    controller.move_sprite(main_character)
+    scene.camera_follow_sprite(main_character)
 def escena_fabrica():
     global fabrica
     fabrica = sprites.create(img("""
@@ -1366,61 +1519,47 @@ def destroy1v1():
     info.stop_countdown()
     sprites.destroy(textSprite)
 
-def on_on_overlap3(sprite3, otherSprite3):
+def on_on_overlap5(sprite3, otherSprite3):
     cursor.say_text("Press A to play")
     if controller.A.is_pressed():
         TwoPlayersScreen()
 sprites.on_overlap(SpriteKind.player,
     SpriteKind.twoPlayersButton,
-    on_on_overlap3)
-
-def on_on_overlap4(sprite22, otherSprite22):
-    global isTalking
-    game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
-    isTalking = True
-    story.print_character_text("" + mainName + "!" + " They took it... They took everything from me!",
-        "Mom")
-    story.print_character_text("\"Who, Ma? What happened?\"", mainName)
-    story.print_character_text("\"That gang... Those thieves! They stormed in, took my jewelry, my savings... everything! You gotta do something!\"",
-        "Mom")
-    story.print_character_text("\"Don't worry, Ma. I'll find them. They won't get away with this.\"",
-        mainName)
-    story.show_player_choices("Get Out", "Stay")
-    if story.check_last_answer("Get Out"):
-        mom2.set_kind(SpriteKind.Complete)
-        isTalking = False
-        mapLevel()
-    elif story.check_last_answer("Stay"):
-        isTalking = False
-        pause(1000)
-sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap4)
+    on_on_overlap5)
 
 def destroyLevelOne():
     sprites.destroy(mom2)
-exit_hint: TextSprite = None
-myMinimap: minimap.Minimap = None
 fabrica: Sprite = None
 edificio: Sprite = None
 tienda: Sprite = None
-isTalking = False
-mom2: Sprite = None
+can_talk = False
 randomTime = 0
 isDuel = False
 canShoot = False
 two_players_button: Sprite = None
 single_player_button: Sprite = None
-player_1_can_shoot = False
-textSprite: TextSprite = None
 player_1_bullet: Sprite = None
 is_shoot_done = False
+player_1_can_shoot = False
+textSprite: TextSprite = None
 player_2_bullet: Sprite = None
 player_2_can_shoot = False
+mom2: Sprite = None
+npc_building: Sprite = None
+npc_football: Sprite = None
+show_npc_building = False
+show_npc_football_map = False
+npc_start: Sprite = None
+myMinimap: minimap.Minimap = None
 showMinimap = False
+can_show_minimap = False
 mainName = ""
 cursor: Sprite = None
 escena_futbol: Sprite = None
-player_1: Sprite = None
+main_character: Sprite = None
+isTalking = False
 is_on_map_level = False
+miniMapa: Sprite = None
 isPlayerLive = False
 doMenu()
 isPlayerLive = False
@@ -1447,43 +1586,7 @@ is_on_map_level = False
 
 def on_on_update():
     if isTalking:
-        controller.move_sprite(player_1, 0, 0)
+        controller.move_sprite(main_character, 0, 0)
     else:
-        controller.move_sprite(player_1, 100, 100)
+        controller.move_sprite(main_character, 100, 100)
 game.on_update(on_on_update)
-
-def on_update_interval():
-    global isTalking, myMinimap, exit_hint, showMinimap
-    if showMinimap:
-        isTalking = True
-        myMinimap = minimap.minimap(MinimapScale.EIGHTH, 2, 15)
-        minimap.include_sprite(myMinimap, player_1, MinimapSpriteScale.OCTUPLE)
-        miniMapa.set_image(minimap.get_image(myMinimap))
-        miniMapa.set_position(scene.camera_property(CameraProperty.X),
-            scene.camera_property(CameraProperty.Y))
-        miniMapa.z = 1000
-        exit_hint = textsprite.create("Press A to exit")
-        exit_hint.set_position(scene.camera_property(CameraProperty.LEFT),
-            scene.camera_property(CameraProperty.TOP))
-        if controller.A.is_pressed():
-            isTalking = False
-            miniMapa.set_image(img("""
-                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . .
-            """))
-            showMinimap = False
-game.on_update_interval(100, on_update_interval)
