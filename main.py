@@ -6,9 +6,6 @@ class SpriteKind:
     losa = SpriteKind.create()
     Complete = SpriteKind.create()
     Building = SpriteKind.create()
-def destroy_multiplayer_sprites():
-    for value in mp.all_players():
-        pass
 
 def on_up_pressed():
     if isPlayerLive:
@@ -646,10 +643,7 @@ def ask_wanna_play_again():
     story.show_player_choices("Go Menu", "Replay")
     if story.check_last_answer("Go Menu"):
         doMenu()
-        destroy_multiplayer_sprites()
     else:
-        sprites.destroy_all_sprites_of_kind(SpriteKind.player)
-        destroy_multiplayer_sprites()
         TwoPlayersScreen()
 
 def on_player1_button_a_pressed():

@@ -6,11 +6,6 @@ namespace SpriteKind {
     export const Complete = SpriteKind.create()
     export const Building = SpriteKind.create()
 }
-function destroy_multiplayer_sprites () {
-    for (let value of mp.allPlayers()) {
-    	
-    }
-}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isPlayerLive) {
         animation.runImageAnimation(
@@ -628,11 +623,10 @@ function TwoPlayersScreen () {
 function ask_wanna_play_again () {
     story.showPlayerChoices("Go Menu", "Replay")
     if (story.checkLastAnswer("Go Menu")) {
+        destroy1v1()
         doMenu()
-        destroy_multiplayer_sprites()
     } else {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Player)
-        destroy_multiplayer_sprites()
+        destroy1v1()
         TwoPlayersScreen()
     }
 }
