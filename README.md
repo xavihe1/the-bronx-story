@@ -7,7 +7,7 @@ En la segona part tenim un mode història on haurem d'ajudar a la nostre mare a 
 ## Integrants de l'equp
 * Sergi Herrador
 * Xavi Heredia
-* </br>
+</br>
 
 ## Link per a jugar
 > Abra esta pagina en [https://xavihe1.github.io/the-bronx-story/](https://xavihe1.github.io/the-bronx-story/)
