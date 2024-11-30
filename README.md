@@ -1,5 +1,11 @@
- 
+## Le Bronx
+Aquest proecte tracta d'un joc arcade fet amb makecode arcade, on podrem escollir entre dues opcions. </br> 
+En la primera, podrem jugar en multijugador a un joc on, quan acabi el temps enrere, el que dispari primer guanya.</br>
+En la segona part tenim un mode història on haurem d'ajudar a la nostre mare a recuperar els objectes que li han robat.
 
+## Integrants de l'equp
+* Sergi Herrador
+* Xavi Heredia
 
 > Abra esta pagina en [https://xavihe1.github.io/the-bronx-story/](https://xavihe1.github.io/the-bronx-story/)
 
