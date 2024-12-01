@@ -9,9 +9,11 @@ class SpriteKind:
     Npc = SpriteKind.create()
     drawable_map_npc = SpriteKind.create()
     npc_duel = SpriteKind.create()
+    final_mom = SpriteKind.create()
+    marker = SpriteKind.create()
 
 def on_on_overlap(sprite22, otherSprite22):
-    global is_shoot_done, is_player_talking, show_npc_building
+    global is_shoot_done, is_player_talking, show_npc_building, show_enemy_guard
     # Si el sprite de tipo bala es la bala del otro jugador y el sprite con el que colisiona es el del primer jugador entonces gana el segundo jugador else el otro
     if otherSprite22 == main_character_bullet and npc_football == sprite22 and not (is_shoot_done):
         is_shoot_done = True
@@ -32,16 +34,18 @@ def on_on_overlap(sprite22, otherSprite22):
         """))
         npc_football.set_kind(SpriteKind.Complete)
         game.splash("You win")
-        story.print_character_text("Ahora dime donde encontrar a vuestra gente", mainName)
+        story.print_character_text("Ahora dime donde encontrar a vuestra gente",
+            main_character_name)
         story.print_character_text("Vale, vale... pero no me hagas daño. Si me llevas a un hospital, te diré dónde están los demás.",
             "Pedro")
-        story.print_character_text("Trato hecho. Ahora, habla.", mainName)
+        story.print_character_text("Trato hecho. Ahora, habla.", main_character_name)
         story.print_character_text("Están en la parte más peligrosa de la ciudad. Aquí, te lo dibujo en el mapa.",
             "Pedro")
         pause(1000)
         story.sprite_say_text(npc_football, "X.X")
         is_player_talking = False
         show_npc_building = True
+        destroy1v1()
         mapLevel()
         story.print_dialog("Tienes dibujado al siguiente rival en el mapa",
             80,
@@ -71,7 +75,9 @@ def on_on_overlap(sprite22, otherSprite22):
         pause(1000)
         story.sprite_say_text(npc_building, "Aggh ffs")
         is_player_talking = False
+        show_enemy_guard = True
         show_npc_building = True
+        destroy1v1()
         mapLevel()
         story.print_dialog("Has enviado un mensaje a tu madre de donde tienen las cosas, aparte lo tienes en el mapa",
             80,
@@ -143,14 +149,21 @@ def on_up_pressed():
         animation.stop_animation(animation.AnimationTypes.ALL, main_character)
 controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
 
+def on_overlap_tile(sprite4, location):
+    if has_completed_mbappez:
+        final_level()
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.stair_south,
+    on_overlap_tile)
+
 def on_on_overlap2(sprite, otherSprite):
-    global mainName
-    cursor.say_text("Press A to play")
+    global main_character_name
+    cursor.say_text("A para jugar")
     if controller.A.is_pressed():
-        if mainName.is_empty() or mainName == "undefined":
-            mainName = game.ask_for_string("Username", 7)
-            if mainName.is_empty() or mainName == "":
-                mainName = "Kyrie"
+        if main_character_name.is_empty() or main_character_name == "undefined":
+            main_character_name = game.ask_for_string("Username", 7)
+            if main_character_name.is_empty() or main_character_name == "":
+                main_character_name = "Kyrie"
         storyMode()
 sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap2)
 
@@ -168,6 +181,8 @@ def on_b_pressed():
                 minimap.include_sprite(myMinimap, npc_football, MinimapSpriteScale.QUADRUPLE)
             if show_npc_building:
                 minimap.include_sprite(myMinimap, npc_building, MinimapSpriteScale.QUADRUPLE)
+            if show_enemy_guard:
+                minimap.include_sprite(myMinimap, enemy_guard, MinimapSpriteScale.QUADRUPLE)
             miniMapa.set_image(minimap.get_image(myMinimap))
             miniMapa.set_position(scene.camera_property(CameraProperty.X),
                 scene.camera_property(CameraProperty.Y))
@@ -195,21 +210,73 @@ def on_b_pressed():
             showMinimap = False
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
+def final_level():
+    global final_mom_sprite, final_emily_sprite
+    sprites.destroy(textSprite)
+    sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
+    # Crear sprites de la madre y Emily
+    final_mom_sprite = sprites.create(img("""
+            . . . . . . . f f . . . . . . . 
+                    . . . . . f f 3 3 f f . . . . . 
+                    . . . . f 3 3 3 3 3 3 f . . . . 
+                    . . . f 5 5 3 3 3 3 5 3 f . . . 
+                    . . f 3 3 5 3 3 3 5 5 3 3 f . . 
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
+                    . f 3 3 f f e e e e f f 3 3 f . 
+                    f f 3 3 f b f e e f b f 3 3 f f 
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
+                    . f 3 3 f e e e e e e e 3 3 f . 
+                    . . f e f 5 5 d d d 5 5 e f . . 
+                    . . 5 e c d 5 9 9 9 5 d e 5 . . 
+                    . . e f b d d d 9 d d d f e . . 
+                    . . . f f 1 d d 1 d 1 f f . . . 
+                    . . . . . f f f f f f . . . . .
+        """),
+        SpriteKind.Npc)
+    final_emily_sprite = sprites.create(img("""
+            . f f f . f f f f . f f f . 
+                    f f f f f c 5 5 5 f f f f f 
+                    f f f f b c c c c b 5 5 f f 
+                    f f 5 5 3 c c c c 3 c 5 f f 
+                    . f 3 3 c c c c c c 3 3 f . 
+                    . f c c c c 4 4 c c c c f . 
+                    . f f c c 4 4 4 4 c c f f . 
+                    . f f f b f 4 4 f b f f f . 
+                    . f f 4 1 f d d f 1 4 f f . 
+                    . . f f d d d d d d f f . . 
+                    . . e f f f 4 4 f f f e . . 
+                    . e 4 f b f 5 5 f b f 4 e . 
+                    . 5 d f 3 3 5 5 3 3 c d 5 . 
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+                    . . . . f f f f f f . . . . 
+                    . . . . f f . . f f . . . .
+        """),
+        SpriteKind.Npc)
+    # Configurar el mapa y ubicar los sprites
+    tiles.set_current_tilemap(tilemap("""
+        nivel2
+    """))
+    tiles.place_on_tile(main_character, tiles.get_tile_location(11, 14))
+    tiles.place_on_tile(final_mom_sprite, tiles.get_tile_location(6, 3))
+    tiles.place_on_tile(final_emily_sprite, tiles.get_tile_location(9, 3))
+
 def on_on_overlap3(sprite222, otherSprite222):
-    global is_player_talking
-    game.show_long_text("Talk with mom", DialogLayout.BOTTOM)
+    global is_player_talking, show_enemy_guard
+    game.show_long_text("Hablar con mamá", DialogLayout.BOTTOM)
     is_player_talking = True
-    story.print_character_text("" + mainName + "!" + " Se lo llevaron... ¡Se llevaron todo!",
-        "Mom")
-    story.print_character_text("¿Quién, mamá? ¿Qué pasó?", mainName)
+    story.print_character_text("" + main_character_name + "!" + " Se lo llevaron... ¡Se llevaron todo!",
+        "Mamá")
+    story.print_character_text("¿Quién, mamá? ¿Qué pasó?", main_character_name)
     story.print_character_text("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!",
-        "Mom")
+        "Mamá")
     story.print_character_text("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.",
-        mainName)
+        main_character_name)
     story.show_player_choices("Salir", "Quedarse")
     if story.check_last_answer("Salir"):
         mom2.set_kind(SpriteKind.Complete)
         is_player_talking = False
+        show_enemy_guard = False
         mapLevel()
     elif story.check_last_answer("Quedarse"):
         is_player_talking = False
@@ -309,7 +376,7 @@ def on_left_pressed():
 controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
 
 def instantiate_npcs():
-    global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start
+    global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start, enemy_guard
     if npc_football == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_football == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
         npc_football = sprites.create(img("""
                 . . . . f f f f . . . . 
@@ -428,6 +495,27 @@ def instantiate_npcs():
         """),
         SpriteKind.Npc)
     tiles.place_on_tile(npc_start, tiles.get_tile_location(6, 7))
+    if show_enemy_guard:
+        enemy_guard = sprites.create(img("""
+                . . . f 2 2 2 2 2 2 2 2 f . . . 
+                            . f f 2 2 2 2 2 2 2 2 2 2 f f . 
+                            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f 
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+                            f 2 2 2 2 2 f f f f 2 2 2 2 2 f 
+                            f f 2 2 2 2 2 2 2 2 2 2 2 f f . 
+                            . f f 2 2 2 2 2 2 2 2 2 f f . . 
+                            . . f f 2 2 2 2 2 2 2 f f . . . 
+                            . . . f f 2 2 2 2 2 f f . . . . 
+                            . . . . f 2 2 2 2 2 f . . . . . 
+                            . . . . . f 2 2 2 f . . . . . . 
+                            . . . . . . f 2 f . . . . . . .
+            """),
+            SpriteKind.marker)
+        tiles.place_on_tile(enemy_guard, tiles.get_tile_location(57, 58))
 
 def on_countdown_end():
     global textSprite, can_main_character_shoot, npc_can_shoot, player_1_can_shoot, player_2_can_shoot
@@ -507,50 +595,74 @@ controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
 def on_on_overlap4(sprite2, otherSprite2):
     global is_player_talking, show_npc_football_map, prev_location_of_main_character, has_prev_location, has_completed_football, has_completed_mbappez
     if not (showMinimap) and is_on_map_level:
-        main_character.say_text("A to Talk", 500, False)
+        main_character.say_text("A para hablar", 500, False)
         if not (showMinimap) and controller.A.is_pressed():
             is_player_talking = True
             if otherSprite2 == npc_start and not (showMinimap):
                 story.print_character_text("Hola, sé lo que ha pasado con tu madre...", "Emily")
                 story.print_character_text("Vi a unos chavales con camisetas de futbol", "Emily")
                 story.print_character_text("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?",
-                    mainName)
-                story.print_character_text("Uno debería de estar en el campo de futbol con una Camiseta del Farça, no me gusta mucho ese equipo pero menos me gusta ese mezquino",
+                    main_character_name)
+                story.print_character_text("Uno debería de estar en el campo de futbol con una Camiseta del Barcelona.",
                     "Emily")
-                story.print_character_text("De verdad, te lo agradezco", mainName)
+                story.print_character_text("De verdad, te lo agradezco", main_character_name)
                 story.print_character_text("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres",
                     "Emily")
                 show_npc_football_map = True
                 story.print_dialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
                 is_player_talking = False
             elif otherSprite2 == npc_football and not (showMinimap):
-                story.print_character_text("¡Eres uno de los que irrumpió y robó a mi madre!", mainName)
+                story.print_character_text("¡Eres uno de los que irrumpió y robó a mi madre!",
+                    main_character_name)
                 story.print_character_text("¿De qué hablas? Yo estoy tranquilo aquí jugando al fútbol.",
                     "Pedro")
                 story.print_character_text("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!",
-                    mainName)
+                    main_character_name)
                 prev_location_of_main_character = main_character.tilemap_location()
                 has_prev_location = True
                 has_completed_football = True
                 npc_duel2(npc_football)
             elif otherSprite2 == npc_building and not (showMinimap) and has_completed_football:
-                story.print_character_text("¡Tú! ¡No te escondas, sé que estás con ellos!", mainName)
+                story.print_character_text("¡Tú! ¡No te escondas, sé que estás con ellos!",
+                    main_character_name)
                 story.print_character_text("¿Qué? ¡No tengo idea de lo que hablas! Yo solo estoy de paso.",
                     "Mbappez")
                 story.print_character_text("No me tomes por tonto. ¿Dónde está guardáis lo que robáis?",
-                    mainName)
+                    main_character_name)
                 story.print_character_text(" ¿Robar? Nosotros no robamos, somos un equipo de fútbol humilde... Bueno, con algo de talento.",
                     "Mbappez")
                 story.print_character_text("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?",
-                    mainName)
+                    main_character_name)
                 story.print_character_text("¡Ah! Bueno, quizás haya... algo de información ahí, pero no es lo que crees.",
                     "Mbappez")
                 prev_location_of_main_character = main_character.tilemap_location()
                 has_prev_location = True
                 has_completed_mbappez = True
                 npc_duel2(npc_building)
+            elif otherSprite2 == final_mom_sprite and not (showMinimap):
+                story.print_character_text("¡Mamá, estoy aquí! ¿Estás bien?", main_character_name)
+                story.print_character_text("Oh, hijo... Estoy perfectamente. Mejor de lo que crees.",
+                    "Mamá")
+                story.print_character_text("¿Qué? Pero esos chicos... ¿Dónde están los ladrones?",
+                    main_character_name)
+                story.print_character_text("Fui yo. Todo esto lo planeé para quitarles lo poco que tenían. Pagué a Emily para que te diera esa información",
+                    "Mamá")
+                story.print_character_text("...", main_character_name)
+                story.print_character_text("¡¿Qué estás diciendo?! ¡Mamá, ellos no hicieron nada!",
+                    main_character_name)
+                story.print_character_text("Ellos no importan. Nosotros necesitábamos el dinero, y ahora lo tenemos.",
+                    "Mamá")
+                story.print_character_text("Lo hice por ti. Por nosotros.", "Mamá")
+                story.print_character_text("¡Entonces he dañado a esos pobres chavales para nada!",
+                    main_character_name)
+                story.print_character_text("Si dices algo, me perderás a mí también. ¿Estás dispuesto a tomar ese riesgo?",
+                    "Mamá")
+                carnival.custom_game_over_expanded("Terminaste el juego!",
+                    effects.confetti,
+                    music.big_crash,
+                    carnival.ScoreTypes.NONE)
             else:
-                story.print_dialog("No peudes hablar con el/ella ahora", 80, 90, 50, 150)
+                story.print_dialog("No puedes hablar con el/ella ahora", 80, 90, 50, 150)
                 is_player_talking = False
 sprites.on_overlap(SpriteKind.player, SpriteKind.Npc, on_on_overlap4)
 
@@ -849,6 +961,30 @@ def on_on_overlap5(sprite223, otherSprite223):
         story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
             "Aggh ffs")
         ask_wanna_play_again()
+    elif otherSprite223 == npc_bullet and main_character == sprite223 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        main_character.set_image(img("""
+            . . . . . . . . . . . 2 2 . . 2 
+                        . 2 2 2 2 2 2 2 2 2 2 . . 2 2 . 
+                        2 2 2 2 2 2 f f f 2 2 2 2 . . 2 
+                        2 2 2 f f c f f f f 2 2 2 f f 2 
+                        2 2 2 2 f c f f f f f f f f f f 
+                        2 2 f f c f f e e 4 4 f e e f f 
+                        2 f f c f f e e e 4 4 4 f e f f 
+                        2 f 2 2 f f f f f f 4 4 e e f 2 
+                        2 f 2 2 f c f f b 1 4 4 e e f 2 
+                        2 2 f 2 2 c f f f e e e e f f 2 
+                        . 2 2 2 f f f f e 4 f 4 4 e f f 
+                        . 2 2 f f f c f e e f 4 4 e f f 
+                        2 2 2 f f c c f f f f 4 e f f 2 
+                        2 . 2 2 f f f f f f 2 2 2 2 2 2 
+                        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+                        . . . 2 2 2 2 2 2 2 2 2 . . . .
+        """))
+        story.sprite_say_text(main_character, "X.X")
+        pause(1000)
+        carnival.on_game_over_expanded(carnival.WinTypes.LOSE)
 sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap5)
 
 def on_player1_button_a_pressed():
@@ -1777,7 +1913,7 @@ def destroy1v1():
     sprites.destroy(textSprite)
 
 def on_on_overlap6(sprite3, otherSprite3):
-    cursor.say_text("Press A to play")
+    cursor.say_text("A para jugar")
     if controller.A.is_pressed():
         TwoPlayersScreen()
 sprites.on_overlap(SpriteKind.player,
@@ -1788,17 +1924,16 @@ def destroyLevelOne():
     tiles.destroy_sprites_of_kind(SpriteKind.mom)
     tiles.destroy_sprites_of_kind(SpriteKind.Building)
     tiles.destroy_sprites_of_kind(SpriteKind.Complete)
-npc_bullet: Sprite = None
 fabrica: Sprite = None
 npc_dueling: Sprite = None
 can_talk = False
+npc_bullet: Sprite = None
 player_1_bullet: Sprite = None
 randomTime = 0
 isDuel = False
 canShoot = False
 two_players_button: Sprite = None
 single_player_button: Sprite = None
-has_completed_mbappez = False
 has_prev_location = False
 prev_location_of_main_character: tiles.Location = None
 has_completed_football = False
@@ -1806,10 +1941,13 @@ player_1_can_shoot = False
 npc_can_shoot = False
 can_main_character_shoot = False
 is_npc_duel = False
-textSprite: TextSprite = None
 player_2_bullet: Sprite = None
 player_2_can_shoot = False
 mom2: Sprite = None
+final_emily_sprite: Sprite = None
+final_mom_sprite: Sprite = None
+textSprite: TextSprite = None
+enemy_guard: Sprite = None
 show_npc_football_map = False
 npc_start: Sprite = None
 myMinimap: minimap.Minimap = None
@@ -1817,10 +1955,12 @@ is_map_showing = False
 showMinimap = False
 can_show_minimap = False
 cursor: Sprite = None
+has_completed_mbappez = False
 main_character: Sprite = None
+show_enemy_guard = False
 show_npc_building = False
 is_player_talking = False
-mainName = ""
+main_character_name = ""
 npc_building: Sprite = None
 is_shoot_done = False
 npc_football: Sprite = None
@@ -1853,6 +1993,7 @@ is_on_map_level = False
 
 def on_on_update():
     if is_player_talking or is_map_showing:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
         controller.move_sprite(main_character, 0, 0)
     else:
         controller.move_sprite(main_character, 100, 100)

@@ -8,6 +8,8 @@ namespace SpriteKind {
     export const Npc = SpriteKind.create()
     export const drawable_map_npc = SpriteKind.create()
     export const npc_duel = SpriteKind.create()
+    export const final_mom = SpriteKind.create()
+    export const marker = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.npc_duel, SpriteKind.Projectile, function (sprite22, otherSprite22) {
     // Si el sprite de tipo bala es la bala del otro jugador y el sprite con el que colisiona es el del primer jugador entonces gana el segundo jugador else el otro
@@ -30,14 +32,15 @@ sprites.onOverlap(SpriteKind.npc_duel, SpriteKind.Projectile, function (sprite22
             `)
         npc_football.setKind(SpriteKind.Complete)
         game.splash("You win")
-        story.printCharacterText("Ahora dime donde encontrar a vuestra gente", mainName)
+        story.printCharacterText("Ahora dime donde encontrar a vuestra gente", main_character_name)
         story.printCharacterText("Vale, vale... pero no me hagas daño. Si me llevas a un hospital, te diré dónde están los demás.", "Pedro")
-        story.printCharacterText("Trato hecho. Ahora, habla.", mainName)
+        story.printCharacterText("Trato hecho. Ahora, habla.", main_character_name)
         story.printCharacterText("Están en la parte más peligrosa de la ciudad. Aquí, te lo dibujo en el mapa.", "Pedro")
         pause(1000)
         story.spriteSayText(npc_football, "X.X")
         is_player_talking = false
         show_npc_building = true
+        destroy1v1()
         mapLevel()
         story.printDialog("Tienes dibujado al siguiente rival en el mapa", 80, 90, 50, 150)
     } else if (otherSprite22 == main_character_bullet && npc_building == sprite22 && !(is_shoot_done)) {
@@ -63,7 +66,9 @@ sprites.onOverlap(SpriteKind.npc_duel, SpriteKind.Projectile, function (sprite22
         pause(1000)
         story.spriteSayText(npc_building, "Aggh ffs")
         is_player_talking = false
+        show_enemy_guard = true
         show_npc_building = true
+        destroy1v1()
         mapLevel()
         story.printDialog("Has enviado un mensaje a tu madre de donde tienen las cosas, aparte lo tienes en el mapa", 80, 90, 50, 150)
     }
@@ -131,13 +136,18 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         animation.stopAnimation(animation.AnimationTypes.All, main_character)
     }
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairSouth, function (sprite4, location) {
+    if (has_completed_mbappez) {
+        final_level()
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.storyButton, function (sprite, otherSprite) {
-    cursor.sayText("Press A to play")
+    cursor.sayText("A para jugar")
     if (controller.A.isPressed()) {
-        if (mainName.isEmpty() || mainName == "undefined") {
-            mainName = game.askForString("Username", 7)
-            if (mainName.isEmpty() || mainName == "") {
-                mainName = "Kyrie"
+        if (main_character_name.isEmpty() || main_character_name == "undefined") {
+            main_character_name = game.askForString("Username", 7)
+            if (main_character_name.isEmpty() || main_character_name == "") {
+                main_character_name = "Kyrie"
             }
         }
         storyMode()
@@ -157,6 +167,9 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             }
             if (show_npc_building) {
                 minimap.includeSprite(myMinimap, npc_building, MinimapSpriteScale.Quadruple)
+            }
+            if (show_enemy_guard) {
+                minimap.includeSprite(myMinimap, enemy_guard, MinimapSpriteScale.Quadruple)
             }
             miniMapa.setImage(minimap.getImage(myMinimap))
             miniMapa.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
@@ -185,17 +198,65 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+function final_level () {
+    sprites.destroy(textSprite)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Npc)
+    scene.setBackgroundColor(13)
+    // Crear sprites de la madre y Emily
+    final_mom_sprite = sprites.create(img`
+        . . . . . . . f f . . . . . . . 
+        . . . . . f f 3 3 f f . . . . . 
+        . . . . f 3 3 3 3 3 3 f . . . . 
+        . . . f 5 5 3 3 3 3 5 3 f . . . 
+        . . f 3 3 5 3 3 3 5 5 3 3 f . . 
+        . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
+        . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
+        . f 3 3 f f e e e e f f 3 3 f . 
+        f f 3 3 f b f e e f b f 3 3 f f 
+        f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
+        . f 3 3 f e e e e e e e 3 3 f . 
+        . . f e f 5 5 d d d 5 5 e f . . 
+        . . 5 e c d 5 9 9 9 5 d e 5 . . 
+        . . e f b d d d 9 d d d f e . . 
+        . . . f f 1 d d 1 d 1 f f . . . 
+        . . . . . f f f f f f . . . . . 
+        `, SpriteKind.Npc)
+    final_emily_sprite = sprites.create(img`
+        . f f f . f f f f . f f f . 
+        f f f f f c 5 5 5 f f f f f 
+        f f f f b c c c c b 5 5 f f 
+        f f 5 5 3 c c c c 3 c 5 f f 
+        . f 3 3 c c c c c c 3 3 f . 
+        . f c c c c 4 4 c c c c f . 
+        . f f c c 4 4 4 4 c c f f . 
+        . f f f b f 4 4 f b f f f . 
+        . f f 4 1 f d d f 1 4 f f . 
+        . . f f d d d d d d f f . . 
+        . . e f f f 4 4 f f f e . . 
+        . e 4 f b f 5 5 f b f 4 e . 
+        . 5 d f 3 3 5 5 3 3 c d 5 . 
+        . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+        . . . . f f f f f f . . . . 
+        . . . . f f . . f f . . . . 
+        `, SpriteKind.Npc)
+    // Configurar el mapa y ubicar los sprites
+    tiles.setCurrentTilemap(tilemap`nivel2`)
+    tiles.placeOnTile(main_character, tiles.getTileLocation(11, 14))
+    tiles.placeOnTile(final_mom_sprite, tiles.getTileLocation(6, 3))
+    tiles.placeOnTile(final_emily_sprite, tiles.getTileLocation(9, 3))
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite222, otherSprite222) {
-    game.showLongText("Talk with mom", DialogLayout.Bottom)
+    game.showLongText("Hablar con mamá", DialogLayout.Bottom)
     is_player_talking = true
-    story.printCharacterText("" + mainName + "!" + " Se lo llevaron... ¡Se llevaron todo!", "Mom")
-    story.printCharacterText("¿Quién, mamá? ¿Qué pasó?", mainName)
-    story.printCharacterText("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!", "Mom")
-    story.printCharacterText("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.", mainName)
+    story.printCharacterText("" + main_character_name + "!" + " Se lo llevaron... ¡Se llevaron todo!", "Mamá")
+    story.printCharacterText("¿Quién, mamá? ¿Qué pasó?", main_character_name)
+    story.printCharacterText("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!", "Mamá")
+    story.printCharacterText("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.", main_character_name)
     story.showPlayerChoices("Salir", "Quedarse")
     if (story.checkLastAnswer("Salir")) {
         mom2.setKind(SpriteKind.Complete)
         is_player_talking = false
+        show_enemy_guard = false
         mapLevel()
     } else if (story.checkLastAnswer("Quedarse")) {
         is_player_talking = false
@@ -403,6 +464,27 @@ function instantiate_npcs () {
         . . . . f f . . f f . . . . 
         `, SpriteKind.Npc)
     tiles.placeOnTile(npc_start, tiles.getTileLocation(6, 7))
+    if (show_enemy_guard) {
+        enemy_guard = sprites.create(img`
+            . . . f 2 2 2 2 2 2 2 2 f . . . 
+            . f f 2 2 2 2 2 2 2 2 2 2 f f . 
+            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f 
+            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+            2 2 2 2 f f f f f f f f 2 2 2 2 
+            2 2 2 2 f f f f f f f f 2 2 2 2 
+            2 2 2 2 f f f f f f f f 2 2 2 2 
+            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+            f 2 2 2 2 2 f f f f 2 2 2 2 2 f 
+            f f 2 2 2 2 2 2 2 2 2 2 2 f f . 
+            . f f 2 2 2 2 2 2 2 2 2 f f . . 
+            . . f f 2 2 2 2 2 2 2 f f . . . 
+            . . . f f 2 2 2 2 2 f f . . . . 
+            . . . . f 2 2 2 2 2 f . . . . . 
+            . . . . . f 2 2 2 f . . . . . . 
+            . . . . . . f 2 f . . . . . . . 
+            `, SpriteKind.marker)
+        tiles.placeOnTile(enemy_guard, tiles.getTileLocation(57, 58))
+    }
 }
 info.onCountdownEnd(function () {
     textSprite = textsprite.create("YA", 15, 2)
@@ -480,40 +562,52 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Npc, function (sprite2, otherSprite2) {
     if (!(showMinimap) && is_on_map_level) {
-        main_character.sayText("A to Talk", 500, false)
+        main_character.sayText("A para hablar", 500, false)
         if (!(showMinimap) && controller.A.isPressed()) {
             is_player_talking = true
             if (otherSprite2 == npc_start && !(showMinimap)) {
                 story.printCharacterText("Hola, sé lo que ha pasado con tu madre...", "Emily")
                 story.printCharacterText("Vi a unos chavales con camisetas de futbol", "Emily")
-                story.printCharacterText("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?", mainName)
-                story.printCharacterText("Uno debería de estar en el campo de futbol con una Camiseta del Farça, no me gusta mucho ese equipo pero menos me gusta ese mezquino", "Emily")
-                story.printCharacterText("De verdad, te lo agradezco", mainName)
+                story.printCharacterText("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?", main_character_name)
+                story.printCharacterText("Uno debería de estar en el campo de futbol con una Camiseta del Barcelona.", "Emily")
+                story.printCharacterText("De verdad, te lo agradezco", main_character_name)
                 story.printCharacterText("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres", "Emily")
                 show_npc_football_map = true
                 story.printDialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
                 is_player_talking = false
             } else if (otherSprite2 == npc_football && !(showMinimap)) {
-                story.printCharacterText("¡Eres uno de los que irrumpió y robó a mi madre!", mainName)
+                story.printCharacterText("¡Eres uno de los que irrumpió y robó a mi madre!", main_character_name)
                 story.printCharacterText("¿De qué hablas? Yo estoy tranquilo aquí jugando al fútbol.", "Pedro")
-                story.printCharacterText("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!", mainName)
+                story.printCharacterText("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!", main_character_name)
                 prev_location_of_main_character = main_character.tilemapLocation()
                 has_prev_location = true
                 has_completed_football = true
                 npc_duel2(npc_football)
             } else if (otherSprite2 == npc_building && !(showMinimap) && has_completed_football) {
-                story.printCharacterText("¡Tú! ¡No te escondas, sé que estás con ellos!", mainName)
+                story.printCharacterText("¡Tú! ¡No te escondas, sé que estás con ellos!", main_character_name)
                 story.printCharacterText("¿Qué? ¡No tengo idea de lo que hablas! Yo solo estoy de paso.", "Mbappez")
-                story.printCharacterText("No me tomes por tonto. ¿Dónde está guardáis lo que robáis?", mainName)
+                story.printCharacterText("No me tomes por tonto. ¿Dónde guardáis lo que robáis?", main_character_name)
                 story.printCharacterText(" ¿Robar? Nosotros no robamos, somos un equipo de fútbol humilde... Bueno, con algo de talento.", "Mbappez")
-                story.printCharacterText("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?", mainName)
+                story.printCharacterText("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?", main_character_name)
                 story.printCharacterText("¡Ah! Bueno, quizás haya... algo de información ahí, pero no es lo que crees.", "Mbappez")
                 prev_location_of_main_character = main_character.tilemapLocation()
                 has_prev_location = true
                 has_completed_mbappez = true
                 npc_duel2(npc_building)
+            } else if (otherSprite2 == final_mom_sprite && !(showMinimap)) {
+                story.printCharacterText("¡Mamá, estoy aquí! ¿Estás bien?", main_character_name)
+                story.printCharacterText("Oh, hijo... Estoy perfectamente. Mejor de lo que crees.", "Mamá")
+                story.printCharacterText("¿Qué? Pero esos chicos... ¿Dónde están los ladrones?", main_character_name)
+                story.printCharacterText("Fui yo. Todo esto lo planeé para quitarles lo poco que tenían. Pagué a Emily para que te diera esa información", "Mamá")
+                story.printCharacterText("...", main_character_name)
+                story.printCharacterText("¡¿Qué estás diciendo?! ¡Mamá, ellos no hicieron nada!", main_character_name)
+                story.printCharacterText("Ellos no importan. Nosotros necesitábamos el dinero, y ahora lo tenemos.", "Mamá")
+                story.printCharacterText("Lo hice por ti. Por nosotros.", "Mamá")
+                story.printCharacterText("¡Entonces he dañado a esos pobres chavales para nada!", main_character_name)
+                story.printCharacterText("Si dices algo, me perderás a mí también. ¿Estás dispuesto a tomar ese riesgo?", "Mamá")
+                carnival.customGameOverExpanded("Terminaste el juego!", effects.confetti, music.bigCrash, carnival.ScoreTypes.None)
             } else {
-                story.printDialog("No peudes hablar con el/ella ahora", 80, 90, 50, 150)
+                story.printDialog("No puedes hablar con el/ella ahora", 80, 90, 50, 150)
                 is_player_talking = false
             }
         }
@@ -806,6 +900,30 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite223,
         pause(1000)
         story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "Aggh ffs")
         ask_wanna_play_again()
+    } else if (otherSprite223 == npc_bullet && main_character == sprite223 && !(is_shoot_done)) {
+        is_shoot_done = true
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        main_character.setImage(img`
+            . . . . . . . . . . . 2 2 . . 2 
+            . 2 2 2 2 2 2 2 2 2 2 . . 2 2 . 
+            2 2 2 2 2 2 f f f 2 2 2 2 . . 2 
+            2 2 2 f f c f f f f 2 2 2 f f 2 
+            2 2 2 2 f c f f f f f f f f f f 
+            2 2 f f c f f e e 4 4 f e e f f 
+            2 f f c f f e e e 4 4 4 f e f f 
+            2 f 2 2 f f f f f f 4 4 e e f 2 
+            2 f 2 2 f c f f b 1 4 4 e e f 2 
+            2 2 f 2 2 c f f f e e e e f f 2 
+            . 2 2 2 f f f f e 4 f 4 4 e f f 
+            . 2 2 f f f c f e e f 4 4 e f f 
+            2 2 2 f f c c f f f f 4 e f f 2 
+            2 . 2 2 f f f f f f 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
+            . . . 2 2 2 2 2 2 2 2 2 . . . . 
+            `)
+        story.spriteSayText(main_character, "X.X")
+        pause(1000)
+        carnival.onGameOverExpanded(carnival.WinTypes.Lose)
     }
 })
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
@@ -1707,7 +1825,7 @@ function destroy1v1 () {
     sprites.destroy(textSprite)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.twoPlayersButton, function (sprite3, otherSprite3) {
-    cursor.sayText("Press A to play")
+    cursor.sayText("A para jugar")
     if (controller.A.isPressed()) {
         TwoPlayersScreen()
     }
@@ -1717,17 +1835,16 @@ function destroyLevelOne () {
     tiles.destroySpritesOfKind(SpriteKind.Building)
     tiles.destroySpritesOfKind(SpriteKind.Complete)
 }
-let npc_bullet: Sprite = null
 let fabrica: Sprite = null
 let npc_dueling: Sprite = null
 let can_talk = false
+let npc_bullet: Sprite = null
 let player_1_bullet: Sprite = null
 let randomTime = 0
 let isDuel = false
 let canShoot = false
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
-let has_completed_mbappez = false
 let has_prev_location = false
 let prev_location_of_main_character: tiles.Location = null
 let has_completed_football = false
@@ -1735,10 +1852,13 @@ let player_1_can_shoot = false
 let npc_can_shoot = false
 let can_main_character_shoot = false
 let is_npc_duel = false
-let textSprite: TextSprite = null
 let player_2_bullet: Sprite = null
 let player_2_can_shoot = false
 let mom2: Sprite = null
+let final_emily_sprite: Sprite = null
+let final_mom_sprite: Sprite = null
+let textSprite: TextSprite = null
+let enemy_guard: Sprite = null
 let show_npc_football_map = false
 let npc_start: Sprite = null
 let myMinimap: minimap.Minimap = null
@@ -1746,10 +1866,12 @@ let is_map_showing = false
 let showMinimap = false
 let can_show_minimap = false
 let cursor: Sprite = null
+let has_completed_mbappez = false
 let main_character: Sprite = null
+let show_enemy_guard = false
 let show_npc_building = false
 let is_player_talking = false
-let mainName = ""
+let main_character_name = ""
 let npc_building: Sprite = null
 let is_shoot_done = false
 let npc_football: Sprite = null
@@ -1780,6 +1902,7 @@ miniMapa = sprites.create(img`
 is_on_map_level = false
 game.onUpdate(function () {
     if (is_player_talking || is_map_showing) {
+        animation.stopAnimation(animation.AnimationTypes.All, main_character)
         controller.moveSprite(main_character, 0, 0)
     } else {
         controller.moveSprite(main_character, 100, 100)
