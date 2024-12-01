@@ -28,14 +28,48 @@ sprites.onOverlap(SpriteKind.npc_duel, SpriteKind.Projectile, function (sprite22
             2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
             . 2 2 4 e 2 2 f e e 2 f f . 2 2 
             `)
+        npc_football.setKind(SpriteKind.Complete)
         game.splash("You win")
-        story.spriteSayText(npc_football, "X.X")
+        story.printCharacterText("Ahora dime donde encontrar a vuestra gente", mainName)
+        story.printCharacterText("Vale, vale... pero no me hagas daño. Si me llevas a un hospital, te diré dónde están los demás.", "Pedro")
+        story.printCharacterText("Trato hecho. Ahora, habla.", mainName)
+        story.printCharacterText("Están en la parte más peligrosa de la ciudad. Aquí, te lo dibujo en el mapa.", "Pedro")
         pause(1000)
-        story.spriteSayText(npc_football, "Aggh ffs")
+        story.spriteSayText(npc_football, "X.X")
+        is_player_talking = false
+        show_npc_building = true
+        mapLevel()
+        story.printDialog("Tienes dibujado al siguiente rival en el mapa", 80, 90, 50, 150)
+    } else if (otherSprite22 == main_character_bullet && npc_building == sprite22 && !(is_shoot_done)) {
+        is_shoot_done = true
+        sprites.destroy(otherSprite22, effects.fire, 500)
+        npc_building.setImage(img`
+            . . e e e . 2 f f f f f f 2 2 2 
+            . . e d e 2 2 e e e f f f f 2 2 
+            . . f f f f e e e e e f f f 2 2 
+            f f f f f e e e f f e e f f f 2 
+            2 f f f f e e e d f e e f f f f 
+            2 f f f e e 2 e e e e e f 2 f f 
+            . f 8 8 e e 2 e e e e e f 2 2 f 
+            f f 8 2 8 e e e f f e e f f 2 f 
+            f f f f f e e e d f e f f f 2 . 
+            2 2 f f f f e e e e e f f f 2 2 
+            . . e d e f f e f f f f f f 2 2 
+            . . e e 2 2 2 f f f f f f 2 2 2 
+            `)
+        npc_building.setKind(SpriteKind.Complete)
+        game.splash("You win")
+        story.spriteSayText(npc_building, "X.X")
+        pause(1000)
+        story.spriteSayText(npc_building, "Aggh ffs")
+        is_player_talking = false
+        show_npc_building = true
+        mapLevel()
+        story.printDialog("Has enviado un mensaje a tu madre de donde tienen las cosas, aparte lo tienes en el mapa", 80, 90, 50, 150)
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive && !(isTalking)) {
+    if (isPlayerLive && !(is_player_talking)) {
         animation.runImageAnimation(
         main_character,
         [img`
@@ -114,20 +148,21 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         can_show_minimap = !(can_show_minimap)
         if (can_show_minimap) {
             showMinimap = true
-            isTalking = true
+            is_map_showing = true
             myMinimap = minimap.minimap(MinimapScale.Eighth, 2, 15)
             minimap.includeSprite(myMinimap, main_character, MinimapSpriteScale.Octuple)
             minimap.includeSprite(myMinimap, npc_start, MinimapSpriteScale.Quadruple)
             if (show_npc_football_map) {
                 minimap.includeSprite(myMinimap, npc_football, MinimapSpriteScale.Quadruple)
-            } else if (show_npc_building) {
+            }
+            if (show_npc_building) {
                 minimap.includeSprite(myMinimap, npc_building, MinimapSpriteScale.Quadruple)
             }
             miniMapa.setImage(minimap.getImage(myMinimap))
             miniMapa.setPosition(scene.cameraProperty(CameraProperty.X), scene.cameraProperty(CameraProperty.Y))
             miniMapa.z = 999
         } else {
-            isTalking = false
+            is_map_showing = false
             miniMapa.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -152,18 +187,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mom, function (sprite222, otherSprite222) {
     game.showLongText("Talk with mom", DialogLayout.Bottom)
-    isTalking = true
-    story.printCharacterText("" + mainName + "!" + " They took it... They took everything from me!", "Mom")
-    story.printCharacterText("\"Who, Ma? What happened?\"", mainName)
-    story.printCharacterText("\"That gang... Those thieves! They stormed in, took my jewelry, my savings... everything! You gotta do something!\"", "Mom")
-    story.printCharacterText("\"Don't worry, Ma. I'll find them. They won't get away with this.\"", mainName)
-    story.showPlayerChoices("Get Out", "Stay")
-    if (story.checkLastAnswer("Get Out")) {
+    is_player_talking = true
+    story.printCharacterText("" + mainName + "!" + " Se lo llevaron... ¡Se llevaron todo!", "Mom")
+    story.printCharacterText("¿Quién, mamá? ¿Qué pasó?", mainName)
+    story.printCharacterText("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!", "Mom")
+    story.printCharacterText("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.", mainName)
+    story.showPlayerChoices("Salir", "Quedarse")
+    if (story.checkLastAnswer("Salir")) {
         mom2.setKind(SpriteKind.Complete)
-        isTalking = false
+        is_player_talking = false
         mapLevel()
-    } else if (story.checkLastAnswer("Stay")) {
-        isTalking = false
+    } else if (story.checkLastAnswer("Quedarse")) {
+        is_player_talking = false
         pause(1000)
     }
 })
@@ -213,7 +248,7 @@ controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive && !(isTalking)) {
+    if (isPlayerLive && !(is_player_talking)) {
         animation.runImageAnimation(
         main_character,
         [img`
@@ -276,46 +311,101 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function instantiate_npcs () {
-    npc_football = sprites.create(img`
-        . . . . f f f f . . . . 
-        . . f f e e e e f f . . 
-        . f f e e e e e e f f . 
-        f e e e 4 e e e e e f f 
-        f e e 4 4 4 e e e e e f 
-        f e e 4 4 4 4 e e e e e 
-        f e e f f 4 4 f f e e e 
-        f e 4 f d 4 4 f d 4 4 e 
-        f e 4 4 4 4 4 4 4 4 e f 
-        . f e 4 4 2 2 4 4 e f . 
-        . f f e 4 4 4 4 e f f . 
-        e 4 f 8 2 8 2 8 2 f 4 e 
-        4 d f 8 2 8 2 5 2 f d 4 
-        4 4 f 8 2 8 2 8 2 f 4 4 
-        . . . f f f f f f . . . 
-        . . . f f . . f f . . . 
-        `, SpriteKind.Npc)
-    show_npc_football_map = false
+    if (npc_football == spriteutils.nullConsts(spriteutils.NullConsts.Null) || npc_football == spriteutils.nullConsts(spriteutils.NullConsts.Undefined)) {
+        npc_football = sprites.create(img`
+            . . . . f f f f . . . . 
+            . . f f e e e e f f . . 
+            . f f e e e e e e f f . 
+            f e e e 4 e e e e e f f 
+            f e e 4 4 4 e e e e e f 
+            f e e 4 4 4 4 e e e e e 
+            f e e f f 4 4 f f e e e 
+            f e 4 f d 4 4 f d 4 4 e 
+            f e 4 4 4 4 4 4 4 4 e f 
+            . f e 4 4 2 2 4 4 e f . 
+            . f f e 4 4 4 4 e f f . 
+            e 4 f 8 2 8 2 8 2 f 4 e 
+            4 d f 8 2 8 2 5 2 f d 4 
+            4 4 f 8 2 8 2 8 2 f 4 4 
+            . . . f f f f f f . . . 
+            . . . f f . . f f . . . 
+            `, SpriteKind.Npc)
+        show_npc_football_map = false
+    } else if (npc_football.kind() == SpriteKind.Complete) {
+        npc_football = sprites.create(img`
+            . . 4 4 e 2 2 f f f f f f . 2 2 
+            . . 4 d 4 f f e e e e e e f . 2 
+            . . f f f f e 4 4 e e e e f f . 
+            f f 8 8 8 e 4 4 f f 4 4 e e f 2 
+            f f 2 2 2 4 4 4 d f 4 4 4 e 2 2 
+            2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f 
+            2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f 
+            f f 8 5 8 4 4 4 f f e e 2 2 e f 
+            f f 2 2 2 e 4 4 d f e e 2 2 2 2 
+            2 2 f f f f e 4 4 e e 2 e 2 2 2 
+            2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
+            . 2 2 4 e 2 2 f e e 2 f f . 2 2 
+            `, SpriteKind.Complete)
+        show_npc_football_map = true
+    }
     tiles.placeOnTile(npc_football, tiles.getTileLocation(39, 8))
-    npc_building = sprites.create(img`
-        . . . . f f f f . . . . 
-        . . f f f f f f f f . . 
-        . f f f f f f f f f f . 
-        f f f f f f f f f f f f 
-        f f f e e e e e f f f f 
-        f f e e e e e e e e f f 
-        f e e f f e e f f e f f 
-        f e e f d e e f d e f f 
-        f e e e e e e e e e e f 
-        . f e e e 2 2 e e e f . 
-        . f f e e e e e e f f . 
-        e e f f f e e 8 f f e e 
-        e d f f f f 8 2 f f d e 
-        e e f f f f 8 8 f f e e 
-        . . . f f f f f f . . . 
-        . . . f f . . f f . . . 
-        `, SpriteKind.Npc)
-    show_npc_building = false
-    tiles.placeOnTile(npc_building, tiles.getTileLocation(9, 46))
+    if (npc_building == spriteutils.nullConsts(spriteutils.NullConsts.Null) || npc_building == spriteutils.nullConsts(spriteutils.NullConsts.Undefined)) {
+        npc_building = sprites.create(img`
+            . . . . f f f f . . . . 
+            . . f f f f f f f f . . 
+            . f f f f f f f f f f . 
+            f f f f f f f f f f f f 
+            f f f e e e e e f f f f 
+            f f e e e e e e e e f f 
+            f e e f f e e f f e f f 
+            f e e f d e e f d e f f 
+            f e e e e e e e e e e f 
+            . f e e e 2 2 e e e f . 
+            . f f e e e e e e f f . 
+            e e f f f e e 8 f f e e 
+            e d f f f f 8 2 f f d e 
+            e e f f f f 8 8 f f e e 
+            . . . f f f f f f . . . 
+            . . . f f . . f f . . . 
+            `, SpriteKind.Npc)
+        show_npc_building = false
+    } else if (npc_building.kind() == SpriteKind.Complete) {
+        npc_building = sprites.create(img`
+            . . e e e . 2 f f f f f f 2 2 2 
+            . . e d e 2 2 e e e f f f f 2 2 
+            . . f f f f e e e e e f f f 2 2 
+            f f f f f e e e f f e e f f f 2 
+            2 f f f f e e e d f e e f f f f 
+            2 f f f e e 2 e e e e e f 2 f f 
+            . f 8 8 e e 2 e e e e e f 2 2 f 
+            f f 8 2 8 e e e f f e e f f 2 f 
+            f f f f f e e e d f e f f f 2 . 
+            2 2 f f f f e e e e e f f f 2 2 
+            . . e d e f f e f f f f f f 2 2 
+            . . e e 2 2 2 f f f f f f 2 2 2 
+            `, SpriteKind.Complete)
+        show_npc_building = true
+    } else {
+        npc_building = sprites.create(img`
+            . . . . f f f f . . . . 
+            . . f f f f f f f f . . 
+            . f f f f f f f f f f . 
+            f f f f f f f f f f f f 
+            f f f e e e e e f f f f 
+            f f e e e e e e e e f f 
+            f e e f f e e f f e f f 
+            f e e f d e e f d e f f 
+            f e e e e e e e e e e f 
+            . f e e e 2 2 e e e f . 
+            . f f e e e e e e f f . 
+            e e f f f e e 8 f f e e 
+            e d f f f f 8 2 f f d e 
+            e e f f f f 8 8 f f e e 
+            . . . f f f f f f . . . 
+            . . . f f . . f f . . . 
+            `, SpriteKind.Npc)
+    }
+    tiles.placeOnTile(npc_building, tiles.getTileLocation(30, 40))
     npc_start = sprites.create(img`
         . f f f . f f f f . f f f . 
         f f f f f c c c c f f f f f 
@@ -342,65 +432,31 @@ info.onCountdownEnd(function () {
     textSprite.setPosition(76, 40)
     if (is_npc_duel) {
         can_main_character_shoot = true
+        pause(randint(650, 1000))
+        npc_bullet = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . 2 2 2 2 . . . . . . . . . 
+            . . 2 1 1 1 1 2 2 . . . . . . . 
+            . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+            . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+            . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+            . . 2 1 1 1 1 3 2 2 . . . . . . 
+            . . . 2 2 2 2 . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, npc_dueling, -50, 0)
     }
     player_1_can_shoot = true
     player_2_can_shoot = true
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite22, otherSprite22) {
-    if (otherSprite22 == player_2_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)) == sprite22 && !(is_shoot_done)) {
-        is_shoot_done = true
-        sprites.destroy(otherSprite22, effects.fire, 500)
-        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)).setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . 2 2 2 2 2 . f f f . . . 
-            . . 2 2 2 f f f f f d b b f . . 
-            . 2 2 f f e 2 f e f d b b b f . 
-            2 2 f 2 e 2 e f e e f f e e f f 
-            2 f 2 2 e 2 f e 4 d d e d d e f 
-            2 f f 2 e 2 f e 4 d d e d d e f 
-            2 f f 2 2 2 f e f 4 f e 4 e f 2 
-            2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
-            2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
-            2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
-            2 2 2 e e f 2 f 4 4 4 f f f f f 
-            2 2 f f e f e f e e f f 2 f f 2 
-            2 2 2 f f 2 2 f f e f 2 2 2 2 2 
-            2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
-            2 . 2 2 2 2 2 2 2 2 2 . 2 2 . . 
-            `)
-        game.splash("Player 2 Wins!")
-        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "X.X")
-        pause(1000)
-        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "Aggh ffs")
-        ask_wanna_play_again()
-    } else if (otherSprite22 == player_1_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)) == sprite22 && !(is_shoot_done)) {
-        is_shoot_done = true
-        sprites.destroy(otherSprite22, effects.fire, 500)
-        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)).setImage(img`
-            . . . . f . . . . . . . . . . . 
-            . . . . f . . . . 2 2 2 2 . . . 
-            . . . f f . . 2 f f f f f 2 2 . 
-            . . . . d 2 2 f f f e e e f 2 . 
-            . . f f d f f f e e e e e e f 2 
-            2 2 6 1 1 e b d 4 4 4 4 e e e 2 
-            2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
-            f f 6 1 1 4 d d f 4 e e e 2 2 f 
-            f f f e e 4 d f 4 f e e 2 2 2 f 
-            f f e d d e 4 4 4 4 e f 2 2 2 f 
-            2 f e d d e f d e f f 2 2 e 2 . 
-            2 2 f e 4 f f 4 4 f f 2 f f 2 2 
-            2 2 2 2 2 2 f f f f 2 2 f f . 2 
-            . . 2 2 2 . . . f f 2 f f . . 2 
-            `)
-        game.splash("Player 1 Wins!")
-        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "X.X")
-        pause(1000)
-        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "Aggh ffs")
-        ask_wanna_play_again()
-    }
-})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive && !(isTalking)) {
+    if (isPlayerLive && !(is_player_talking)) {
         animation.runImageAnimation(
         main_character,
         [img`
@@ -466,7 +522,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Npc, function (sprite2, otherSpr
     if (!(showMinimap) && is_on_map_level) {
         main_character.sayText("A to Talk", 500, false)
         if (!(showMinimap) && controller.A.isPressed()) {
-            isTalking = true
+            is_player_talking = true
             if (otherSprite2 == npc_start && !(showMinimap)) {
                 story.printCharacterText("Hola, sé lo que ha pasado con tu madre...", "Emily")
                 story.printCharacterText("Vi a unos chavales con camisetas de futbol", "Emily")
@@ -476,12 +532,29 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Npc, function (sprite2, otherSpr
                 story.printCharacterText("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres", "Emily")
                 show_npc_football_map = true
                 story.printDialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
-                isTalking = false
+                is_player_talking = false
             } else if (otherSprite2 == npc_football && !(showMinimap)) {
-                story.printCharacterText("¡¡Eres uno de los que irrumpió y robo a mi madre!!", mainName)
-                story.printCharacterText("Que hablas, yo estoy del chill jugando fuchibol", "Pedro")
-                story.printCharacterText("No te hagas el tonto y devuélvelo!!", mainName)
+                story.printCharacterText("¡Eres uno de los que irrumpió y robó a mi madre!", mainName)
+                story.printCharacterText("¿De qué hablas? Yo estoy tranquilo aquí jugando al fútbol.", "Pedro")
+                story.printCharacterText("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!", mainName)
+                prev_location_of_main_character = main_character.tilemapLocation()
+                has_prev_location = true
+                has_completed_football = true
                 npc_duel2(npc_football)
+            } else if (otherSprite2 == npc_building && !(showMinimap) && has_completed_football) {
+                story.printCharacterText("¡Tú! ¡No te escondas, sé que estás con ellos!", mainName)
+                story.printCharacterText("¿Qué? ¡No tengo idea de lo que hablas! Yo solo estoy de paso.", "Mbappez")
+                story.printCharacterText("No me tomes por tonto. ¿Dónde está guardáis lo que robáis?", mainName)
+                story.printCharacterText(" ¿Robar? Nosotros no robamos, somos un equipo de fútbol humilde... Bueno, con algo de talento.", "Mbappez")
+                story.printCharacterText("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?", mainName)
+                story.printCharacterText("¡Ah! Bueno, quizás haya... algo de información ahí, pero no es lo que crees.", "Mbappez")
+                prev_location_of_main_character = main_character.tilemapLocation()
+                has_prev_location = true
+                has_completed_mbappez = true
+                npc_duel2(npc_building)
+            } else {
+                story.printDialog("No peudes hablar con el/ella ahora", 80, 90, 50, 150)
+                is_player_talking = false
             }
         }
     }
@@ -492,7 +565,7 @@ function storyModeDestroy () {
     sprites.destroy(two_players_button)
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isPlayerLive && !(isTalking)) {
+    if (isPlayerLive && !(is_player_talking)) {
         animation.runImageAnimation(
         main_character,
         [img`
@@ -722,6 +795,59 @@ function ask_wanna_play_again () {
         TwoPlayersScreen()
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite223, otherSprite223) {
+    if (otherSprite223 == player_2_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)) == sprite223 && !(is_shoot_done)) {
+        is_shoot_done = true
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)).setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . 2 2 2 2 2 . f f f . . . 
+            . . 2 2 2 f f f f f d b b f . . 
+            . 2 2 f f e 2 f e f d b b b f . 
+            2 2 f 2 e 2 e f e e f f e e f f 
+            2 f 2 2 e 2 f e 4 d d e d d e f 
+            2 f f 2 e 2 f e 4 d d e d d e f 
+            2 f f 2 2 2 f e f 4 f e 4 e f 2 
+            2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
+            2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
+            2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
+            2 2 2 e e f 2 f 4 4 4 f f f f f 
+            2 2 f f e f e f e e f f 2 f f 2 
+            2 2 2 f f 2 2 f f e f 2 2 2 2 2 
+            2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
+            2 . 2 2 2 2 2 2 2 2 2 . 2 2 . . 
+            `)
+        game.splash("Player 2 Wins!")
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "X.X")
+        pause(1000)
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.One)), "Aggh ffs")
+        ask_wanna_play_again()
+    } else if (otherSprite223 == player_1_bullet && mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)) == sprite223 && !(is_shoot_done)) {
+        is_shoot_done = true
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)).setImage(img`
+            . . . . f . . . . . . . . . . . 
+            . . . . f . . . . 2 2 2 2 . . . 
+            . . . f f . . 2 f f f f f 2 2 . 
+            . . . . d 2 2 f f f e e e f 2 . 
+            . . f f d f f f e e e e e e f 2 
+            2 2 6 1 1 e b d 4 4 4 4 e e e 2 
+            2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
+            f f 6 1 1 4 d d f 4 e e e 2 2 f 
+            f f f e e 4 d f 4 f e e 2 2 2 f 
+            f f e d d e 4 4 4 4 e f 2 2 2 f 
+            2 f e d d e f d e f f 2 2 e 2 . 
+            2 2 f e 4 f f 4 4 f f 2 f f 2 2 
+            2 2 2 2 2 2 f f f f 2 2 f f . 2 
+            . . 2 2 2 . . . f f 2 f f . . 2 
+            `)
+        game.splash("Player 1 Wins!")
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "X.X")
+        pause(1000)
+        story.spriteSayText(mp.getPlayerSprite(mp.playerSelector(mp.PlayerNumber.Two)), "Aggh ffs")
+        ask_wanna_play_again()
+    }
+})
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     if (player_1_can_shoot && !(is_npc_duel)) {
         player_1_bullet = sprites.createProjectileFromSprite(img`
@@ -912,7 +1038,7 @@ function storyMode () {
         . . . . . f f f f f f . . . . . 
         `, SpriteKind.mom)
     tiles.placeOnTile(mom2, tiles.getTileLocation(15, 2))
-    isTalking = false
+    is_player_talking = false
 }
 function doMenu () {
     scene.setBackgroundImage(img`
@@ -1106,6 +1232,7 @@ function doMenu () {
 }
 function mapLevel () {
     destroyLevelOne()
+    is_shoot_done = false
     can_show_minimap = false
     can_talk = true
     is_on_map_level = true
@@ -1213,7 +1340,11 @@ function mapLevel () {
         ddddddddddddddddddddddddddeeeeedddddddddddddddddddddddddd.
         ddddddddddddddddddddddddddeeeeedddddddddddddddddddddddddd.
         `, SpriteKind.Building)
-    tiles.placeOnTile(main_character, tiles.getTileLocation(1, 9))
+    if (has_prev_location) {
+        tiles.placeOnTile(main_character, prev_location_of_main_character)
+    } else {
+        tiles.placeOnTile(main_character, tiles.getTileLocation(1, 9))
+    }
     scene.cameraFollowSprite(main_character)
     instantiate_npcs()
 }
@@ -1247,12 +1378,262 @@ function npc_duel2 (npc: Sprite) {
     can_main_character_shoot = false
     npc.setKind(SpriteKind.npc_duel)
     sprites.destroyAllSpritesOfKind(SpriteKind.Npc)
+    npc_dueling = npc
     randomTime = randint(1, 10)
     info.startCountdown(randomTime)
-    isTalking = true
+    is_player_talking = true
     is_on_map_level = false
-    npc.setPosition(120, 90)
-    main_character.setPosition(40, 90)
+    if (npc == npc_football) {
+        scene.setBackgroundImage(img`
+            777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            dd1111111111111111111111111177777777777111111111111111111111111111111111111111111111111111111111117777777777777777777777777777777777777777777777777777777777777
+            1d77d77d77d777d77d77dd77d11177777777777177777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777
+            dddddddddddddddddddddddd111177777777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777
+            177d77d77ddd7dd7d77dd77d111177777777771777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777
+            17d777777d7dd777777d77dd111177777777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777
+            dddddddddddddddddddddd111d1177777777717777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777
+            1d77dd77d77d77dd77d77dd1171177777777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777
+            1d77d777777d77d777d77d11d71177777777177777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777
+            ddddd77dd7dd7dd7ddd7dd11771177777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777
+            dd7dd7d77ddd7dd7d777d11d771177777771777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777
+            d7dd77d77d77ddd7d77dd11d7d1177777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777
+            17d777777d77d7777d7d1177d71177777717777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777
+            dddddddddddddddddddd1177d71177777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777
+            1dd7dd7dddddddddddd11ddddd1177771177777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777
+            1d77d77d777d77d77dd11777d71177771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777
+            1dddddddddddddddd111d7d77d1177711777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777
+            d77d77d77ddd7dd7dd117ddd771177711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777
+            17d777777d77d7777117777dd71177117777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777
+            ddddddddddddddddd11dd77ddd1177117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777
+            1d777d77dd7d777d11d777ddd71171177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777
+            1d77d77dd77d77dd117d7dd7dd1111177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777
+            d777d77d77d777d11777dd77d71111777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777
+            dddddddddddddd11177dd77d771111777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777
+            1ddddddddddddd117dd77d7d7d1117777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777
+            17d777777d77dd1177dd77dd771117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777
+            ddddddddddd7d117dd77d7d7d71177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777
+            1d77dd77d77dd11dd7d7d77ddd1177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777
+            d111d11d11d1111111111111111777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777
+            dddddddddddd117777777777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777
+            7d7dddddd771177777777777717777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777
+            7dd777777dd1177777777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777
+            d7d77d77d711777777777777177777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777
+            7dd7dd7ddd11777777777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777
+            7d77d7777117777777777771777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777
+            d777777dd117777777777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777
+            dddddddd1177777777777717777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777
+            777777dd1177777777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777
+            77d777711777777777777177777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777
+            ddddddd11777777777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777
+            7d77d7117777777777771777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777
+            d777dd117777777777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            ddddd1177777777777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            d77d11177777777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            77d711777777777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            77dd11777777777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            ddd117777777777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            7dd117777777777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            d71177777777777117777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            dd1177777777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            711777777777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            d11777777777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            117777777777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            117777777777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777111777777777777777777777777777777777777777777777
+            177777777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777771111777777777777777777777777777777777777777777777
+            177777777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777777117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777771177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777711777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177777117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177771117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+            177771177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771
+            177711177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771
+            177711777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711
+            177111777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711
+            177117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117
+            171117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117
+            171177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177
+            111177777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177
+            111777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777
+            111777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777
+            117777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777
+            117777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777
+            177777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777
+            777777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777
+            777777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777
+            777777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777
+            777777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777
+            777777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777
+            777777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777
+            777777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777
+            777777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777
+            777777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777
+            777777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777
+            777777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777
+            777777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777
+            777777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777
+            777777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777
+            777777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777
+            777777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777
+            777777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777
+            777777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777
+            777777777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777
+            777777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777
+            777777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777
+            777777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777
+            777777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777
+            777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777
+            777777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777
+            777777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777
+            777777777777777777777777777777777777777777771777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777
+            777777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777777
+            777777777777777777777777777777777777777777717777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777777
+            777777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777777
+            777777777777777777777777777777777777777777177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777777
+            777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777777
+            777777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777777
+            777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777777777
+            777777777777777777777777777777777777777711777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777117777777777777777777777
+            777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777777777
+            777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777777777
+            777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777777777
+            `)
+        npc.setPosition(120, 90)
+        main_character.setPosition(40, 90)
+    } else if (npc == npc_building) {
+        scene.setBackgroundImage(img`
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c9999999999999999999999999999
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c9999999d99999c9999999999999999999999999999
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c999999dc999c9c9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999dc99999c999999dccccccc9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99d9dcdddd99dcccdd9c9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99c9dccccc99dc99999c9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99c99c999999dc99999c9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cc9996cccdcddcd99999dc9997cc9999999999999999999999999999
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999911ddddddd11119dc19999c7ccccccccccccccccccc9999999999911999999999999999
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd1d1ddd9dddddd111dc19999cd9c99c991111ccdd999c9999999999111111111111111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddd9ddddd111dc19999c9dc99c911111cc99999c9999999999911111111111111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999d99ddddddd99dddd11ddcdddddcddcddcddddddccdddddcd9999999999d1111111111111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddddddddddd999dd11dddddbdddddddbddddddddceeeeeeb999999999911111dd1111111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddddddd11ddddddddddddddddddddddceeeeeeb999999999911199991d11111111
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999911dd1ddddddddddd11ddddddddddddddddddddddceeffffb9d9999999911199999999111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddddddd11ddddddddddddddddddddddceefffb9999999999911d99999999111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddd9ddddd11dbbbbbbffffffffddfffffffffffb9999999999911999999999111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd9ddd9d9ddd1d1bffbffffffffff9bfffffffffffb9999999999ddd99d999999111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd9ddd9d9dddd11bff6ffffffffff9cffdffffffffbfd99999999d11d9ddb9999dddddd
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999d99dd99ddd9d9ddd11ddffbbfbbffbffbdccbdffffffffbf99999999991199dbe9999111111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddd9ddd1dddddddddddddddddddddddeeeeeeefd99999d999dddddbe999d111111
+            9999999999999999999999999999999999999999999999999999999999999999999999999999999999991ddddddddddddddd1dddddddddddddddddddddddeeeeeeef9999999999dd4eeeecccdd11111
+            999999999999999999999999999999999999999999999999999999999999999999999999999999999991dddddd1ddddddddd1dddddddddbdddddddddddddeeeffeef99999999991d9bbbe9991111111
+            99999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddd1dd99ddddd9ddddddbdddddddddddddddeeeefeef99999999dddd9bbbc99d1111111
+            999999999999999cc9999999999999999999999999999999999999999999999999991d11111119999991ddd9dddddd999ddd1dddddddddddddddddddbdddfeeefeef999999999bd19dbbc99d111111d
+            999999999999999cc9999999999999999999999999999999d9999999999999999999ddddd1dd1ddddd111ddd9d1ddd999ddd1dd9ffff99ffffffffbcdffffffeffdf999999999cd19bbbc799d11111d
+            9999999999ccccccccccdd119999999999999999999991dddd999999999999999999ddddd1dd1ddddd11ddd999ddddd99ddd1dddffff67ffffbbffbbbffffffefffffb9999999cd19bbbcb99911111d
+            99999999991ddddcccdccd119999999999999999999991dddd999999999999999999dddddddd1dddddd1ddd9d99dddd9dddd1dddfffffbfffbddbf6bfffffffeff9f999999999cd19b6bcb99911111d
+            999999999911d11ccddd11119999999999999999999991dddd111199999999999999dd9ddddd1ddddddd1dddddddddd9dddd1ddddddddddddddddbdddbdbfffeffbf999999999c119bbbc999911111d
+            999999999911d11dc1dd11dd9999999999999999999111dddd111111111111111111dd9ddd9d1dd9dddd1dddddddd99dddddddddddddddddddddbdddddddeeeeeeeebbdddd999c119bbbc999911111d
+            999999999d11111dc11111dd9999999999999999999ddddddd11111dd1111111d111dd99dd9d1ddd99dddddddddd9ddddddddbbdddddddddddddbdddddddeeeeeeee4eb4eeeeee444eeeccccccbbbbb
+            999999999cccccccccccccccd199999999999999991dddddd11111dddd111111d111ddd9dd9dddddddddddddddbbbbbbbbbbbeedddddddddddddddddddddfeeefffb9bb9dbdb9c119bbbbbb6dd11ddd
+            99999999dcdddddcccccccccd1111999999999911119dddddd1111dddd111111d111ddddddddddddddddddddbbbbbbbbbbbdbffdddddddddddddddddddddfffeffbc9779dbbd9c1d9bdbb9bdd111d1d
+            99999999ddd11d1dcd1111dd11111d11199999911d1ddddddd11d1dddd111111d11dddddddddddddddddddddeffbfffbfffbbffbbbbbbdbfffbffbfffdfffffeff9b9db99bd99c1d9bbbb99d9dd9ddd
+            99999999dddddd1bcd1111dd111119d111111111dd1ddddddd11d1dddd11d111d119dddddd9dddddddd9ddddfffbfffbfffbbffbfffffbfffffff6fffdfffffeffdbddb9dbd9dc999d9bb99d9b9999b
+            99999999d1d1111dcd1111dbdddddd1dddd11111d91ddddddd11dddddd11ddddddddddddd99d1ddd9dd9ddddfffbfffbfffbbffffffbfffffffffbfffffffffeff9b9dcbd9dddc999d9bb99d9ddb99b
+            99999999d1d1111dcddddddddddbbbbbb6d11111d91ddddddd11dddddd119ddddd91ddd99ddd1dd99dd99dddfffbfffbfffbbffbddddddbdddddddbdddbbfffeffbb99bd9999dc99999bb99d919999b
+            99999999d1d111ddcdddddddddddddddddbdddddbbdddddddd11dddbbd119dddddd1dddddddd1dd99dddddddddddddddddddbffbdddddddddddddddddddbeeeefebbd9bdd999dc99999bb9dd9199ddb
+            99999999dddd1dbeceeeeeeeeeeeeeeeeeefffffeedddddddd11dddcdd11ddddddddddddddddddd99dddddddbffbbbbdbffdbffbdddddddddddddddddddbeeeeeeebbbbb44444e4444eecccccccccce
+            999999991d1d114fcfefffefffeffefffeefffffeedddddddbddb6cccddddddddddddddddddddddd9dddddddbffbfffbfffbbffbdddddbdddddddbdddddbfffeeebbddbddddddcdddddbbd9b999999b
+            999999991d1dd14fcfefffefffeffefffeeffffeeedddddddbddcbdcddbddddddddddddddddddddd9dddddddbffbfffbfffbbffbddddbddddddddbdddddbfffeffbdddddd999db99dddbb9db999999b
+            99999999dddddd4fcfefffefffeffefffefffffeeedddddddbddbddbddfdddddddddbdddddddddddddddddddbffbfffbfffbbffbbffffffffffbffddfffffffeffdddddddddddb9d9dfefd9d99999db
+            ddddddddddddddeeceeeeeeeeeeeeeeeeefffeeeeedddddddbddddbbdbfdddddddddbddddddddddddddd9dddbbbbbbbdbbbdbfffbfffffbbfffffffbbffffffeffddddddddffdbdddffefbdddd9dbef
+            dddddddddddddd4fcfefffefffeffefffefffeeeeeddddddddddddfbdbfbdddddddbcbbdddddddddd999dddddbbdddddddddbefbbffddbdbbfffffffbffffffbbbdddddddfffdbddddddfffbddbbeff
+            ddbddddddddddd4fcfefffefffeffefffeefeeeeeeddddd1dbcdddfd1fbdbddddbbdbdddddddddddddddddddbffbfffdfffdbffbddddddbddddddddddddbfffddddbddddffffcbdddddbffffddcbeff
+            ddbdddddddddbd4fcfefffefffeffefffeefeeeeeed11111dbcbddfbdf1ddd1bddbddbddddddddddddddddddbffbfffdfffbbffbddddddbddddddddddbdbeeebbdddddbeeeeeeccbbddbefffddcbfff
+            eddddddddddbddeeceeeeeeeeeeeeeeeeeeeeeeeeebd1111dbffdfffbbdbdb1bddcbdcbcd1ddddddddebddddbffbbffbfffbbffbdddddddddddddddddddbeeebdddddddcfcdddbcbdddbbfffbcebeff
+            dedddddb4dbbb4eecbddddddddd1dd1ddddeeeeeee6bd111dbffdfffbffbdebbcccddbddddddbb34442ee4cbbffbbffdbffdbffbddddddddddddbddddddbfffbbbbbbbdbbdbbdbbbbbbdfffffbffeff
+            ddbddddb4dbbe4eecedddddbddddddddddbeeeeeee66d111dddddddbddbddefbdddbdbdbbdddbd3e44e332cdddddddddddddbffbbffffffffffffffffffffffbffbbffbffbffbfffbfcdfffffbffbff
+            ddbddbdb4bbbe4cccc6666ff6666f6fff6eeeeeeeedd1111dbffdbfbdbfbdefbdddbddddedddebdedfedf2edbffbbffdbffbbffbbffffffffffffffffffffffbffbbffbffbffdfffbfcbfffffbffbff
+            ddddb4bcbbbdd4cfccff6ffff6666ffffbeeeeffffbddddddbffdeffbffbdffbddbddddddddd2bbeffeff2cbbffbbffdbffdbffbbffffffffffffffffffffffbffbbffbffbccdffbbccbfffffbffbeb
+            4bdbc4bb4bbbdbbcccfffffff6666ffffbeeeffffebddddddbffdeffdffbdffbbbdddddddddd2efeffeff2cbbffbbffdbffdbffbbffffffffffffffffffffffbbbdbffdbbdbbdbbbbbbbfffffbffbb4
+            dbbeb4444bbbddbbccffbcffffcc66fffbeeefffeedddddd3bee4effbefbbffffbddddddddddee2eff22e2cebee4eff4eee4efffbffffffffffffffffffffffbdddbffdddddddddddddbffeeeefbd44
+            ddddddddddbdddbbbcbbbbefffebbbbbbbbbffffbbdddddd44444efe44444eebeddddddddddd4444ff4444ee4444bff44444eeeebffffffffffffffffffffffbdddbfbddddddddddddddbbbbbbbddbb
+            44444444444444444c444444444444444444444444444444444ddd444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            44dd4444444444444c4444444444ddd4444ddd444444444444444444444444444444444ddd44444444444444444444444444444444d44444444444444444dddd44444444444444444ddd44444444444
+            b4bb44b4dddbbbbbbcbb4bbbdbbb44bbbb4bbb4b44dddbbbbbb4bbbbbbbb4bb44ddbbbb44bb4dbbbbbb44bbbb444bb4bbbbbbbbbb44bbbbdbb44bbbbbbbbbbbbb4bbbbbb44dbb44444444bbbb4bbddb
+            bbbbbbbbbbbbbbbbbcbeebbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbb44bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb4bbbbbbbbbbbbbbbbbbbbbbbbbbbbb4bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+            bdbbbbbbbbbbbbbbbceeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbdbbbbbbb
+            bbbbbbbbbbdbbbbbbeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbdbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+            bbbbbbbbbbbbbbbbbbeeeeeeeeeeebbbbbbbeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+            bbbbbbbbbbbbbbbbbbeeeeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+            111111111bbbbbb11eeeeeeeeeeeeffeeeff111111111bbbbbb111111111111bbbbbb111111111111bbbbbbb11111111111bbbbbbb111111111111bbbbbbbb11111111111bbbbbbbbb1111111111111
+            bbbbbbbbbbbbbbbbbeeeeeeeeeeeeffeffffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeebbbbbbbbbbbbbbbbbbb
+            bbbbbbbbbbbbbbbbbeeefeeeeeeeffefffffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbebbbbbebbbebbbbbbbbbbbbbbbbbb
+            bbbbbbbbbbbbbbbbbeecfceeeeeeffeeefffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeeffffeeeeeeeeeebbbbbbbbbbbbbbbb
+            bbbbbbbbbbbbbbbbbeecffeeeeeeeffeeeebbbbeecbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeefffffeeeeeffffeeeeeeeeeeeeebbbbbbbbbbbbb
+            bdbbbbbddddbbbbbbbeffffeeeeeeffefeeeeeeeeebdbbbbbbbbbbbbbbbddbdddbbbbbbddbbddbbbbbbbbbbdbdddbbbbbbbbbbbbbbddbbbbdbbbeeefffffeeeefffffeeeeeeeeffeeebbeebbb4bbbbb
+            44444dd44444444444444bfeeefeeeeeffeeffeeeffffffffffffeeeb4d4444444444444444444444444444d4d44444444444444444444444444beeefeeeeeeefffffeeeeeeeeeeeeeeeeeebb444444
+            44444d444444444444444ddd444ffffffffffffffffffffb4dd44dd4444444dd44444444444444444444444d4444444444444444444d4444444d44ff4d4deeeefffffeeeeeeeeebfffff444dd444444
+            4444444444d44444444444dd444444444444444444444444ddd444444444444444444444444444444444444444444444444d4444444d44444444444dd4ddfffffdffffbbbbbb4fff444444ddd444444
+            444444444444444444444444444444444444444444d44444d44d4444444444444444444dd444444444444444444dd444444ddd444444444444d444444d4d444fffff4444444444444d444444444444d
+            444444444444444444444444444dd444444444444444444444444444ddd44444444444dd4d4444444444444444444444444d4d44444444444d44444444444444444444d44444444444444444444444d
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
+            `)
+        npc.setPosition(120, 120)
+        main_character.setPosition(38, 120)
+    }
 }
 function escena_fabrica () {
     fabrica = sprites.create(img`
@@ -1359,30 +1740,37 @@ function destroyLevelOne () {
 }
 let fabrica: Sprite = null
 let can_talk = false
+let player_1_bullet: Sprite = null
 let randomTime = 0
 let isDuel = false
 let canShoot = false
 let two_players_button: Sprite = null
 let single_player_button: Sprite = null
-let player_1_bullet: Sprite = null
+let has_completed_mbappez = false
+let has_prev_location = false
+let prev_location_of_main_character: tiles.Location = null
+let has_completed_football = false
 let player_1_can_shoot = false
+let npc_dueling: Sprite = null
+let npc_bullet: Sprite = null
 let can_main_character_shoot = false
 let textSprite: TextSprite = null
 let player_2_bullet: Sprite = null
 let player_2_can_shoot = false
 let is_npc_duel = false
 let mom2: Sprite = null
-let npc_building: Sprite = null
-let show_npc_building = false
 let show_npc_football_map = false
 let npc_start: Sprite = null
 let myMinimap: minimap.Minimap = null
+let is_map_showing = false
 let showMinimap = false
 let can_show_minimap = false
-let mainName = ""
 let cursor: Sprite = null
 let main_character: Sprite = null
-let isTalking = false
+let show_npc_building = false
+let is_player_talking = false
+let mainName = ""
+let npc_building: Sprite = null
 let is_shoot_done = false
 let npc_football: Sprite = null
 let main_character_bullet: Sprite = null
@@ -1411,7 +1799,7 @@ miniMapa = sprites.create(img`
     `, SpriteKind.Player)
 is_on_map_level = false
 game.onUpdate(function () {
-    if (isTalking) {
+    if (is_player_talking || is_map_showing) {
         controller.moveSprite(main_character, 0, 0)
     } else {
         controller.moveSprite(main_character, 100, 100)
