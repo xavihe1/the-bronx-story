@@ -1,7 +1,7 @@
 @namespace
 class SpriteKind:
     twoPlayersButton = SpriteKind.create()
-    storyButton = SpriteKind.create()
+    story_button = SpriteKind.create()
     mom = SpriteKind.create()
     losa = SpriteKind.create()
     Complete = SpriteKind.create()
@@ -12,1186 +12,9 @@ class SpriteKind:
     final_mom = SpriteKind.create()
     marker = SpriteKind.create()
 
-def on_on_overlap(sprite22, otherSprite22):
-    global is_shoot_done, is_player_talking, show_npc_building, show_enemy_guard
-    # Si el sprite de tipo bala es la bala del otro jugador y el sprite con el que colisiona es el del primer jugador entonces gana el segundo jugador else el otro
-    if otherSprite22 == main_character_bullet and npc_football == sprite22 and not (is_shoot_done):
-        is_shoot_done = True
-        sprites.destroy(otherSprite22, effects.fire, 500)
-        npc_football.set_image(img("""
-            . . 4 4 e 2 2 f f f f f f . 2 2 
-                        . . 4 d 4 f f e e e e e e f . 2 
-                        . . f f f f e 4 4 e e e e f f . 
-                        f f 8 8 8 e 4 4 f f 4 4 e e f 2 
-                        f f 2 2 2 4 4 4 d f 4 4 4 e 2 2 
-                        2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f 
-                        2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f 
-                        f f 8 5 8 4 4 4 f f e e 2 2 e f 
-                        f f 2 2 2 e 4 4 d f e e 2 2 2 2 
-                        2 2 f f f f e 4 4 e e 2 e 2 2 2 
-                        2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
-                        . 2 2 4 e 2 2 f e e 2 f f . 2 2
-        """))
-        npc_football.set_kind(SpriteKind.Complete)
-        game.splash("You win")
-        story.print_character_text("Ahora dime donde encontrar a vuestra gente",
-            main_character_name)
-        story.print_character_text("Vale, vale... pero no me hagas daño. Si me llevas a un hospital, te diré dónde están los demás.",
-            "Pedro")
-        story.print_character_text("Trato hecho. Ahora, habla.", main_character_name)
-        story.print_character_text("Están en la parte más peligrosa de la ciudad. Aquí, te lo dibujo en el mapa.",
-            "Pedro")
-        pause(1000)
-        story.sprite_say_text(npc_football, "X.X")
-        is_player_talking = False
-        show_npc_building = True
-        destroy1v1()
-        mapLevel()
-        story.print_dialog("Tienes dibujado al siguiente rival en el mapa",
-            80,
-            90,
-            50,
-            150)
-    elif otherSprite22 == main_character_bullet and npc_building == sprite22 and not (is_shoot_done):
-        is_shoot_done = True
-        sprites.destroy(otherSprite22, effects.fire, 500)
-        npc_building.set_image(img("""
-            . . e e e . 2 f f f f f f 2 2 2 
-                        . . e d e 2 2 e e e f f f f 2 2 
-                        . . f f f f e e e e e f f f 2 2 
-                        f f f f f e e e f f e e f f f 2 
-                        2 f f f f e e e d f e e f f f f 
-                        2 f f f e e 2 e e e e e f 2 f f 
-                        . f 8 8 e e 2 e e e e e f 2 2 f 
-                        f f 8 2 8 e e e f f e e f f 2 f 
-                        f f f f f e e e d f e f f f 2 . 
-                        2 2 f f f f e e e e e f f f 2 2 
-                        . . e d e f f e f f f f f f 2 2 
-                        . . e e 2 2 2 f f f f f f 2 2 2
-        """))
-        npc_building.set_kind(SpriteKind.Complete)
-        game.splash("You win")
-        story.sprite_say_text(npc_building, "X.X")
-        pause(1000)
-        story.sprite_say_text(npc_building, "Aggh ffs")
-        is_player_talking = False
-        show_enemy_guard = True
-        show_npc_building = True
-        destroy1v1()
-        mapLevel()
-        story.print_dialog("Has enviado un mensaje a tu madre de donde tienen las cosas, aparte lo tienes en el mapa",
-            80,
-            90,
-            50,
-            150)
-sprites.on_overlap(SpriteKind.npc_duel, SpriteKind.projectile, on_on_overlap)
-
-def on_up_pressed():
-    if isPlayerLive and not (is_player_talking):
-        animation.run_image_animation(main_character,
-            [img("""
-                    . . . . f f f f . . . . . 
-                                . . f f c c c c f f . . . 
-                                . f f c c c c c c f f . . 
-                                f f c c c c c c c c f f . 
-                                f f c c f c c c c c c f . 
-                                f f f f f c c c f c c f . 
-                                f f f f c c c f c c f f . 
-                                f f f f f f f f f f f f . 
-                                f f f f f f f f f f f f . 
-                                . f f f f f f f f f f . . 
-                                . f f f f f f f f f f . . 
-                                f e f f f f f f f f e f . 
-                                e 4 f e e e e e e c 4 e . 
-                                e e f f e e e e f f e e . 
-                                . . . f f f f f f . . . . 
-                                . . . f f . . f f . . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f c c c c f f . . 
-                                . f f f c c c c c c f f . 
-                                f f c c c c c c c c c f f 
-                                f c c c c f c c c c c c f 
-                                . f f f f c c c c f c c f 
-                                . f f f f c c f c c c f f 
-                                . f f f f f f f f f f f f 
-                                . f f f f f f f f f f f f 
-                                . . f f f f f f f f f f . 
-                                . . e f f f f f f f f f . 
-                                . . e f f f f f f f f e f 
-                                . . 4 c e e e e e e 4 4 e 
-                                . . e f f f f f f f e e . 
-                                . . . f f f . . . . . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f c c c c f f . . 
-                                . . f f c c c c c c f f . 
-                                . f f f c c c c c c c f f 
-                                f f f c c c c c c c c c f 
-                                f f c c c f c c c c c c f 
-                                . f f f f f c c c f c f f 
-                                . f f f f c c f f c f f f 
-                                . . f f f f f f f f f f f 
-                                . . f f f f f f f f f f . 
-                                . . f f f f f f f f f e . 
-                                . f e f f f f f f f f e . 
-                                . e 4 4 e e e e e e c 4 . 
-                                . . e e f f f f f f f e . 
-                                . . . . . . . . f f f . .
-                """)],
-            500,
-            True)
-    elif isPlayerLive:
-        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
-controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
-
-def on_overlap_tile(sprite4, location):
-    if has_completed_mbappez:
-        final_level()
-scene.on_overlap_tile(SpriteKind.player,
-    sprites.dungeon.stair_south,
-    on_overlap_tile)
-
-def on_on_overlap2(sprite, otherSprite):
-    global main_character_name
-    cursor.say_text("A para jugar")
-    if controller.A.is_pressed():
-        if main_character_name.is_empty() or main_character_name == "undefined":
-            main_character_name = game.ask_for_string("Username", 7)
-            if main_character_name.is_empty() or main_character_name == "":
-                main_character_name = "Kyrie"
-        storyMode()
-sprites.on_overlap(SpriteKind.player, SpriteKind.storyButton, on_on_overlap2)
-
-def on_b_pressed():
-    global can_show_minimap, showMinimap, is_map_showing, myMinimap
-    if is_on_map_level:
-        can_show_minimap = not (can_show_minimap)
-        if can_show_minimap:
-            showMinimap = True
-            is_map_showing = True
-            myMinimap = minimap.minimap(MinimapScale.EIGHTH, 2, 15)
-            minimap.include_sprite(myMinimap, main_character, MinimapSpriteScale.OCTUPLE)
-            minimap.include_sprite(myMinimap, npc_start, MinimapSpriteScale.QUADRUPLE)
-            if show_npc_football_map:
-                minimap.include_sprite(myMinimap, npc_football, MinimapSpriteScale.QUADRUPLE)
-            if show_npc_building:
-                minimap.include_sprite(myMinimap, npc_building, MinimapSpriteScale.QUADRUPLE)
-            if show_enemy_guard:
-                minimap.include_sprite(myMinimap, enemy_guard, MinimapSpriteScale.QUADRUPLE)
-            miniMapa.set_image(minimap.get_image(myMinimap))
-            miniMapa.set_position(scene.camera_property(CameraProperty.X),
-                scene.camera_property(CameraProperty.Y))
-            miniMapa.z = 999
-        else:
-            is_map_showing = False
-            miniMapa.set_image(img("""
-                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . . 
-                                . . . . . . . . . . . . . . . .
-            """))
-            showMinimap = False
-controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
-
-def final_level():
-    global final_mom_sprite, final_emily_sprite
-    sprites.destroy(textSprite)
-    sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
-    # Crear sprites de la madre y Emily
-    final_mom_sprite = sprites.create(img("""
-            . . . . . . . f f . . . . . . . 
-                    . . . . . f f 3 3 f f . . . . . 
-                    . . . . f 3 3 3 3 3 3 f . . . . 
-                    . . . f 5 5 3 3 3 3 5 3 f . . . 
-                    . . f 3 3 5 3 3 3 5 5 3 3 f . . 
-                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
-                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
-                    . f 3 3 f f e e e e f f 3 3 f . 
-                    f f 3 3 f b f e e f b f 3 3 f f 
-                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
-                    . f 3 3 f e e e e e e e 3 3 f . 
-                    . . f e f 5 5 d d d 5 5 e f . . 
-                    . . 5 e c d 5 9 9 9 5 d e 5 . . 
-                    . . e f b d d d 9 d d d f e . . 
-                    . . . f f 1 d d 1 d 1 f f . . . 
-                    . . . . . f f f f f f . . . . .
-        """),
-        SpriteKind.Npc)
-    final_emily_sprite = sprites.create(img("""
-            . f f f . f f f f . f f f . 
-                    f f f f f c 5 5 5 f f f f f 
-                    f f f f b c c c c b 5 5 f f 
-                    f f 5 5 3 c c c c 3 c 5 f f 
-                    . f 3 3 c c c c c c 3 3 f . 
-                    . f c c c c 4 4 c c c c f . 
-                    . f f c c 4 4 4 4 c c f f . 
-                    . f f f b f 4 4 f b f f f . 
-                    . f f 4 1 f d d f 1 4 f f . 
-                    . . f f d d d d d d f f . . 
-                    . . e f f f 4 4 f f f e . . 
-                    . e 4 f b f 5 5 f b f 4 e . 
-                    . 5 d f 3 3 5 5 3 3 c d 5 . 
-                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
-                    . . . . f f f f f f . . . . 
-                    . . . . f f . . f f . . . .
-        """),
-        SpriteKind.Npc)
-    # Configurar el mapa y ubicar los sprites
-    tiles.set_current_tilemap(tilemap("""
-        nivel2
-    """))
-    tiles.place_on_tile(main_character, tiles.get_tile_location(11, 14))
-    tiles.place_on_tile(final_mom_sprite, tiles.get_tile_location(6, 3))
-    tiles.place_on_tile(final_emily_sprite, tiles.get_tile_location(9, 3))
-
-def on_on_overlap3(sprite222, otherSprite222):
-    global is_player_talking, show_enemy_guard
-    game.show_long_text("Hablar con mamá", DialogLayout.BOTTOM)
-    is_player_talking = True
-    story.print_character_text("" + main_character_name + "!" + " Se lo llevaron... ¡Se llevaron todo!",
-        "Mamá")
-    story.print_character_text("¿Quién, mamá? ¿Qué pasó?", main_character_name)
-    story.print_character_text("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!",
-        "Mamá")
-    story.print_character_text("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.",
-        main_character_name)
-    story.show_player_choices("Salir", "Quedarse")
-    if story.check_last_answer("Salir"):
-        mom2.set_kind(SpriteKind.Complete)
-        is_player_talking = False
-        show_enemy_guard = False
-        mapLevel()
-    elif story.check_last_answer("Quedarse"):
-        is_player_talking = False
-        pause(1000)
-sprites.on_overlap(SpriteKind.player, SpriteKind.mom, on_on_overlap3)
-
-def on_player2_button_a_pressed():
-    global player_2_bullet, player_2_can_shoot
-    if player_2_can_shoot:
-        player_2_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . 2 2 2 2 . . . . . . . . . 
-                            . . 2 1 1 1 1 2 2 . . . . . . . 
-                            . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                            . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                            . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                            . . 2 1 1 1 1 3 2 2 . . . . . . 
-                            . . . 2 2 2 2 . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . .
-            """),
-            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
-            -50,
-            0)
-        player_2_can_shoot = False
-controller.player2.on_button_event(ControllerButton.A,
-    ControllerButtonEvent.PRESSED,
-    on_player2_button_a_pressed)
-
-def on_left_pressed():
-    if isPlayerLive and not (is_player_talking):
-        animation.run_image_animation(main_character,
-            [img("""
-                    . . . . . f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . . f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . . f f e e f b f e e f f 
-                                . . . f 4 4 f 1 e 4 e f . 
-                                . . . f 4 4 4 4 e f f f . 
-                                . . . f f e e e e e f . . 
-                                . . . f e f e e e 4 e . . 
-                                . . . f e e e e e 4 e . . 
-                                . . . f f f f f e e f . . 
-                                . . . . f f f f f f . . . 
-                                . . . . . . f f f . . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . f f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . . f f e e f b f e e f f 
-                                . . f f 4 4 f 1 e 4 e f . 
-                                . . . f 4 4 4 e e f f f . 
-                                . . . f f e e 4 4 e f . . 
-                                . . . f e f e 4 4 e f . . 
-                                . . f f f f f e e f f f . 
-                                . . f f f f f f f f f f . 
-                                . . . f f f . . . f f . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f f f . . . 
-                                . . . f f f f f f f f f . 
-                                . . f f f c f f f f f f . 
-                                . f f f c f f f c f f f f 
-                                f f c c f f f c c f f c f 
-                                f f f f f e f f f f c c f 
-                                . f f f e e f f f f f f f 
-                                . f f f e e f b f e e f f 
-                                . . f f 4 4 f 1 e 4 e f f 
-                                . . . f 4 4 4 4 e f f f . 
-                                . . . f f e e e e 4 4 4 . 
-                                . . . f e f e e e 4 4 e . 
-                                . . f f f f f f f e e f . 
-                                . . f f f f f f f f f f . 
-                                . . . f f f . . . f f . .
-                """)],
-            500,
-            True)
-    elif isPlayerLive:
-        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
-controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
-
-def instantiate_npcs():
-    global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start, enemy_guard
-    if npc_football == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_football == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
-        npc_football = sprites.create(img("""
-                . . . . f f f f . . . . 
-                            . . f f e e e e f f . . 
-                            . f f e e e e e e f f . 
-                            f e e e 4 e e e e e f f 
-                            f e e 4 4 4 e e e e e f 
-                            f e e 4 4 4 4 e e e e e 
-                            f e e f f 4 4 f f e e e 
-                            f e 4 f d 4 4 f d 4 4 e 
-                            f e 4 4 4 4 4 4 4 4 e f 
-                            . f e 4 4 2 2 4 4 e f . 
-                            . f f e 4 4 4 4 e f f . 
-                            e 4 f 8 2 8 2 8 2 f 4 e 
-                            4 d f 8 2 8 2 5 2 f d 4 
-                            4 4 f 8 2 8 2 8 2 f 4 4 
-                            . . . f f f f f f . . . 
-                            . . . f f . . f f . . .
-            """),
-            SpriteKind.Npc)
-        show_npc_football_map = False
-    elif npc_football.kind() == SpriteKind.Complete:
-        npc_football = sprites.create(img("""
-                . . 4 4 e 2 2 f f f f f f . 2 2 
-                            . . 4 d 4 f f e e e e e e f . 2 
-                            . . f f f f e 4 4 e e e e f f . 
-                            f f 8 8 8 e 4 4 f f 4 4 e e f 2 
-                            f f 2 2 2 4 4 4 d f 4 4 4 e 2 2 
-                            2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f 
-                            2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f 
-                            f f 8 5 8 4 4 4 f f e e 2 2 e f 
-                            f f 2 2 2 e 4 4 d f e e 2 2 2 2 
-                            2 2 f f f f e 4 4 e e 2 e 2 2 2 
-                            2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
-                            . 2 2 4 e 2 2 f e e 2 f f . 2 2
-            """),
-            SpriteKind.Complete)
-        show_npc_football_map = True
-    tiles.place_on_tile(npc_football, tiles.get_tile_location(39, 8))
-    if npc_building == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_building == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
-        npc_building = sprites.create(img("""
-                . . . . f f f f . . . . 
-                            . . f f f f f f f f . . 
-                            . f f f f f f f f f f . 
-                            f f f f f f f f f f f f 
-                            f f f e e e e e f f f f 
-                            f f e e e e e e e e f f 
-                            f e e f f e e f f e f f 
-                            f e e f d e e f d e f f 
-                            f e e e e e e e e e e f 
-                            . f e e e 2 2 e e e f . 
-                            . f f e e e e e e f f . 
-                            e e f f f e e 8 f f e e 
-                            e d f f f f 8 2 f f d e 
-                            e e f f f f 8 8 f f e e 
-                            . . . f f f f f f . . . 
-                            . . . f f . . f f . . .
-            """),
-            SpriteKind.Npc)
-        show_npc_building = False
-    elif npc_building.kind() == SpriteKind.Complete:
-        npc_building = sprites.create(img("""
-                . . e e e . 2 f f f f f f 2 2 2 
-                            . . e d e 2 2 e e e f f f f 2 2 
-                            . . f f f f e e e e e f f f 2 2 
-                            f f f f f e e e f f e e f f f 2 
-                            2 f f f f e e e d f e e f f f f 
-                            2 f f f e e 2 e e e e e f 2 f f 
-                            . f 8 8 e e 2 e e e e e f 2 2 f 
-                            f f 8 2 8 e e e f f e e f f 2 f 
-                            f f f f f e e e d f e f f f 2 . 
-                            2 2 f f f f e e e e e f f f 2 2 
-                            . . e d e f f e f f f f f f 2 2 
-                            . . e e 2 2 2 f f f f f f 2 2 2
-            """),
-            SpriteKind.Complete)
-        show_npc_building = True
-    else:
-        npc_building = sprites.create(img("""
-                . . . . f f f f . . . . 
-                            . . f f f f f f f f . . 
-                            . f f f f f f f f f f . 
-                            f f f f f f f f f f f f 
-                            f f f e e e e e f f f f 
-                            f f e e e e e e e e f f 
-                            f e e f f e e f f e f f 
-                            f e e f d e e f d e f f 
-                            f e e e e e e e e e e f 
-                            . f e e e 2 2 e e e f . 
-                            . f f e e e e e e f f . 
-                            e e f f f e e 8 f f e e 
-                            e d f f f f 8 2 f f d e 
-                            e e f f f f 8 8 f f e e 
-                            . . . f f f f f f . . . 
-                            . . . f f . . f f . . .
-            """),
-            SpriteKind.Npc)
-    tiles.place_on_tile(npc_building, tiles.get_tile_location(30, 40))
-    npc_start = sprites.create(img("""
-            . f f f . f f f f . f f f . 
-                    f f f f f c c c c f f f f f 
-                    f f f f b c c c c b f f f f 
-                    f f f c 3 c c c c 3 c f f f 
-                    . f 3 3 c c c c c c 3 3 f . 
-                    . f c c c c 4 4 c c c c f . 
-                    . f f c c 4 4 4 4 c c f f . 
-                    . f f f b f 4 4 f b f f f . 
-                    . f f 4 1 f d d f 1 4 f f . 
-                    . . f f d d d d d d f f . . 
-                    . . e f e 4 4 4 4 e f e . . 
-                    . e 4 f b 3 3 3 3 b f 4 e . 
-                    . 4 d f 3 3 3 3 3 3 c d 4 . 
-                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
-                    . . . . f f f f f f . . . . 
-                    . . . . f f . . f f . . . .
-        """),
-        SpriteKind.Npc)
-    tiles.place_on_tile(npc_start, tiles.get_tile_location(6, 7))
-    if show_enemy_guard:
-        enemy_guard = sprites.create(img("""
-                . . . f 2 2 2 2 2 2 2 2 f . . . 
-                            . f f 2 2 2 2 2 2 2 2 2 2 f f . 
-                            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f 
-                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
-                            2 2 2 2 f f f f f f f f 2 2 2 2 
-                            2 2 2 2 f f f f f f f f 2 2 2 2 
-                            2 2 2 2 f f f f f f f f 2 2 2 2 
-                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
-                            f 2 2 2 2 2 f f f f 2 2 2 2 2 f 
-                            f f 2 2 2 2 2 2 2 2 2 2 2 f f . 
-                            . f f 2 2 2 2 2 2 2 2 2 f f . . 
-                            . . f f 2 2 2 2 2 2 2 f f . . . 
-                            . . . f f 2 2 2 2 2 f f . . . . 
-                            . . . . f 2 2 2 2 2 f . . . . . 
-                            . . . . . f 2 2 2 f . . . . . . 
-                            . . . . . . f 2 f . . . . . . .
-            """),
-            SpriteKind.marker)
-        tiles.place_on_tile(enemy_guard, tiles.get_tile_location(57, 58))
-
-def on_countdown_end():
-    global textSprite, can_main_character_shoot, npc_can_shoot, player_1_can_shoot, player_2_can_shoot
-    textSprite = textsprite.create("YA", 15, 2)
-    textSprite.set_scale(4, ScaleAnchor.MIDDLE)
-    textSprite.set_position(76, 40)
-    if is_npc_duel:
-        can_main_character_shoot = True
-        npc_can_shoot = True
-    player_1_can_shoot = True
-    player_2_can_shoot = True
-info.on_countdown_end(on_countdown_end)
-
-def on_right_pressed():
-    if isPlayerLive and not (is_player_talking):
-        animation.run_image_animation(main_character,
-            [img("""
-                    . . . . . . . . . . . . . 
-                                . . . f f f f f f . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f f . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f f . 
-                                f f e 4 e 1 f 4 4 f f . . 
-                                . f f f e 4 4 4 4 f . . . 
-                                . 4 4 4 e 4 4 4 f f . . . 
-                                . e 4 4 e e e f e f . . . 
-                                . f e e f e e e e f f . . 
-                                . f f f f f f f f f f . . 
-                                . . f f . . . f f f . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . f f f f f f . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f f . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f . . 
-                                . f e 4 e 1 f 4 4 f f . . 
-                                . f f f e e 4 4 4 f . . . 
-                                . . f 4 4 f 4 4 f f . . . 
-                                . . f 4 4 f e f e f . . . 
-                                . f f f f e e e e f f . . 
-                                . f f f f f f f f f f . . 
-                                . . f f . . . f f f . . .
-                """),
-                img("""
-                    . . . f f f f f . . . . . 
-                                . f f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f c f f f c f f . . 
-                                f c f f c c f f f c c f f 
-                                f c c f f f f e f f f f f 
-                                f f f f f f f e e f f f . 
-                                f f e e f b f e e f f . . 
-                                . f e 4 e 1 f 4 4 f . . . 
-                                . f f f e 4 4 4 4 f . . . 
-                                . . f e f f e e f f . . . 
-                                . . f 4 4 f e e e f . . . 
-                                . . f 4 4 e e f e f . . . 
-                                . . f f f f e e e f . . . 
-                                . . . f f f f f f . . . . 
-                                . . . . f f f . . . . . .
-                """)],
-            500,
-            True)
-    elif isPlayerLive:
-        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
-controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
-
-def on_on_overlap4(sprite2, otherSprite2):
-    global is_player_talking, show_npc_football_map, prev_location_of_main_character, has_prev_location, has_completed_football, has_completed_mbappez
-    if not (showMinimap) and is_on_map_level:
-        main_character.say_text("A para hablar", 500, False)
-        if not (showMinimap) and controller.A.is_pressed():
-            is_player_talking = True
-            if otherSprite2 == npc_start and not (showMinimap):
-                story.print_character_text("Hola, sé lo que ha pasado con tu madre...", "Emily")
-                story.print_character_text("Vi a unos chavales con camisetas de futbol", "Emily")
-                story.print_character_text("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?",
-                    main_character_name)
-                story.print_character_text("Uno debería de estar en el campo de futbol con una Camiseta del Barcelona.",
-                    "Emily")
-                story.print_character_text("De verdad, te lo agradezco", main_character_name)
-                story.print_character_text("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres",
-                    "Emily")
-                show_npc_football_map = True
-                story.print_dialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
-                is_player_talking = False
-            elif otherSprite2 == npc_football and not (showMinimap):
-                story.print_character_text("¡Eres uno de los que irrumpió y robó a mi madre!",
-                    main_character_name)
-                story.print_character_text("¿De qué hablas? Yo estoy tranquilo aquí jugando al fútbol.",
-                    "Pedro")
-                story.print_character_text("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!",
-                    main_character_name)
-                prev_location_of_main_character = main_character.tilemap_location()
-                has_prev_location = True
-                has_completed_football = True
-                npc_duel2(npc_football)
-            elif otherSprite2 == npc_building and not (showMinimap) and has_completed_football:
-                story.print_character_text("¡Tú! ¡No te escondas, sé que estás con ellos!",
-                    main_character_name)
-                story.print_character_text("¿Qué? ¡No tengo idea de lo que hablas! Yo solo estoy de paso.",
-                    "Mbappez")
-                story.print_character_text("No me tomes por tonto. ¿Dónde está guardáis lo que robáis?",
-                    main_character_name)
-                story.print_character_text(" ¿Robar? Nosotros no robamos, somos un equipo de fútbol humilde... Bueno, con algo de talento.",
-                    "Mbappez")
-                story.print_character_text("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?",
-                    main_character_name)
-                story.print_character_text("¡Ah! Bueno, quizás haya... algo de información ahí, pero no es lo que crees.",
-                    "Mbappez")
-                prev_location_of_main_character = main_character.tilemap_location()
-                has_prev_location = True
-                has_completed_mbappez = True
-                npc_duel2(npc_building)
-            elif otherSprite2 == final_mom_sprite and not (showMinimap):
-                story.print_character_text("¡Mamá, estoy aquí! ¿Estás bien?", main_character_name)
-                story.print_character_text("Oh, hijo... Estoy perfectamente. Mejor de lo que crees.",
-                    "Mamá")
-                story.print_character_text("¿Qué? Pero esos chicos... ¿Dónde están los ladrones?",
-                    main_character_name)
-                story.print_character_text("Fui yo. Todo esto lo planeé para quitarles lo poco que tenían. Pagué a Emily para que te diera esa información",
-                    "Mamá")
-                story.print_character_text("...", main_character_name)
-                story.print_character_text("¡¿Qué estás diciendo?! ¡Mamá, ellos no hicieron nada!",
-                    main_character_name)
-                story.print_character_text("Ellos no importan. Nosotros necesitábamos el dinero, y ahora lo tenemos.",
-                    "Mamá")
-                story.print_character_text("Lo hice por ti. Por nosotros.", "Mamá")
-                story.print_character_text("¡Entonces he dañado a esos pobres chavales para nada!",
-                    main_character_name)
-                story.print_character_text("Si dices algo, me perderás a mí también. ¿Estás dispuesto a tomar ese riesgo?",
-                    "Mamá")
-                carnival.custom_game_over_expanded("Terminaste el juego!",
-                    effects.confetti,
-                    music.big_crash,
-                    carnival.ScoreTypes.NONE)
-            else:
-                story.print_dialog("No puedes hablar con el/ella ahora", 80, 90, 50, 150)
-                is_player_talking = False
-sprites.on_overlap(SpriteKind.player, SpriteKind.Npc, on_on_overlap4)
-
-def storyModeDestroy():
-    sprites.destroy(cursor)
-    sprites.destroy(single_player_button)
-    sprites.destroy(two_players_button)
-
-def on_down_pressed():
-    if isPlayerLive and not (is_player_talking):
-        animation.run_image_animation(main_character,
-            [img("""
-                    . . . . f f f f . . . . . 
-                                . . f f f f f f f f . . . 
-                                . f f f f f f c f f f . . 
-                                f f f f f f c c f f f c . 
-                                f f f c f f f f f f f c . 
-                                c c c f f f e e f f c c . 
-                                f f f f f e e f f c c f . 
-                                f f f b f e e f b f f f . 
-                                . f 4 1 f 4 4 f 1 4 f . . 
-                                . f e 4 4 4 4 4 4 e f . . 
-                                . f f f e e e e f f f . . 
-                                f e f e f e e f e f e f . 
-                                e 4 f e e e e e e f 4 e . 
-                                e e f f f f f f f f e e . 
-                                . . . f f f f f f . . . . 
-                                . . . f f . . f f . . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . . f f f f . . . . 
-                                . . . f f f f f f f f . . 
-                                . . f f f f f f c f f f . 
-                                f f f f f f f c c f f f c 
-                                f f f f c f f f f f f f c 
-                                . c c c f f f e e f f c c 
-                                . f f f f f e e f f c c f 
-                                . f f f b f e e f b f f f 
-                                . f f 4 1 f 4 4 f 1 4 f f 
-                                . . f e 4 4 4 4 4 e e f e 
-                                . f e f e f e e f 4 4 4 e 
-                                . e 4 f e e e e e 4 4 e . 
-                                . . . f f f f f f e e . . 
-                                . . . f f f f f f f . . . 
-                                . . . f f f . . . . . . .
-                """),
-                img("""
-                    . . . . . . . . . . . . . 
-                                . . . . f f f f . . . . . 
-                                . . f f f f f f f f . . . 
-                                . f f f c f f f f f f . . 
-                                c f f f c c f f f f f f f 
-                                c f f f f f f f c f f f f 
-                                c c f f e e f f f c c c . 
-                                f c c f f e e f f f f f . 
-                                f f f b f e e f b f f f . 
-                                f f 4 1 f 4 4 f 1 4 f f . 
-                                e f e e 4 4 4 4 4 e f . . 
-                                e 4 4 4 f e e f e f e f . 
-                                . e 4 4 e e e e e f 4 e . 
-                                . . e e f f f f f f . . . 
-                                . . . f f f f f f f . . . 
-                                . . . . . . . f f f . . .
-                """)],
-            500,
-            True)
-    elif isPlayerLive:
-        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
-controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
-
-def TwoPlayersScreen():
-    global is_shoot_done, canShoot, player_1_can_shoot, player_2_can_shoot, isDuel, randomTime
-    is_shoot_done = False
-    canShoot = False
-    player_1_can_shoot = False
-    player_2_can_shoot = False
-    isDuel = True
-    randomTime = randint(1, 10)
-    info.start_countdown(randomTime)
-    scene.set_background_image(img("""
-        fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff11fffffffffffff111
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbfffffffffffffbbbbbbbbbbbbbbb1111111fffffffffffff1111111111ffffffffffffff1111
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbffbffffffffffffbfff111fffffffbfffffffffffffb1111111111fffffff111bbbbbbbbbbbbffffffffffff1111
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb1111111ffffffbfffffffffffffb1111111111ffffffffbffffffffffffbffffffffffffff11
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbfbffffffbbbfb11666116fffffbfffffffffffffb11111111ffffffffffbffffffffffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffbbbbbbffffbffbfbbbbfffffffb11111116fffffbfffbbbbffffffb1111111fffffffffffbffbbbbffffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb11111116fffffbfffffffffffbfbbbbbbbbbbbbbbbffffbffffffffffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb111111fffffffbfffffffffffbfbfffffffffffffbffffbfffffffffbffb111111ffffffffff
-                ffffffffffffffffffffffffffffffffffffffffffff111111fffbffffffffffffbffbffffffffffffb1111fffffffffbfffffffffffbfbfffffffffffffbffffbfffbfffffbffb11111111ffffffff
-                ffffffffffffffffffffffffffffffffffffffff111111111111fbfffffffbbfffbffbffffffffffffbfffffffffffffbfffbfffffffbfbfffffffffffffbf111bfffbbffffbffb11111111ffffffff
-                ffffffffffffffffffffffffffffffffffffffff1111166111111bffffffffffffbffbffffffffffffbfffffffffffffbfffffffffffffbffbbbbfffffffbf111bfffffffffbffb11111111ffffffff
-                fffffffffffffffffffffffffffffffffffffffff111656661111bffffffffffffbffbffffbbbbbbffbfffffffffffffbfffffffffffffbffffffffffbffbff11bfffffffffbffb11111111ffffffff
-                fffffffffffffffffffffffffffffffffffffffffff1551511111bffffffffffffbffbfffffffffbffbffbbbbbbbbbbbbfffffffffffffbffffffffffbffbffffbffffffffffffb11111111ffffffff
-                fffffffffffffffffffffffffffffffffffffffffff5556551111bffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffbbbffffbffbffffbffffffffffffbf1111111ffffffff
-                fffffffffffffffffffffffffffffffffffffffffff555665511fbfffbffffffffbffbffffffffffffbffbffffffffffbfffffbbbbbbffbffffffffffbffbffffbfffbbbbbffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffff55555555ffbffffffffffffbffbffbfffffffffbffbffbbbbffffbfffffffffffffbfffffffffffffbffffbffffffffffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffffff55555555ffbfffffffffbffbffbffbfffffffffbffbffffffffffbfbfffffffffffbfffffffffffffbffffbffffffffffffbffffffffffffffff
-                fffffffffffffffffffffffffffffffffffffffff111555555fffbfffffffffbffbffbffffffbbbfffbffbffffffffffbfbfffffffffffbfffffffbfffffbffffbffffffffffffbffffffffffffffff
-                ffffffffffffffffffffffffffffffffffffffffff1111111ffffbffbfffbbbbffbffbffffffffffffbffbfffffffbffbfbbffffffffffbffbffffbfffffbffffbffffffffffffbffffffffffffffff
-                ffffffffffffffffffffffffffffffffffffffffff116661fffffbffbfffbbbbffbffbffffffffffffbffbfffffffbffbffffffffffbbfbffbffffffffffbffffbfffffffbbbffbfffffbbbbbbbbbbb
-                fffffffffffffffffffffffffffffffffffffffffff161fffffffbffbfffffffffbffbffffffffffffbffbffbffffbffbffffffbbbbfffbffbffffffffffbffffbffffffffffffbfffffbffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbfffbbbffffffbffbfffffffbffbfffffbfffffffbffbffffffffffbffffbffbfffffffffbf1111bffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffbbbbffbffffbffbbffffffffb11111bffffffffff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffbbffffbffffffffffbffbfffffffffffffbffffbfffbbbffffffb11111bffbffffbff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffbbbbffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffffffffbffffbffffffffffffbf11ffbfffffffbff
-                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffffffffbffffbffffffffffffbfffffbfffffffbff
-                ffffffffffcccccccccccccbccceeeeecccccccffffffccccccccccccccccccbcccccccccccfccccccccccccccccccccccccccccccccffcccccccccccccccccccccccccccccfffbfffffbffffffffff
-                fffffffffcccccccbcccccc68cceeeccbcccccccfffcccccbccccbbcccccccccbccccbbcccccccccbccccbbccccccccccccccbbcccccccccbccccccccccbccccbccccbbccccccccfffffbffffffffff
-                fffffffffbbbbbbbbbbbbcc6cccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcfffffbffbbbbffff
-                fffffffffbbbbbbbbbfffffffffffffffbbbbbbbbbbbbbbbbbbccccbcbcbcccbbbbbccbbccbbbccbbcbbccbbbcbbbbccbccccbbccbbcccbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbccfffbffffffffff
-                bbbbfffffbbbbbbcffffffffffffffffffcbbbbbbbbbbbbbbbbbcbbbcbcbcbbbbbbbcccbcbcbcbbcbccbcbcbcbbbbcbbbbbcbbcbbcbcbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccfbffffffffff
-                bbbbbbbbbbbbbbcffffffffffffffffffffcbbbbbbbbbbbbbbbbcbbbcccbcbbbbbbbcbcbcccbbccbbcbccbbcbbbbbbccbbbcbbcbcbbcccbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccffffffffbf
-                bbbbbbbbbbbbbbcffffffffffffffffffffcbbbbbbbbbbbbbbbbcbbbcbcbccccbbbbccbbcbbcbbbbcbbbcbcbcbbbbbbbcbbcbbbcbbccbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcffffffffff
-                cbbccbcbbccbbccccffffffffffffffffcbccbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbbcccffbffffff
-                cccbccccccbcbcbcccccccffffffcccccccbccccccbcbcbcccccccccccbcbcbccccbccccccbcbcbccccbbbbbbbbbbbbbbbbbbbbbbbbbbcbccccccbcbbbbcbcbccccccbcbbbbcbcbccccbcccffffffff
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfffff
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfff
-                ccbbbbcbbbbcbbbccbbccbbbbcbcbbbbccbbbbcbbbcbcccbccbbbbcbbbbcbbbbccbbbbcbbbbcbbbbccbbbbbbbbbbbbbbbbbbbbcbbbbcbbbbccbbbbcbbbbcbbbbccbbbbcbbbbbbbcbccbbbbcbbbbccff
-                bbcbbbbbbbbbbcbbbcbbcbbcbcbbbcbbbbcbbbbbbbbcccbbbbcbbbbbbbbbbcbbbbcbbbbbbbbbbcbbbbcbbbbbcbbbbcbbbbbbcbbbbbbbbcbbbbcbbbbbbbbbbcbbbbcbbbbbbbbbccbbbbcbbbbbbbbbbcc
-                bbbbbbbbbbbbbbbcbbbbcccbbcbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbcccbcbbbbbbbbbbbbbbbb
-                bbcbbbbcbbbbbcbbbcccbbbbbcbbbcbbbbcbbcbbbbccbbcbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbcbbbbbcbbcbbbbcbbbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbbbbbbbbbbbbbcbbbcbbcbbbbbbbcb
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                bbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbccbbb
-                bcbbbcbbbbbbbbbbbbbbbbbbbbccccccbcbbcbccbcbbcbbcbcbbcbccbcbbcbbcbcbbcbccbbbcbbbcbcbbbbbbbbccbbbbbbbbbbccbcbbcbbcbbbbbcbbbbbbbbbbbbbbbbbbbb5bbbbbbbbbbbbccbbcbbb
-                bbcbbbbbbbbcbccbbbbb55bbbbbccbbbbbcbbbbbbcbbbccbbbcbbbbbbcbbbccbbbcbbbbbbbbccccbbbcbbbbbbbcbbbbbbbbbbbbbbbbbbccbbbbbccbbccbbbbcbbbcbbbbb55555bbbcccccbccccbbbcb
-                cbbbbbccbbbbbcbbbb551155bbbbbbbbbbbbbcbbbbccbbbccbbbbcbbbbccbbbccbbbbcbbbbccbbbccbbbbcbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbb55522522555bbbbccbbbbbbbcb
-                bbcbccccbbbbbbbb5511551155bbbbbbcbcbbcbbbccbbccbbbcbbcbbbccbbccbbbcbbcbbbcccbccbbbcbbcbcbbbbbbbbbbbbcbbbbbbbbbbbbbbbbcccbbbbbcbbbbbb5225225225225bbbbbbbbbbccbb
-                cccbcbccbbbbbbb515222222515bbbbbcccbbcccbbccccbbcccbbcccbbccccbbcccbbcccbbbcbbbbcccbbcccbbbbbbbbbbbbbbbbbbbbcccccccccccccccbcbbbbbbb5225225225225bbbbbbbbccbbbb
-                bbbbbccbbcccbb52225255252225bbbbbbbbbbcbbbbbbbbbbbbbbbcbbbcbcbcbbbbbbbcbbbbbbbbbbbbbbbcbbccbbbbbcbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbb5255555555525bbbbbcbbbbbbbb
-                bbcbbcbbbcbbbb55555555555555bbbcbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbcccbbbbbbbbbbbbbbcccbbccbbbccccbbbbbbbbbbcbbbbbbbbbbbbbb555fffff555bbbbcbbccbbbbcb
-                bbbbbbbbbbbbbbb555852258555bbbbcbbbbbcbbbbcbbbbbbbbbbcbbbbbbcbbbbbbbbcbbbbbbbbbbbbcbbcbbbbbbbbbbbbbbbcbbbbbbbbbbcccbbbcbbbccccbbbcbbbfff22522fffbbbbcbbbbbbbbbb
-                cbcbbbbbbbbbcbbb5111111115bbbcccbbcbbcbccbbbbbbbbbbbbcbcccbccccbcbcbbcbccbbbbbccbcbbbcbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbf22222552225fbbbccbccccbbbb
-                ccccbbbcccbccbbb1555555551bbbbbcbcccccccccccbbbbbbbccccccccccccccccccccccccbbbbcccbbccccccbbbbccccccccccccccccccccccccccccccccbbbbbf55222fff52522fbbbcbbbbbcccc
-                bbbbbbbbbbccbbb551111111155bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbf522fff188fff252fbbbbbbbbbbbb
-                bcbbbbbbbbbbbb51111111111115bbbbbcbbbbcbcbbbbbbccccbcbbbbcbbcbcbbcbbcbbbbcbbbcbbbbcbbcbbccbbbbbbbbbbbbbbbbbcbbbbbccccccbbbbbbbbbbf222f111888111f252fbbbbbbbbbbb
-                bbcbbbccbbbbb5115511111155115bbbcbcbbccbcbbbbbcbbbbbbbbbbbbbbcbbbbcbbbbbbbbbbcbbbbbccbbbbbbbccbbbcbbbbccccccbbbbbbbbbbbbbbcbbbbbf252f11188811188f222fbbbbcbbbcb
-                cbbbbbbbbbbb511588555555515115bbbbbbcccbbbcbbbbbbbbbbcbbbccbbbcccbbbbcbbbcbbbbbbbbbbbcbbbbbccbbbbcbbbbccbbbbbbbbbcbbbbbbbbcbbcbbf22f1118881118881f25fbbbbbbbbcb
-                cbcbbbbbbbbb515885851115111515bbbbcbbbbbcccbbcbbcbcbbcbccbcbbcbbcbcbbcbccbcbbcbbcbcbbbcbbbccbbbbccbbbbbbbbbbbbbbcbbbbbbcbbbbccbbf52f1188811188811f55fbbbcbbbbcb
-                ccbbbbbcbbb51588588851515111515bbcbbbbcbbbbccbbbccbbbccbbbbccbbbccbbbccbbbbccbbbccbbbccbbbbcbbbbbbbbbbcbbbbbbbbbcbbbbbbbbbbbcbbf22f11888111888111f222fbbcccccbb
-                bbbbbbccbbb51518588885111111515bbbbbbbbbbbbbbcbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbcbbbbbbbbbbbbbccbbbccbbbcbccbbbbbbbbbbbcccbbbbbbbbf22f188811188811188f22fbbbbbbbbb
-                bbbbbbcbbbb51515888888811111515bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbccbbbbbccbbbbbcbbbbbf52f888111888111888f25fbbbbbbbbb
-                bbbbbbcbbbb51515188855581111515bccbbbcbbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbbbbbbbbbccbbbbbbbbbbbbbbcbbbbbbccbbbbf22f881118881118881f22fbbbbbbbbb
-                cbcccbbbbbb51511518858888111515bbbcbbcbccccccccbcbcbbcbccccccccbcbcbbcbccccccccbcbcbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbcbbbbf252f1118881118881f525fbbbccbbbc
-                cccbbbbcbbb51511511855588811515bbbcccccccccccccccccccccccccccccccccccccccccccbbbbbbbbbccbcccccccccccccccccccccbbbbbbbcbbbbbccbbbf52f1188811188811f25fbbbbbbbbbc
-                bcbbbbbccbb51511151158885881515bbbcbcbccbbbbcbbbbcbbcbccbbcbcbbbbcbbcbccbbbbcbbbbcbcbbbbbbbbbbbbbbcccccbbbbbbbbbccbbccbbbbccbbbbf22f1888111888111f22fbbbcbbcbbb
-                bbbbbbcbbbbb515111515885888515bbbbccbbbbbcbbbbcbbbbbbbbbbccbbccbbbbbbbbbbcbbbbbbbbbbbbbbbbbbccbbbbbbbbbcccccccbbbbbbbbbbbbcbbbcbf525f88111888111f252fbbccbbbbbb
-                cbbbbbcbbbbb511111155558888815bbcbbbbccbbbbbbbbbbbbbbccbbbbbccbbcbbbbccbbbccbbbcbbbbcbbbbbbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbcbbf255f111888111f522fbbccbbbbbbb
-                bbcbbbcbbbbbb5111111511888815bbbbcbbbcbbbbcbccbbbbcbbcbbbcbbccbbbbcbbcbbbccbbcccbbbbbbcbbcbbcccbbbbccccbbbbccbbcccbbbbbccccbbbcbbbf522fff881fff225fbbbbbbbcccbc
-                cbcbbbcbbbcbbb51111111118815bbbbbcbcbbbbbbbbbcbbbbbbbcbccbbcbbcccbcbbcbccbcbcccbbcccbbbccbbbbccbbbcbbbbbccbbbbbbbbbbbbbbbbbbbbcbbbbf22525fff52222fbbbbbbbbbbbcc
-                ccbbbbbbbbcbbbb511111111115bbbbbbbbbbbbbcccccbbbbbbbcbcbbbbcbbbbccbbbbcccbbccccbbbbbcbbbbcbbbcbbbbccbbbccbccbbbcbbbbbbbcbbccbbbbbbbbf22522252225fbbbbbbbccccccc
-                bbcbbbbbbbbbbbbb5551111555bbbbbccccbbbcbbbbbbbbcbbbbbbbbcbbbbcbbbbcbbbccbccccbccccbbbbbbbbbbbbbbbbbbccccbbbbbbbccccbccccbbbbbbbbbbbbbfff55222fffbbbbbbcbbbbbbbb
-                bbbbbbbbbbbbbbbbbbb5555bbbbbbcccbcbbccccccccbccbbbbbbbbbbbcbbbbbbbbbbcccbbbbbbbbbbbbbcbbcbbbbcbbbbbbbbbbbbbbccbbcbcbbbbccccccccbbbbbbbbbfffffbbbbbbbbbcbbbbbbbb
-                bbcbbccbcbbcbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccccccccccccccccccccccccbbbbbbbbbbbbcbbbbbbbbbbbbbbcbbbcbbbbbcbb
-                cccbbbbbccbbbbbcccccbbbbbcbcbbbbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbcccbbbbbcbbbbbbbccaac
-                bbbbccccbccbbbbbbbbccbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbccbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bcbbbbbbbbbbbbcbcccccbbbbbccbbbbbbbcbbbbbbbcbbbbbcbbbbbbbbbbcbbcbcbbcbccbbbcccbbcbbcbbcccccbbcccbbccbcbcbcbbcbbbbcccccbbcbbbcbcbcbbbbbbccccbbbcccbbbcbccbccbcbc
-                bbcbbbbbbbbbbbbbbbbbbbbbcccbbbcbbcccccccbbbcbbbbbccbbbbbcbbbbcbbbbcbbbbcbbbbbbbbbcbcbbcbbbcbbcbccbbcbbbccbbbbcbbbbcccbbbcbbbcbccbbbbbbbbbbbbbcbbbbbbbbbccbbbbcb
-                cbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbccbbbbbbbcbbbbccbbcccbbbbcbbbbbbbbbbbbbcbbbbbbcbbccbbbbcbbccbbccbbcccbbccbbbbbbccbbbbbbbbbbbbccbbbccbbbcccbbbcbbccb
-                bbcbbbccbcbbbcbbbbcbbbbccbbbbcbbbccbbbcbbbbbbccbbbbcbbbbbcbbbcbbbbcbbbbccbcffccffbbbbbbbbbbbbbbbbbbbbbccbcbbbcbbbbcbbebccbbbbcbbbccbbbbccbbcbbbccbbbbbbccbbccbc
-                cccccccbccccccbccccccccccbccccbbbcbbbbbbbbbbbbbbbbbccbbbcbccccbccccccccccccccccccccccccccccccccccccccccbccccccbccccccccccbccccbcccbbcccccbbccccccccccccccbbcbbc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-                bccccccccccbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfccccccccbccccccccccbccccccccccccccccccccbccccccccccbccccccccccccccccccc
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                cbcbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbccbcbbbbbbbccbcbbbbbbbbbbbbbcbcb
-                bbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcb
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bbbcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bbcccccccfccccccfcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                ccccffccccccccfccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                ccccccccffccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb6bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                cccccccccbccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                cccccbccccccccbcccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                cccccccccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bbcccccccccccccccbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbb
-                dbbbbbccccccccbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbb
-                ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccc
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-    """))
-    sprites.destroy(two_players_button)
-    sprites.destroy(single_player_button)
-    sprites.destroy(cursor)
-    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.ONE),
-        sprites.create(img("""
-                . . . . . . . . . . . . . . . . 
-                        . . . . . f f f f f f . . . . . 
-                        . . . f f e e e e f 2 f . . . . 
-                        . . f f e e e e f 2 2 2 f . . . 
-                        . . f e e e f f e e e e f . . . 
-                        . . f f f f e e 2 2 2 2 e f . . 
-                        . . f e 2 2 2 f f f f e 2 f . . 
-                        . f f f f f f f e e e f f f . . 
-                        . f f e 4 4 e b f 4 4 e e f . . 
-                        . f e e 4 d 4 1 f d d e f f . . 
-                        . . f e e e 4 d d d d f d d f . 
-                        . . . . f e e 4 e e e f b b f . 
-                        . . . . f 2 2 2 4 d d e b b f . 
-                        . . . f f 4 4 4 e d d e b f . . 
-                        . . . f f f f f f e e f f . . . 
-                        . . . . f f . . . f f f . . . .
-            """),
-            SpriteKind.player))
-    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.TWO),
-        sprites.create(img("""
-                . . . . . f f f f f . . . . 
-                        . . . . f e e e e e f f . . 
-                        . . . f e e e e e e e f f . 
-                        . . f e e e e e e e f f f f 
-                        . . f e e 4 e e e f f f f f 
-                        . . f e e 4 4 e e e f f f f 
-                        . . f f e 4 4 4 4 4 f f f f 
-                        . . f f e 4 4 f f 4 e 4 f f 
-                        . . . f f d d d d 4 d 4 f . 
-                        . . . . f b b d d 4 f f f . 
-                        . . . . f e 4 4 4 e e f . . 
-                        f f f d d 1 1 1 e d d 4 . . 
-                        . . f . f 1 1 1 e d d e . . 
-                        . . . . f 6 6 6 f e e f . . 
-                        . . . . . f f f f f f . . . 
-                        . . . . . . . f f f . . . .
-            """),
-            SpriteKind.player))
-    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_position(40, 90)
-    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_position(120, 90)
-def ask_wanna_play_again():
-    story.show_player_choices("Go Menu", "Replay")
-    if story.check_last_answer("Go Menu"):
-        destroy1v1()
-        doMenu()
-    else:
-        destroy1v1()
-        TwoPlayersScreen()
-
-def on_on_overlap5(sprite223, otherSprite223):
-    global is_shoot_done
-    if otherSprite223 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite223 and not (is_shoot_done):
-        is_shoot_done = True
-        sprites.destroy(otherSprite223, effects.fire, 500)
-        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
-            . . . . . . . . . . . . . . . . 
-                        . . . . 2 2 2 2 2 . f f f . . . 
-                        . . 2 2 2 f f f f f d b b f . . 
-                        . 2 2 f f e 2 f e f d b b b f . 
-                        2 2 f 2 e 2 e f e e f f e e f f 
-                        2 f 2 2 e 2 f e 4 d d e d d e f 
-                        2 f f 2 e 2 f e 4 d d e d d e f 
-                        2 f f 2 2 2 f e f 4 f e 4 e f 2 
-                        2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
-                        2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
-                        2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
-                        2 2 2 e e f 2 f 4 4 4 f f f f f 
-                        2 2 f f e f e f e e f f 2 f f 2 
-                        2 2 2 f f 2 2 f f e f 2 2 2 2 2 
-                        2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
-                        2 . 2 2 2 2 2 2 2 2 2 . 2 2 . .
-        """))
-        game.splash("Player 2 Wins!")
-        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
-            "X.X")
-        pause(1000)
-        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
-            "Aggh ffs")
-        ask_wanna_play_again()
-    elif otherSprite223 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite223 and not (is_shoot_done):
-        is_shoot_done = True
-        sprites.destroy(otherSprite223, effects.fire, 500)
-        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
-            . . . . f . . . . . . . . . . . 
-                        . . . . f . . . . 2 2 2 2 . . . 
-                        . . . f f . . 2 f f f f f 2 2 . 
-                        . . . . d 2 2 f f f e e e f 2 . 
-                        . . f f d f f f e e e e e e f 2 
-                        2 2 6 1 1 e b d 4 4 4 4 e e e 2 
-                        2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
-                        f f 6 1 1 4 d d f 4 e e e 2 2 f 
-                        f f f e e 4 d f 4 f e e 2 2 2 f 
-                        f f e d d e 4 4 4 4 e f 2 2 2 f 
-                        2 f e d d e f d e f f 2 2 e 2 . 
-                        2 2 f e 4 f f 4 4 f f 2 f f 2 2 
-                        2 2 2 2 2 2 f f f f 2 2 f f . 2 
-                        . . 2 2 2 . . . f f 2 f f . . 2
-        """))
-        game.splash("Player 1 Wins!")
-        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
-            "X.X")
-        pause(1000)
-        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
-            "Aggh ffs")
-        ask_wanna_play_again()
-    elif otherSprite223 == npc_bullet and main_character == sprite223 and not (is_shoot_done):
-        is_shoot_done = True
-        sprites.destroy(otherSprite223, effects.fire, 500)
-        main_character.set_image(img("""
-            . . . . . . . . . . . 2 2 . . 2 
-                        . 2 2 2 2 2 2 2 2 2 2 . . 2 2 . 
-                        2 2 2 2 2 2 f f f 2 2 2 2 . . 2 
-                        2 2 2 f f c f f f f 2 2 2 f f 2 
-                        2 2 2 2 f c f f f f f f f f f f 
-                        2 2 f f c f f e e 4 4 f e e f f 
-                        2 f f c f f e e e 4 4 4 f e f f 
-                        2 f 2 2 f f f f f f 4 4 e e f 2 
-                        2 f 2 2 f c f f b 1 4 4 e e f 2 
-                        2 2 f 2 2 c f f f e e e e f f 2 
-                        . 2 2 2 f f f f e 4 f 4 4 e f f 
-                        . 2 2 f f f c f e e f 4 4 e f f 
-                        2 2 2 f f c c f f f f 4 e f f 2 
-                        2 . 2 2 f f f f f f 2 2 2 2 2 2 
-                        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-                        . . . 2 2 2 2 2 2 2 2 2 . . . .
-        """))
-        story.sprite_say_text(main_character, "X.X")
-        pause(1000)
-        carnival.on_game_over_expanded(carnival.WinTypes.LOSE)
-sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap5)
-
-def on_player1_button_a_pressed():
-    global player_1_bullet, player_1_can_shoot, main_character_bullet, can_main_character_shoot
-    if player_1_can_shoot and not (is_npc_duel):
-        player_1_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . 2 2 2 2 . . . 
-                            . . . . . . . 2 2 1 1 1 1 2 . . 
-                            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                            . . . . . . 2 2 3 1 1 1 1 2 . . 
-                            . . . . . . . . . 2 2 2 2 . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . .
-            """),
-            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
-            50,
-            0)
-        player_1_can_shoot = False
-    elif can_main_character_shoot and is_npc_duel:
-        main_character_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . 2 2 2 2 . . . 
-                            . . . . . . . 2 2 1 1 1 1 2 . . 
-                            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
-                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
-                            . . . . . . 2 2 3 1 1 1 1 2 . . 
-                            . . . . . . . . . 2 2 2 2 . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . . 
-                            . . . . . . . . . . . . . . . .
-            """),
-            main_character,
-            50,
-            0)
-        can_main_character_shoot = False
-controller.player1.on_button_event(ControllerButton.A,
-    ControllerButtonEvent.PRESSED,
-    on_player1_button_a_pressed)
-
-def storyMode():
-    global mom2, is_player_talking
-    storyModeDestroy()
-    createPlayer()
-    scene.set_background_image(img("""
-        ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-                ................................................................................................................................................................
-    """))
-    scene.set_background_color(11)
-    tiles.set_current_tilemap(tilemap("""
-        level2
-    """))
-    tiles.place_on_tile(main_character, tiles.get_tile_location(7, 12))
-    mom2 = sprites.create(img("""
-            . . . . . . . f f . . . . . . . 
-                    . . . . . f f 3 3 f f . . . . . 
-                    . . . . f 3 3 3 3 3 3 f . . . . 
-                    . . . f 3 3 3 3 3 3 3 3 f . . . 
-                    . . f 3 3 3 3 3 3 3 3 3 3 f . . 
-                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
-                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
-                    . f 3 3 f f e e e e f f 3 3 f . 
-                    f f 3 3 f b f e e f b f 3 3 f f 
-                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
-                    . f 3 3 f e e e e e e e 3 3 f . 
-                    . . f e f d d d d d d d e f . . 
-                    . . e e c d d d d d d d e e . . 
-                    . . e f b d d d d d d d f e . . 
-                    . . . f f 1 d d 1 d 1 f f . . . 
-                    . . . . . f f f f f f . . . . .
-        """),
-        SpriteKind.mom)
-    tiles.place_on_tile(mom2, tiles.get_tile_location(15, 2))
-    is_player_talking = False
-def doMenu():
+# Al empezar el juego cargamos el menú.
+# Este menú contiene dos tipos de botón y un cursor tipo jugador
+def do_menu():
     global cursor, two_players_button, single_player_button
     scene.set_background_image(img("""
         666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
@@ -1381,12 +204,525 @@ def doMenu():
                     .22ffffff222222fffff2222
                     ...f11111f2222f11111f22.
         """),
-        SpriteKind.storyButton)
+        SpriteKind.story_button)
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
-def mapLevel():
+
+
+#Función: on_player_overlap_with_two_players_button
+# - Muestra un mensaje en el cursor indicando que se debe presionar "A" para jugar.
+# - Si el jugador presiona el botón "A", se activa la pantalla de dos jugadores.
+def on_player_overlap_with_two_players_button(sprite3, otherSprite3):
+    cursor.say_text("A para jugar")
+    if controller.A.is_pressed():
+        two_players_screen()
+sprites.on_overlap(SpriteKind.player,
+    SpriteKind.twoPlayersButton,
+    on_player_overlap_with_two_players_button)
+
+# Si escoge el modo dos jugadores realiza lo siguiente:
+# Si nos chocamos y presionamos A cargamos dos jugadores y un mapa,
+# Una vez cargado manejamos las variables de que puedan disparar, empezamos un temporizador con un tiempo random de duelo
+# Cuando termine el temporizador llamará automáticamente a la funcion on_countdown_end
+def two_players_screen():
+    global is_shoot_done, can_shoot, player_1_can_shoot, player_2_can_shoot, isDuel, random_countdown_time
+    is_shoot_done = False
+    can_shoot = False
+    player_1_can_shoot = False
+    player_2_can_shoot = False
+    isDuel = True
+    random_countdown_time = randint(1, 10)
+    info.start_countdown(random_countdown_time)
+    scene.set_background_image(img("""
+        fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff11fffffffffffff111
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbfffffffffffffbbbbbbbbbbbbbbb1111111fffffffffffff1111111111ffffffffffffff1111
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbbbbbbbbbbbbbbffbffffffffffffbfff111fffffffbfffffffffffffb1111111111fffffff111bbbbbbbbbbbbffffffffffff1111
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb1111111ffffffbfffffffffffffb1111111111ffffffffbffffffffffffbffffffffffffff11
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbfbffffffbbbfb11666116fffffbfffffffffffffb11111111ffffffffffbffffffffffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffbbbbbbffffbffbfbbbbfffffffb11111116fffffbfffbbbbffffffb1111111fffffffffffbffbbbbffffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb11111116fffffbfffffffffffbfbbbbbbbbbbbbbbbffffbffffffffffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffb111111fffffffbfffffffffffbfbfffffffffffffbffffbfffffffffbffb111111ffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffff111111fffbffffffffffffbffbffffffffffffb1111fffffffffbfffffffffffbfbfffffffffffffbffffbfffbfffffbffb11111111ffffffff
+                ffffffffffffffffffffffffffffffffffffffff111111111111fbfffffffbbfffbffbffffffffffffbfffffffffffffbfffbfffffffbfbfffffffffffffbf111bfffbbffffbffb11111111ffffffff
+                ffffffffffffffffffffffffffffffffffffffff1111166111111bffffffffffffbffbffffffffffffbfffffffffffffbfffffffffffffbffbbbbfffffffbf111bfffffffffbffb11111111ffffffff
+                fffffffffffffffffffffffffffffffffffffffff111656661111bffffffffffffbffbffffbbbbbbffbfffffffffffffbfffffffffffffbffffffffffbffbff11bfffffffffbffb11111111ffffffff
+                fffffffffffffffffffffffffffffffffffffffffff1551511111bffffffffffffbffbfffffffffbffbffbbbbbbbbbbbbfffffffffffffbffffffffffbffbffffbffffffffffffb11111111ffffffff
+                fffffffffffffffffffffffffffffffffffffffffff5556551111bffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffbbbffffbffbffffbffffffffffffbf1111111ffffffff
+                fffffffffffffffffffffffffffffffffffffffffff555665511fbfffbffffffffbffbffffffffffffbffbffffffffffbfffffbbbbbbffbffffffffffbffbffffbfffbbbbbffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffff55555555ffbffffffffffffbffbffbfffffffffbffbffbbbbffffbfffffffffffffbfffffffffffffbffffbffffffffffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffff55555555ffbfffffffffbffbffbffbfffffffffbffbffffffffffbfbfffffffffffbfffffffffffffbffffbffffffffffffbffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffff111555555fffbfffffffffbffbffbffffffbbbfffbffbffffffffffbfbfffffffffffbfffffffbfffffbffffbffffffffffffbffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffff1111111ffffbffbfffbbbbffbffbffffffffffffbffbfffffffbffbfbbffffffffffbffbffffbfffffbffffbffffffffffffbffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffff116661fffffbffbfffbbbbffbffbffffffffffffbffbfffffffbffbffffffffffbbfbffbffffffffffbffffbfffffffbbbffbfffffbbbbbbbbbbb
+                fffffffffffffffffffffffffffffffffffffffffff161fffffffbffbfffffffffbffbffffffffffffbffbffbffffbffbffffffbbbbfffbffbffffffffffbffffbffffffffffffbfffffbffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbfffbbbffffffbffbfffffffbffbfffffbfffffffbffbffffffffffbffffbffbfffffffffbf1111bffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffbbbbffbffffbffbbffffffffb11111bffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffbbffffbffffffffffbffbfffffffffffffbffffbfffbbbffffffb11111bffbffffbff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffbbbbffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffffffffbffffbffffffffffffbf11ffbfffffffbff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffbffffffffffffbffbffffffffffffbffbffffffffffbfffffffffffffbfffffffffffffbffffbffffffffffffbfffffbfffffffbff
+                ffffffffffcccccccccccccbccceeeeecccccccffffffccccccccccccccccccbcccccccccccfccccccccccccccccccccccccccccccccffcccccccccccccccccccccccccccccfffbfffffbffffffffff
+                fffffffffcccccccbcccccc68cceeeccbcccccccfffcccccbccccbbcccccccccbccccbbcccccccccbccccbbccccccccccccccbbcccccccccbccccccccccbccccbccccbbccccccccfffffbffffffffff
+                fffffffffbbbbbbbbbbbbcc6cccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcfffffbffbbbbffff
+                fffffffffbbbbbbbbbfffffffffffffffbbbbbbbbbbbbbbbbbbccccbcbcbcccbbbbbccbbccbbbccbbcbbccbbbcbbbbccbccccbbccbbcccbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbccfffbffffffffff
+                bbbbfffffbbbbbbcffffffffffffffffffcbbbbbbbbbbbbbbbbbcbbbcbcbcbbbbbbbcccbcbcbcbbcbccbcbcbcbbbbcbbbbbcbbcbbcbcbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccfbffffffffff
+                bbbbbbbbbbbbbbcffffffffffffffffffffcbbbbbbbbbbbbbbbbcbbbcccbcbbbbbbbcbcbcccbbccbbcbccbbcbbbbbbccbbbcbbcbcbbcccbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccffffffffbf
+                bbbbbbbbbbbbbbcffffffffffffffffffffcbbbbbbbbbbbbbbbbcbbbcbcbccccbbbbccbbcbbcbbbbcbbbcbcbcbbbbbbbcbbcbbbcbbccbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcffffffffff
+                cbbccbcbbccbbccccffffffffffffffffcbccbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbbcccffbffffff
+                cccbccccccbcbcbcccccccffffffcccccccbccccccbcbcbcccccccccccbcbcbccccbccccccbcbcbccccbbbbbbbbbbbbbbbbbbbbbbbbbbcbccccccbcbbbbcbcbccccccbcbbbbcbcbccccbcccffffffff
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfffff
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfff
+                ccbbbbcbbbbcbbbccbbccbbbbcbcbbbbccbbbbcbbbcbcccbccbbbbcbbbbcbbbbccbbbbcbbbbcbbbbccbbbbbbbbbbbbbbbbbbbbcbbbbcbbbbccbbbbcbbbbcbbbbccbbbbcbbbbbbbcbccbbbbcbbbbccff
+                bbcbbbbbbbbbbcbbbcbbcbbcbcbbbcbbbbcbbbbbbbbcccbbbbcbbbbbbbbbbcbbbbcbbbbbbbbbbcbbbbcbbbbbcbbbbcbbbbbbcbbbbbbbbcbbbbcbbbbbbbbbbcbbbbcbbbbbbbbbccbbbbcbbbbbbbbbbcc
+                bbbbbbbbbbbbbbbcbbbbcccbbcbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbcccbcbbbbbbbbbbbbbbbb
+                bbcbbbbcbbbbbcbbbcccbbbbbcbbbcbbbbcbbcbbbbccbbcbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbcbbbbbcbbcbbbbcbbbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbbbbbbbbbbbbbcbbbcbbcbbbbbbbcb
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                bbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbccbbb
+                bcbbbcbbbbbbbbbbbbbbbbbbbbccccccbcbbcbccbcbbcbbcbcbbcbccbcbbcbbcbcbbcbccbbbcbbbcbcbbbbbbbbccbbbbbbbbbbccbcbbcbbcbbbbbcbbbbbbbbbbbbbbbbbbbb5bbbbbbbbbbbbccbbcbbb
+                bbcbbbbbbbbcbccbbbbb55bbbbbccbbbbbcbbbbbbcbbbccbbbcbbbbbbcbbbccbbbcbbbbbbbbccccbbbcbbbbbbbcbbbbbbbbbbbbbbbbbbccbbbbbccbbccbbbbcbbbcbbbbb55555bbbcccccbccccbbbcb
+                cbbbbbccbbbbbcbbbb551155bbbbbbbbbbbbbcbbbbccbbbccbbbbcbbbbccbbbccbbbbcbbbbccbbbccbbbbcbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbb55522522555bbbbccbbbbbbbcb
+                bbcbccccbbbbbbbb5511551155bbbbbbcbcbbcbbbccbbccbbbcbbcbbbccbbccbbbcbbcbbbcccbccbbbcbbcbcbbbbbbbbbbbbcbbbbbbbbbbbbbbbbcccbbbbbcbbbbbb5225225225225bbbbbbbbbbccbb
+                cccbcbccbbbbbbb515222222515bbbbbcccbbcccbbccccbbcccbbcccbbccccbbcccbbcccbbbcbbbbcccbbcccbbbbbbbbbbbbbbbbbbbbcccccccccccccccbcbbbbbbb5225225225225bbbbbbbbccbbbb
+                bbbbbccbbcccbb52225255252225bbbbbbbbbbcbbbbbbbbbbbbbbbcbbbcbcbcbbbbbbbcbbbbbbbbbbbbbbbcbbccbbbbbcbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbb5255555555525bbbbbcbbbbbbbb
+                bbcbbcbbbcbbbb55555555555555bbbcbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbcccbbbbbbbbbbbbbbcccbbccbbbccccbbbbbbbbbbcbbbbbbbbbbbbbb555fffff555bbbbcbbccbbbbcb
+                bbbbbbbbbbbbbbb555852258555bbbbcbbbbbcbbbbcbbbbbbbbbbcbbbbbbcbbbbbbbbcbbbbbbbbbbbbcbbcbbbbbbbbbbbbbbbcbbbbbbbbbbcccbbbcbbbccccbbbcbbbfff22522fffbbbbcbbbbbbbbbb
+                cbcbbbbbbbbbcbbb5111111115bbbcccbbcbbcbccbbbbbbbbbbbbcbcccbccccbcbcbbcbccbbbbbccbcbbbcbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbf22222552225fbbbccbccccbbbb
+                ccccbbbcccbccbbb1555555551bbbbbcbcccccccccccbbbbbbbccccccccccccccccccccccccbbbbcccbbccccccbbbbccccccccccccccccccccccccccccccccbbbbbf55222fff52522fbbbcbbbbbcccc
+                bbbbbbbbbbccbbb551111111155bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbcccbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbf522fff188fff252fbbbbbbbbbbbb
+                bcbbbbbbbbbbbb51111111111115bbbbbcbbbbcbcbbbbbbccccbcbbbbcbbcbcbbcbbcbbbbcbbbcbbbbcbbcbbccbbbbbbbbbbbbbbbbbcbbbbbccccccbbbbbbbbbbf222f111888111f252fbbbbbbbbbbb
+                bbcbbbccbbbbb5115511111155115bbbcbcbbccbcbbbbbcbbbbbbbbbbbbbbcbbbbcbbbbbbbbbbcbbbbbccbbbbbbbccbbbcbbbbccccccbbbbbbbbbbbbbbcbbbbbf252f11188811188f222fbbbbcbbbcb
+                cbbbbbbbbbbb511588555555515115bbbbbbcccbbbcbbbbbbbbbbcbbbccbbbcccbbbbcbbbcbbbbbbbbbbbcbbbbbccbbbbcbbbbccbbbbbbbbbcbbbbbbbbcbbcbbf22f1118881118881f25fbbbbbbbbcb
+                cbcbbbbbbbbb515885851115111515bbbbcbbbbbcccbbcbbcbcbbcbccbcbbcbbcbcbbcbccbcbbcbbcbcbbbcbbbccbbbbccbbbbbbbbbbbbbbcbbbbbbcbbbbccbbf52f1188811188811f55fbbbcbbbbcb
+                ccbbbbbcbbb51588588851515111515bbcbbbbcbbbbccbbbccbbbccbbbbccbbbccbbbccbbbbccbbbccbbbccbbbbcbbbbbbbbbbcbbbbbbbbbcbbbbbbbbbbbcbbf22f11888111888111f222fbbcccccbb
+                bbbbbbccbbb51518588885111111515bbbbbbbbbbbbbbcbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbcbbbbbbbbbbbbbccbbbccbbbcbccbbbbbbbbbbbcccbbbbbbbbf22f188811188811188f22fbbbbbbbbb
+                bbbbbbcbbbb51515888888811111515bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbccbbbbbccbbbbbcbbbbbf52f888111888111888f25fbbbbbbbbb
+                bbbbbbcbbbb51515188855581111515bccbbbcbbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbcbbcbbbbbbbcbbbbbbbbbbbbccbbbbbbbbbbbbbbcbbbbbbccbbbbf22f881118881118881f22fbbbbbbbbb
+                cbcccbbbbbb51511518858888111515bbbcbbcbccccccccbcbcbbcbccccccccbcbcbbcbccccccccbcbcbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbcbbbbf252f1118881118881f525fbbbccbbbc
+                cccbbbbcbbb51511511855588811515bbbcccccccccccccccccccccccccccccccccccccccccccbbbbbbbbbccbcccccccccccccccccccccbbbbbbbcbbbbbccbbbf52f1188811188811f25fbbbbbbbbbc
+                bcbbbbbccbb51511151158885881515bbbcbcbccbbbbcbbbbcbbcbccbbcbcbbbbcbbcbccbbbbcbbbbcbcbbbbbbbbbbbbbbcccccbbbbbbbbbccbbccbbbbccbbbbf22f1888111888111f22fbbbcbbcbbb
+                bbbbbbcbbbbb515111515885888515bbbbccbbbbbcbbbbcbbbbbbbbbbccbbccbbbbbbbbbbcbbbbbbbbbbbbbbbbbbccbbbbbbbbbcccccccbbbbbbbbbbbbcbbbcbf525f88111888111f252fbbccbbbbbb
+                cbbbbbcbbbbb511111155558888815bbcbbbbccbbbbbbbbbbbbbbccbbbbbccbbcbbbbccbbbccbbbcbbbbcbbbbbbbcbcbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbcbbf255f111888111f522fbbccbbbbbbb
+                bbcbbbcbbbbbb5111111511888815bbbbcbbbcbbbbcbccbbbbcbbcbbbcbbccbbbbcbbcbbbccbbcccbbbbbbcbbcbbcccbbbbccccbbbbccbbcccbbbbbccccbbbcbbbf522fff881fff225fbbbbbbbcccbc
+                cbcbbbcbbbcbbb51111111118815bbbbbcbcbbbbbbbbbcbbbbbbbcbccbbcbbcccbcbbcbccbcbcccbbcccbbbccbbbbccbbbcbbbbbccbbbbbbbbbbbbbbbbbbbbcbbbbf22525fff52222fbbbbbbbbbbbcc
+                ccbbbbbbbbcbbbb511111111115bbbbbbbbbbbbbcccccbbbbbbbcbcbbbbcbbbbccbbbbcccbbccccbbbbbcbbbbcbbbcbbbbccbbbccbccbbbcbbbbbbbcbbccbbbbbbbbf22522252225fbbbbbbbccccccc
+                bbcbbbbbbbbbbbbb5551111555bbbbbccccbbbcbbbbbbbbcbbbbbbbbcbbbbcbbbbcbbbccbccccbccccbbbbbbbbbbbbbbbbbbccccbbbbbbbccccbccccbbbbbbbbbbbbbfff55222fffbbbbbbcbbbbbbbb
+                bbbbbbbbbbbbbbbbbbb5555bbbbbbcccbcbbccccccccbccbbbbbbbbbbbcbbbbbbbbbbcccbbbbbbbbbbbbbcbbcbbbbcbbbbbbbbbbbbbbccbbcbcbbbbccccccccbbbbbbbbbfffffbbbbbbbbbcbbbbbbbb
+                bbcbbccbcbbcbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcccccccccccccccccccccccccbbbbbbbbbbbbcbbbbbbbbbbbbbbcbbbcbbbbbcbb
+                cccbbbbbccbbbbbcccccbbbbbcbcbbbbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbcccbbbbbcbbbbbbbccaac
+                bbbbccccbccbbbbbbbbccbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbccbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bcbbbbbbbbbbbbcbcccccbbbbbccbbbbbbbcbbbbbbbcbbbbbcbbbbbbbbbbcbbcbcbbcbccbbbcccbbcbbcbbcccccbbcccbbccbcbcbcbbcbbbbcccccbbcbbbcbcbcbbbbbbccccbbbcccbbbcbccbccbcbc
+                bbcbbbbbbbbbbbbbbbbbbbbbcccbbbcbbcccccccbbbcbbbbbccbbbbbcbbbbcbbbbcbbbbcbbbbbbbbbcbcbbcbbbcbbcbccbbcbbbccbbbbcbbbbcccbbbcbbbcbccbbbbbbbbbbbbbcbbbbbbbbbccbbbbcb
+                cbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbbccbbbbbbbcbbbbccbbcccbbbbcbbbbbbbbbbbbbcbbbbbbcbbccbbbbcbbccbbccbbcccbbccbbbbbbccbbbbbbbbbbbbccbbbccbbbcccbbbcbbccb
+                bbcbbbccbcbbbcbbbbcbbbbccbbbbcbbbccbbbcbbbbbbccbbbbcbbbbbcbbbcbbbbcbbbbccbcffccffbbbbbbbbbbbbbbbbbbbbbccbcbbbcbbbbcbbebccbbbbcbbbccbbbbccbbcbbbccbbbbbbccbbccbc
+                cccccccbccccccbccccccccccbccccbbbcbbbbbbbbbbbbbbbbbccbbbcbccccbccccccccccccccccccccccccccccccccccccccccbccccccbccccccccccbccccbcccbbcccccbbccccccccccccccbbcbbc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                bccccccccccbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccfccccccccbccccccccccbccccccccccccccccccccbccccccccccbccccccccccccccccccc
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                cbcbbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbccbcbbbbbbbccbcbbbbbbbbbbbbbcbcb
+                bbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcb
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bbbcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bbcccccccfccccccfcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                ccccffccccccccfccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                ccccccccffccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb6bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                cccccccccbccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                cccccbccccccccbcccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                cccccccccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bbcccccccccccccccbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbb
+                dbbbbbccccccccbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbdbbbbbbbbbbbbbbbbbbb
+                ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccccbccccccccccbcccccccccbbcccccccc
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    """))
+    sprites.destroy(two_players_button)
+    sprites.destroy(single_player_button)
+    sprites.destroy(cursor)
+    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.ONE),
+        sprites.create(img("""
+                . . . . . . . . . . . . . . . .
+                        . . . . . f f f f f f . . . . .
+                        . . . f f e e e e f 2 f . . . .
+                        . . f f e e e e f 2 2 2 f . . .
+                        . . f e e e f f e e e e f . . .
+                        . . f f f f e e 2 2 2 2 e f . .
+                        . . f e 2 2 2 f f f f e 2 f . .
+                        . f f f f f f f e e e f f f . .
+                        . f f e 4 4 e b f 4 4 e e f . .
+                        . f e e 4 d 4 1 f d d e f f . .
+                        . . f e e e 4 d d d d f d d f .
+                        . . . . f e e 4 e e e f b b f .
+                        . . . . f 2 2 2 4 d d e b b f .
+                        . . . f f 4 4 4 e d d e b f . .
+                        . . . f f f f f f e e f f . . .
+                        . . . . f f . . . f f f . . . .
+            """),
+            SpriteKind.player))
+    mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.TWO),
+        sprites.create(img("""
+                . . . . . f f f f f . . . .
+                        . . . . f e e e e e f f . .
+                        . . . f e e e e e e e f f .
+                        . . f e e e e e e e f f f f
+                        . . f e e 4 e e e f f f f f
+                        . . f e e 4 4 e e e f f f f
+                        . . f f e 4 4 4 4 4 f f f f
+                        . . f f e 4 4 f f 4 e 4 f f
+                        . . . f f d d d d 4 d 4 f .
+                        . . . . f b b d d 4 f f f .
+                        . . . . f e 4 4 4 e e f . .
+                        f f f d d 1 1 1 e d d 4 . .
+                        . . f . f 1 1 1 e d d e . .
+                        . . . . f 6 6 6 f e e f . .
+                        . . . . . f f f f f f . . .
+                        . . . . . . . f f f . . . .
+            """),
+            SpriteKind.player))
+    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_position(40, 90)
+    mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_position(120, 90)
+
+# Cuando termina el cotundown enseñamos un mensaje que contiene "YA"
+# Si es un duelo de npc hacemos que el main_character y el npc puedan disparar
+# También hacemos que el jugador 1 y jugador 2 puedan disparar si no es un duelo contra npc
+def on_countdown_end():
+    global textSprite, can_main_character_shoot, npc_can_shoot, player_1_can_shoot, player_2_can_shoot
+    textSprite = textsprite.create("YA", 15, 2)
+    textSprite.set_scale(4, ScaleAnchor.MIDDLE)
+    textSprite.set_position(76, 40)
+    if is_npc_duel:
+        can_main_character_shoot = True
+        npc_can_shoot = True
+    else :
+        player_1_can_shoot = True
+        player_2_can_shoot = True
+info.on_countdown_end(on_countdown_end)
+
+# Si el jugador_1 presiona A
+# Puede disparar y no es un duelo contra NPC creamos la bala que la dispare desde ese jugador
+# Makecode arcade detecta jugador 1 también al protagonista así que manejamos también los duelos de npc,
+# Si el protagonista puede disparar y es un duelo contra un NPC disparamos desde el sprite del protagonista.
+def on_player1_button_a_pressed():
+    global player_1_bullet, player_1_can_shoot, main_character_bullet, can_main_character_shoot
+    if player_1_can_shoot and not (is_npc_duel):
+        player_1_bullet = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . 2 2 2 2 . . .
+                            . . . . . . . 2 2 1 1 1 1 2 . .
+                            . . . . 2 2 3 3 1 1 1 1 1 1 . .
+                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . .
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
+                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . .
+                            . . . . . . 2 2 3 1 1 1 1 2 . .
+                            . . . . . . . . . 2 2 2 2 . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+            """),
+            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            50,
+            0)
+        player_1_can_shoot = False
+    elif can_main_character_shoot and is_npc_duel:
+        main_character_bullet = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . 2 2 2 2 . . .
+                            . . . . . . . 2 2 1 1 1 1 2 . .
+                            . . . . 2 2 3 3 1 1 1 1 1 1 . .
+                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . .
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
+                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . .
+                            . . . . . . 2 2 3 1 1 1 1 2 . .
+                            . . . . . . . . . 2 2 2 2 . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+            """),
+            main_character,
+            50,
+            0)
+        can_main_character_shoot = False
+controller.player1.on_button_event(ControllerButton.A,
+    ControllerButtonEvent.PRESSED,
+    on_player1_button_a_pressed)
+
+# Si hay un segundo jugador en el modo multijugador arcade
+# Al presionar A si puede disparar realizará el disparo hacía el siguiente jugador
+def on_player2_button_a_pressed():
+    global player_2_bullet, player_2_can_shoot
+    if player_2_can_shoot:
+        player_2_bullet = sprites.create_projectile_from_sprite(img("""
+                . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . 2 2 2 2 . . . . . . . . .
+                            . . 2 1 1 1 1 2 2 . . . . . . .
+                            . . 1 1 1 1 1 1 3 3 2 2 . . . .
+                            . . 1 1 1 1 1 1 1 1 3 3 3 3 . .
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
+                            . . 1 1 1 1 1 1 1 3 2 2 3 3 . .
+                            . . 2 1 1 1 1 3 2 2 . . . . . .
+                            . . . 2 2 2 2 . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+                            . . . . . . . . . . . . . . . .
+            """),
+            mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            -50,
+            0)
+        player_2_can_shoot = False
+controller.player2.on_button_event(ControllerButton.A,
+    ControllerButtonEvent.PRESSED,
+    on_player2_button_a_pressed)
+
+
+# Si escoge el story_button realiza lo siguiente:
+# Si nos chocamos y presionamos A pedimos un nombre, si es nulo ponemos Kyrie
+# Una vez tengamos el nombre o lo pongamos por defecto llamamos al modo historia
+def overlap_story_button(sprite, otherSprite):
+    global main_character_name
+    cursor.say_text("A para jugar")
+    if controller.A.is_pressed():
+        if main_character_name.is_empty() or main_character_name == "undefined":
+            main_character_name = game.ask_for_string("Username", 7)
+            if main_character_name.is_empty() or main_character_name == "":
+                main_character_name = "Kyrie"
+        story_mode()
+sprites.on_overlap(SpriteKind.player, SpriteKind.story_button, overlap_story_button)
+
+# Eliminamos todo el menú para cuando pasemos al modo historia no mantenga nada.
+def menu_destroy():
+    sprites.destroy(cursor)
+    sprites.destroy(single_player_button)
+    sprites.destroy(two_players_button)
+
+# Llamamos al modo historia, destruimos el menu llamando a la funcion
+# creamos al jugador con create_main_character
+def story_mode():
+    global mom2, is_player_talking
+    menu_destroy()
+    create_main_character()
+    scene.set_background_image(img("""
+        ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+    """))
+    scene.set_background_color(11)
+    tiles.set_current_tilemap(tilemap("""
+        level2
+    """))
+    tiles.place_on_tile(main_character, tiles.get_tile_location(7, 12))
+    mom2 = sprites.create(img("""
+            . . . . . . . f f . . . . . . .
+                    . . . . . f f 3 3 f f . . . . .
+                    . . . . f 3 3 3 3 3 3 f . . . .
+                    . . . f 3 3 3 3 3 3 3 3 f . . .
+                    . . f 3 3 3 3 3 3 3 3 3 3 f . .
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f .
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f .
+                    . f 3 3 f f e e e e f f 3 3 f .
+                    f f 3 3 f b f e e f b f 3 3 f f
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f
+                    . f 3 3 f e e e e e e e 3 3 f .
+                    . . f e f d d d d d d d e f . .
+                    . . e e c d d d d d d d e e . .
+                    . . e f b d d d d d d d f e . .
+                    . . . f f 1 d d 1 d 1 f f . . .
+                    . . . . . f f f f f f . . . . .
+        """),
+        SpriteKind.mom)
+    tiles.place_on_tile(mom2, tiles.get_tile_location(15, 2))
+    is_player_talking = False
+
+# Cuando estemos encima de la madre del inicio
+# Si estamos encima y le damos a la A hablaremos con ella
+# Nos mostrará el juego dos opciones y según escojamos haremos una acción u otra.
+def handle_overlap_mom(sprite222, otherSprite222):
+    global is_player_talking, show_enemy_guard
+    game.show_long_text("Hablar con mamá", DialogLayout.BOTTOM)
+    is_player_talking = True
+    story.print_character_text("" + main_character_name + "!" + " Se lo llevaron... ¡Se llevaron todo!",
+        "Mamá")
+    story.print_character_text("¿Quién, mamá? ¿Qué pasó?", main_character_name)
+    story.print_character_text("¡Esa banda... esos ladrones! Entraron a la fuerza, se llevaron mis joyas, mis ahorros... ¡todo! ¡Tienes que hacer algo!",
+        "Mamá")
+    story.print_character_text("No te preocupes, mamá. Los encontraré. No se saldrán con la suya.",
+        main_character_name)
+    story.show_player_choices("Salir", "Quedarse")
+    if story.check_last_answer("Salir"):
+        mom2.set_kind(SpriteKind.Complete)
+        is_player_talking = False
+        show_enemy_guard = False
+        map_level()
+    elif story.check_last_answer("Quedarse"):
+        is_player_talking = False
+        pause(1000)
+sprites.on_overlap(SpriteKind.player, SpriteKind.mom, handle_overlap_mom)
+
+
+# Creamos el main_character con su sprite y marcamos que está vivo
+def create_main_character():
+    global isPlayerLive, main_character
+    isPlayerLive = True
+    main_character = sprites.create(img("""
+            . . . . f f f f . . . . .
+                    . . f f f f f f f f . . .
+                    . f f f f f f c f f f . .
+                    f f f f f f c c f f f c .
+                    f f f c f f f f f f f c .
+                    c c c f f f e e f f c c .
+                    f f f f f e e f f c c f .
+                    f f f b f e e f b f f f .
+                    . f e 1 f 4 4 f 1 e f . .
+                    . f e 4 4 4 4 4 4 e f . .
+                    . f f f e e e e f f f . .
+                    f f f e f e e f e f f f .
+                    e e f e e e e e e f e e .
+                    e e f e e e e e e f e e .
+                    . . . f f f f f f . . . .
+                    . . . f f . . f f . . . .
+        """),
+        SpriteKind.player)
+    main_character.z = 100
+    controller.move_sprite(main_character)
+    scene.camera_follow_sprite(main_character)
+
+# Cargamos el nivel del mapa que es donde procederá toda la historia
+def map_level():
     global is_shoot_done, can_show_minimap, can_talk, is_on_map_level, showMinimap
-    destroyLevelOne()
+    destroy_mom_story_level()
     is_shoot_done = False
     can_show_minimap = False
     can_talk = True
@@ -1511,50 +847,780 @@ def mapLevel():
         tiles.place_on_tile(main_character, tiles.get_tile_location(1, 9))
     scene.camera_follow_sprite(main_character)
     instantiate_npcs()
-def createPlayer():
-    global isPlayerLive, main_character
-    isPlayerLive = True
-    main_character = sprites.create(img("""
-            . . . . f f f f . . . . . 
-                    . . f f f f f f f f . . . 
-                    . f f f f f f c f f f . . 
-                    f f f f f f c c f f f c . 
-                    f f f c f f f f f f f c . 
-                    c c c f f f e e f f c c . 
-                    f f f f f e e f f c c f . 
-                    f f f b f e e f b f f f . 
-                    . f e 1 f 4 4 f 1 e f . . 
-                    . f e 4 4 4 4 4 4 e f . . 
-                    . f f f e e e e f f f . . 
-                    f f f e f e e f e f f f . 
-                    e e f e e e e e e f e e . 
-                    e e f e e e e e e f e e . 
-                    . . . f f f f f f . . . . 
-                    . . . f f . . f f . . . .
+
+# Destruimos el primer nivel de la madre y así con ello evitamos que aparezca en el siguiente nivel/mapa
+def destroy_mom_story_level():
+    tiles.destroy_sprites_of_kind(SpriteKind.mom)
+    tiles.destroy_sprites_of_kind(SpriteKind.Building)
+    tiles.destroy_sprites_of_kind(SpriteKind.Complete)
+
+# Iniciamos los npcs en el mapa cambiamos el sprite según si estan derrotados o no.
+def instantiate_npcs():
+    global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start, enemy_guard
+    if npc_football == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_football == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
+        npc_football = sprites.create(img("""
+                . . . . f f f f . . . .
+                            . . f f e e e e f f . .
+                            . f f e e e e e e f f .
+                            f e e e 4 e e e e e f f
+                            f e e 4 4 4 e e e e e f
+                            f e e 4 4 4 4 e e e e e
+                            f e e f f 4 4 f f e e e
+                            f e 4 f d 4 4 f d 4 4 e
+                            f e 4 4 4 4 4 4 4 4 e f
+                            . f e 4 4 2 2 4 4 e f .
+                            . f f e 4 4 4 4 e f f .
+                            e 4 f 8 2 8 2 8 2 f 4 e
+                            4 d f 8 2 8 2 5 2 f d 4
+                            4 4 f 8 2 8 2 8 2 f 4 4
+                            . . . f f f f f f . . .
+                            . . . f f . . f f . . .
+            """),
+            SpriteKind.Npc)
+        show_npc_football_map = False
+    elif npc_football.kind() == SpriteKind.Complete:
+        npc_football = sprites.create(img("""
+                . . 4 4 e 2 2 f f f f f f . 2 2
+                            . . 4 d 4 f f e e e e e e f . 2
+                            . . f f f f e 4 4 e e e e f f .
+                            f f 8 8 8 e 4 4 f f 4 4 e e f 2
+                            f f 2 2 2 4 4 4 d f 4 4 4 e 2 2
+                            2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f
+                            2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f
+                            f f 8 5 8 4 4 4 f f e e 2 2 e f
+                            f f 2 2 2 e 4 4 d f e e 2 2 2 2
+                            2 2 f f f f e 4 4 e e 2 e 2 2 2
+                            2 2 4 d 4 f f e 4 e 2 2 f f 2 .
+                            . 2 2 4 e 2 2 f e e 2 f f . 2 2
+            """),
+            SpriteKind.Complete)
+        show_npc_football_map = True
+    tiles.place_on_tile(npc_football, tiles.get_tile_location(39, 8))
+    if npc_building == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_building == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
+        npc_building = sprites.create(img("""
+                . . . . f f f f . . . .
+                            . . f f f f f f f f . .
+                            . f f f f f f f f f f .
+                            f f f f f f f f f f f f
+                            f f f e e e e e f f f f
+                            f f e e e e e e e e f f
+                            f e e f f e e f f e f f
+                            f e e f d e e f d e f f
+                            f e e e e e e e e e e f
+                            . f e e e 2 2 e e e f .
+                            . f f e e e e e e f f .
+                            e e f f f e e 8 f f e e
+                            e d f f f f 8 2 f f d e
+                            e e f f f f 8 8 f f e e
+                            . . . f f f f f f . . .
+                            . . . f f . . f f . . .
+            """),
+            SpriteKind.Npc)
+        show_npc_building = False
+    elif npc_building.kind() == SpriteKind.Complete:
+        npc_building = sprites.create(img("""
+                . . e e e . 2 f f f f f f 2 2 2
+                            . . e d e 2 2 e e e f f f f 2 2
+                            . . f f f f e e e e e f f f 2 2
+                            f f f f f e e e f f e e f f f 2
+                            2 f f f f e e e d f e e f f f f
+                            2 f f f e e 2 e e e e e f 2 f f
+                            . f 8 8 e e 2 e e e e e f 2 2 f
+                            f f 8 2 8 e e e f f e e f f 2 f
+                            f f f f f e e e d f e f f f 2 .
+                            2 2 f f f f e e e e e f f f 2 2
+                            . . e d e f f e f f f f f f 2 2
+                            . . e e 2 2 2 f f f f f f 2 2 2
+            """),
+            SpriteKind.Complete)
+        show_npc_building = True
+    else:
+        npc_building = sprites.create(img("""
+                . . . . f f f f . . . .
+                            . . f f f f f f f f . .
+                            . f f f f f f f f f f .
+                            f f f f f f f f f f f f
+                            f f f e e e e e f f f f
+                            f f e e e e e e e e f f
+                            f e e f f e e f f e f f
+                            f e e f d e e f d e f f
+                            f e e e e e e e e e e f
+                            . f e e e 2 2 e e e f .
+                            . f f e e e e e e f f .
+                            e e f f f e e 8 f f e e
+                            e d f f f f 8 2 f f d e
+                            e e f f f f 8 8 f f e e
+                            . . . f f f f f f . . .
+                            . . . f f . . f f . . .
+            """),
+            SpriteKind.Npc)
+    tiles.place_on_tile(npc_building, tiles.get_tile_location(30, 40))
+    npc_start = sprites.create(img("""
+            . f f f . f f f f . f f f .
+                    f f f f f c c c c f f f f f
+                    f f f f b c c c c b f f f f
+                    f f f c 3 c c c c 3 c f f f
+                    . f 3 3 c c c c c c 3 3 f .
+                    . f c c c c 4 4 c c c c f .
+                    . f f c c 4 4 4 4 c c f f .
+                    . f f f b f 4 4 f b f f f .
+                    . f f 4 1 f d d f 1 4 f f .
+                    . . f f d d d d d d f f . .
+                    . . e f e 4 4 4 4 e f e . .
+                    . e 4 f b 3 3 3 3 b f 4 e .
+                    . 4 d f 3 3 3 3 3 3 c d 4 .
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 .
+                    . . . . f f f f f f . . . .
+                    . . . . f f . . f f . . . .
         """),
-        SpriteKind.player)
-    main_character.z = 100
-    controller.move_sprite(main_character)
-    scene.camera_follow_sprite(main_character)
-def npc_duel2(npc: Sprite):
-    global is_npc_duel, can_main_character_shoot, npc_dueling, randomTime, is_player_talking, is_on_map_level
+        SpriteKind.Npc)
+    tiles.place_on_tile(npc_start, tiles.get_tile_location(6, 7))
+    if show_enemy_guard:
+        enemy_guard = sprites.create(img("""
+                . . . f 2 2 2 2 2 2 2 2 f . . .
+                            . f f 2 2 2 2 2 2 2 2 2 2 f f .
+                            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2
+                            2 2 2 2 f f f f f f f f 2 2 2 2
+                            2 2 2 2 f f f f f f f f 2 2 2 2
+                            2 2 2 2 f f f f f f f f 2 2 2 2
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2
+                            f 2 2 2 2 2 f f f f 2 2 2 2 2 f
+                            f f 2 2 2 2 2 2 2 2 2 2 2 f f .
+                            . f f 2 2 2 2 2 2 2 2 2 f f . .
+                            . . f f 2 2 2 2 2 2 2 f f . . .
+                            . . . f f 2 2 2 2 2 f f . . . .
+                            . . . . f 2 2 2 2 2 f . . . . .
+                            . . . . . f 2 2 2 f . . . . . .
+                            . . . . . . f 2 f . . . . . . .
+            """),
+            SpriteKind.marker)
+        tiles.place_on_tile(enemy_guard, tiles.get_tile_location(57, 58))
+
+def on_on_overlap(sprite22, otherSprite22):
+    global is_shoot_done, is_player_talking, show_npc_building, show_enemy_guard
+    # Maneja las colisiones entre un NPC y un proyectil.
+    # Dependiendo del tipo de NPC (fútbol o edificio), se ejecutan diferentes acciones y se actualiza el estado del juego.
+    #
+    # :param sprite22: Sprite del NPC involucrado en la colisión.
+    # :param otherSprite22: Sprite del proyectil que colisiona con el NPC.
+    #
+    #
+    # Si el sprite de tipo bala es la bala del otro jugador y el sprite con el que colisiona es el del primer jugador entonces gana el segundo jugador else el otro
+    if otherSprite22 == main_character_bullet and npc_football == sprite22 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite22, effects.fire, 500)
+        npc_football.set_image(img("""
+            . . 4 4 e 2 2 f f f f f f . 2 2
+                        . . 4 d 4 f f e e e e e e f . 2
+                        . . f f f f e 4 4 e e e e f f .
+                        f f 8 8 8 e 4 4 f f 4 4 e e f 2
+                        f f 2 2 2 4 4 4 d f 4 4 4 e 2 2
+                        2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f
+                        2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f
+                        f f 8 5 8 4 4 4 f f e e 2 2 e f
+                        f f 2 2 2 e 4 4 d f e e 2 2 2 2
+                        2 2 f f f f e 4 4 e e 2 e 2 2 2
+                        2 2 4 d 4 f f e 4 e 2 2 f f 2 .
+                        . 2 2 4 e 2 2 f e e 2 f f . 2 2
+        """))
+        npc_football.set_kind(SpriteKind.Complete)
+        game.splash("You win")
+        story.print_character_text("Ahora dime donde encontrar a vuestra gente",
+            main_character_name)
+        story.print_character_text("Vale, vale... pero no me hagas daño. Si me llevas a un hospital, te diré dónde están los demás.",
+            "Pedro")
+        story.print_character_text("Trato hecho. Ahora, habla.", main_character_name)
+        story.print_character_text("Están en la parte más peligrosa de la ciudad. Aquí, te lo dibujo en el mapa.",
+            "Pedro")
+        pause(1000)
+        story.sprite_say_text(npc_football, "X.X")
+        is_player_talking = False
+        show_npc_building = True
+        destroy_1v1()
+        map_level()
+        story.print_dialog("Tienes dibujado al siguiente rival en el mapa",
+            80,
+            90,
+            50,
+            150)
+    elif otherSprite22 == main_character_bullet and npc_building == sprite22 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite22, effects.fire, 500)
+        npc_building.set_image(img("""
+            . . e e e . 2 f f f f f f 2 2 2
+                        . . e d e 2 2 e e e f f f f 2 2
+                        . . f f f f e e e e e f f f 2 2
+                        f f f f f e e e f f e e f f f 2
+                        2 f f f f e e e d f e e f f f f
+                        2 f f f e e 2 e e e e e f 2 f f
+                        . f 8 8 e e 2 e e e e e f 2 2 f
+                        f f 8 2 8 e e e f f e e f f 2 f
+                        f f f f f e e e d f e f f f 2 .
+                        2 2 f f f f e e e e e f f f 2 2
+                        . . e d e f f e f f f f f f 2 2
+                        . . e e 2 2 2 f f f f f f 2 2 2
+        """))
+        npc_building.set_kind(SpriteKind.Complete)
+        game.splash("You win")
+        story.sprite_say_text(npc_building, "X.X")
+        pause(1000)
+        story.sprite_say_text(npc_building, "Aggh ffs")
+        is_player_talking = False
+        show_enemy_guard = True
+        show_npc_building = True
+        destroy_1v1()
+        map_level()
+        story.print_dialog("Has enviado un mensaje a tu madre de donde tienen las cosas, aparte lo tienes en el mapa",
+            80,
+            90,
+            50,
+            150)
+sprites.on_overlap(SpriteKind.npc_duel, SpriteKind.projectile, on_on_overlap)
+
+# Esta función gestiona los eventos de colisión entre un sprite (jugador o NPC) y un proyectil.
+# Dependiendo del origen del proyectil y del sprite impactado, realiza diferentes acciones:
+# - Marca el disparo como procesado para evitar duplicados.
+# - Destruye el proyectil con un efecto visual.
+# - Actualiza la imagen del sprite impactado para reflejar daño.
+# - Muestra mensajes en pantalla o inicia el fin del juego, según el caso.
+def handle_players_projectile_collision(sprite223, otherSprite223):
+    global is_shoot_done
+    # Si el proyectil pertenece al jugador 2 y golpea al jugador 1, habiendo el jugador 2 disparado antes este gana.
+    if otherSprite223 == player_2_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)) == sprite223 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
+            . . . . . . . . . . . . . . . .
+                        . . . . 2 2 2 2 2 . f f f . . .
+                        . . 2 2 2 f f f f f d b b f . .
+                        . 2 2 f f e 2 f e f d b b b f .
+                        2 2 f 2 e 2 e f e e f f e e f f
+                        2 f 2 2 e 2 f e 4 d d e d d e f
+                        2 f f 2 e 2 f e 4 d d e d d e f
+                        2 f f 2 2 2 f e f 4 f e 4 e f 2
+                        2 f 2 2 2 2 f f 4 f d 4 2 4 f 2
+                        2 f e 2 2 2 2 f f 4 f e 2 4 f 2
+                        2 f 2 2 e f 2 f 4 4 e e 2 4 f f
+                        2 2 2 e e f 2 f 4 4 4 f f f f f
+                        2 2 f f e f e f e e f f 2 f f 2
+                        2 2 2 f f 2 2 f f e f 2 2 2 2 2
+                        2 . . 2 2 2 2 f f f 2 2 2 2 2 .
+                        2 . 2 2 2 2 2 2 2 2 2 . 2 2 . .
+        """))
+        game.splash("Player 2 Wins!")
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            "X.X")
+        pause(1000)
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
+            "Aggh ffs")
+        ask_wanna_play_again()
+    # Si el proyectil pertenece al jugador 1 y golpea al jugador 2, habiendo el jugador 1 disparado antes este gana.
+    elif otherSprite223 == player_1_bullet and mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)) == sprite223 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
+            . . . . f . . . . . . . . . . .
+                        . . . . f . . . . 2 2 2 2 . . .
+                        . . . f f . . 2 f f f f f 2 2 .
+                        . . . . d 2 2 f f f e e e f 2 .
+                        . . f f d f f f e e e e e e f 2
+                        2 2 6 1 1 e b d 4 4 4 4 e e e 2
+                        2 f 6 1 1 4 b f 4 f 4 e e 2 e f
+                        f f 6 1 1 4 d d f 4 e e e 2 2 f
+                        f f f e e 4 d f 4 f e e 2 2 2 f
+                        f f e d d e 4 4 4 4 e f 2 2 2 f
+                        2 f e d d e f d e f f 2 2 e 2 .
+                        2 2 f e 4 f f 4 4 f f 2 f f 2 2
+                        2 2 2 2 2 2 f f f f 2 2 f f . 2
+                        . . 2 2 2 . . . f f 2 f f . . 2
+        """))
+        game.splash("Player 1 Wins!")
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            "X.X")
+        pause(1000)
+        story.sprite_say_text(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
+            "Aggh ffs")
+        ask_wanna_play_again()
+    # Si el proyectil pertenece a un NPC y golpea al personaje principal, habiendo el NPC disparado antes hacemos game_over
+    elif otherSprite223 == npc_bullet and main_character == sprite223 and not (is_shoot_done):
+        is_shoot_done = True
+        sprites.destroy(otherSprite223, effects.fire, 500)
+        main_character.set_image(img("""
+            . . . . . . . . . . . 2 2 . . 2
+                        . 2 2 2 2 2 2 2 2 2 2 . . 2 2 .
+                        2 2 2 2 2 2 f f f 2 2 2 2 . . 2
+                        2 2 2 f f c f f f f 2 2 2 f f 2
+                        2 2 2 2 f c f f f f f f f f f f
+                        2 2 f f c f f e e 4 4 f e e f f
+                        2 f f c f f e e e 4 4 4 f e f f
+                        2 f 2 2 f f f f f f 4 4 e e f 2
+                        2 f 2 2 f c f f b 1 4 4 e e f 2
+                        2 2 f 2 2 c f f f e e e e f f 2
+                        . 2 2 2 f f f f e 4 f 4 4 e f f
+                        . 2 2 f f f c f e e f 4 4 e f f
+                        2 2 2 f f c c f f f f 4 e f f 2
+                        2 . 2 2 f f f f f f 2 2 2 2 2 2
+                        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 .
+                        . . . 2 2 2 2 2 2 2 2 2 . . . .
+        """))
+        story.sprite_say_text(main_character, "X.X")
+        pause(1000)
+        carnival.on_game_over_expanded(carnival.WinTypes.LOSE)
+sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, handle_players_projectile_collision)
+
+# Pregunta si quiere volver a jugar, si dice que si recargamos la pantalla de nuevo
+# Si no quiere volver a jugar destrozamos la pantalla y cargamos el menú
+def ask_wanna_play_again():
+    story.show_player_choices("Menú", "Volver a jugar")
+    if story.check_last_answer("Menú"):
+        destroy_1v1()
+        do_menu()
+    else:
+        destroy_1v1()
+        two_players_screen()
+
+# Destroza todo lo creado en el duelo arcade
+# para que no quede en pantalla en siguientes peleas o al pasar al modo historia
+def destroy_1v1():
+    sprites.destroy_all_sprites_of_kind(SpriteKind.projectile)
+    carnival.show_timer(False)
+    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)))
+    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)))
+    info.stop_countdown()
+    sprites.destroy(textSprite)
+
+# Esta función se ejecuta cuando el jugador presiona la flecha hacia el lado, dependiendo del lado hará una u otra.
+# Se verifica si el jugador está vivo para evitar acciones cuando está eliminado.
+# También se asegura de que el jugador no esté hablando, ya que el diálogo tiene prioridad sobre el movimiento.
+# Si las condiciones anteriores se cumplen:
+# - Se inicia una animación específica para el personaje principal.
+def on_up_pressed():
+    if isPlayerLive and not (is_player_talking):
+        animation.run_image_animation(main_character,
+            [img("""
+                    . . . . f f f f . . . . .
+                                . . f f c c c c f f . . .
+                                . f f c c c c c c f f . .
+                                f f c c c c c c c c f f .
+                                f f c c f c c c c c c f .
+                                f f f f f c c c f c c f .
+                                f f f f c c c f c c f f .
+                                f f f f f f f f f f f f .
+                                f f f f f f f f f f f f .
+                                . f f f f f f f f f f . .
+                                . f f f f f f f f f f . .
+                                f e f f f f f f f f e f .
+                                e 4 f e e e e e e c 4 e .
+                                e e f f e e e e f f e e .
+                                . . . f f f f f f . . . .
+                                . . . f f . . f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f c c c c f f . .
+                                . f f f c c c c c c f f .
+                                f f c c c c c c c c c f f
+                                f c c c c f c c c c c c f
+                                . f f f f c c c c f c c f
+                                . f f f f c c f c c c f f
+                                . f f f f f f f f f f f f
+                                . f f f f f f f f f f f f
+                                . . f f f f f f f f f f .
+                                . . e f f f f f f f f f .
+                                . . e f f f f f f f f e f
+                                . . 4 c e e e e e e 4 4 e
+                                . . e f f f f f f f e e .
+                                . . . f f f . . . . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f c c c c f f . .
+                                . . f f c c c c c c f f .
+                                . f f f c c c c c c c f f
+                                f f f c c c c c c c c c f
+                                f f c c c f c c c c c c f
+                                . f f f f f c c c f c f f
+                                . f f f f c c f f c f f f
+                                . . f f f f f f f f f f f
+                                . . f f f f f f f f f f .
+                                . . f f f f f f f f f e .
+                                . f e f f f f f f f f e .
+                                . e 4 4 e e e e e e c 4 .
+                                . . e e f f f f f f f e .
+                                . . . . . . . . f f f . .
+                """)],
+            500,
+            True)
+    elif isPlayerLive:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
+
+# - Se inicia una animación específica para el personaje principal hacía abajo.
+def on_down_pressed():
+    if isPlayerLive and not (is_player_talking):
+        animation.run_image_animation(main_character,
+            [img("""
+                    . . . . f f f f . . . . .
+                                . . f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f f f c c f f f c .
+                                f f f c f f f f f f f c .
+                                c c c f f f e e f f c c .
+                                f f f f f e e f f c c f .
+                                f f f b f e e f b f f f .
+                                . f 4 1 f 4 4 f 1 4 f . .
+                                . f e 4 4 4 4 4 4 e f . .
+                                . f f f e e e e f f f . .
+                                f e f e f e e f e f e f .
+                                e 4 f e e e e e e f 4 e .
+                                e e f f f f f f f f e e .
+                                . . . f f f f f f . . . .
+                                . . . f f . . f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . . f f f f . . . .
+                                . . . f f f f f f f f . .
+                                . . f f f f f f c f f f .
+                                f f f f f f f c c f f f c
+                                f f f f c f f f f f f f c
+                                . c c c f f f e e f f c c
+                                . f f f f f e e f f c c f
+                                . f f f b f e e f b f f f
+                                . f f 4 1 f 4 4 f 1 4 f f
+                                . . f e 4 4 4 4 4 e e f e
+                                . f e f e f e e f 4 4 4 e
+                                . e 4 f e e e e e 4 4 e .
+                                . . . f f f f f f e e . .
+                                . . . f f f f f f f . . .
+                                . . . f f f . . . . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . f f f f . . . . .
+                                . . f f f f f f f f . . .
+                                . f f f c f f f f f f . .
+                                c f f f c c f f f f f f f
+                                c f f f f f f f c f f f f
+                                c c f f e e f f f c c c .
+                                f c c f f e e f f f f f .
+                                f f f b f e e f b f f f .
+                                f f 4 1 f 4 4 f 1 4 f f .
+                                e f e e 4 4 4 4 4 e f . .
+                                e 4 4 4 f e e f e f e f .
+                                . e 4 4 e e e e e f 4 e .
+                                . . e e f f f f f f . . .
+                                . . . f f f f f f f . . .
+                                . . . . . . . f f f . . .
+                """)],
+            500,
+            True)
+    elif isPlayerLive:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
+
+# - Se inicia una animación específica para el personaje principal hacía arriba.
+def on_right_pressed():
+    if isPlayerLive and not (is_player_talking):
+        animation.run_image_animation(main_character,
+            [img("""
+                    . . . . . . . . . . . . .
+                                . . . f f f f f f . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f f .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f f .
+                                f f e 4 e 1 f 4 4 f f . .
+                                . f f f e 4 4 4 4 f . . .
+                                . 4 4 4 e 4 4 4 f f . . .
+                                . e 4 4 e e e f e f . . .
+                                . f e e f e e e e f f . .
+                                . f f f f f f f f f f . .
+                                . . f f . . . f f f . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . f f f f f f . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f f .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f . .
+                                . f e 4 e 1 f 4 4 f f . .
+                                . f f f e e 4 4 4 f . . .
+                                . . f 4 4 f 4 4 f f . . .
+                                . . f 4 4 f e f e f . . .
+                                . f f f f e e e e f f . .
+                                . f f f f f f f f f f . .
+                                . . f f . . . f f f . . .
+                """),
+                img("""
+                    . . . f f f f f . . . . .
+                                . f f f f f f f f f . . .
+                                . f f f f f f c f f f . .
+                                f f f f c f f f c f f . .
+                                f c f f c c f f f c c f f
+                                f c c f f f f e f f f f f
+                                f f f f f f f e e f f f .
+                                f f e e f b f e e f f . .
+                                . f e 4 e 1 f 4 4 f . . .
+                                . f f f e 4 4 4 4 f . . .
+                                . . f e f f e e f f . . .
+                                . . f 4 4 f e e e f . . .
+                                . . f 4 4 e e f e f . . .
+                                . . f f f f e e e f . . .
+                                . . . f f f f f f . . . .
+                                . . . . f f f . . . . . .
+                """)],
+            500,
+            True)
+    elif isPlayerLive:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
+
+# - Se inicia una animación específica para el personaje principal hacía la izquierda.
+def on_left_pressed():
+    if isPlayerLive and not (is_player_talking):
+        animation.run_image_animation(main_character,
+            [img("""
+                    . . . . . f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . . f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . . f f e e f b f e e f f
+                                . . . f 4 4 f 1 e 4 e f .
+                                . . . f 4 4 4 4 e f f f .
+                                . . . f f e e e e e f . .
+                                . . . f e f e e e 4 e . .
+                                . . . f e e e e e 4 e . .
+                                . . . f f f f f e e f . .
+                                . . . . f f f f f f . . .
+                                . . . . . . f f f . . . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . f f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . f f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . . f f e e f b f e e f f
+                                . . f f 4 4 f 1 e 4 e f .
+                                . . . f 4 4 4 e e f f f .
+                                . . . f f e e 4 4 e f . .
+                                . . . f e f e 4 4 e f . .
+                                . . f f f f f e e f f f .
+                                . . f f f f f f f f f f .
+                                . . . f f f . . . f f . .
+                """),
+                img("""
+                    . . . . . . . . . . . . .
+                                . . . . f f f f f f . . .
+                                . . . f f f f f f f f f .
+                                . . f f f c f f f f f f .
+                                . f f f c f f f c f f f f
+                                f f c c f f f c c f f c f
+                                f f f f f e f f f f c c f
+                                . f f f e e f f f f f f f
+                                . f f f e e f b f e e f f
+                                . . f f 4 4 f 1 e 4 e f f
+                                . . . f 4 4 4 4 e f f f .
+                                . . . f f e e e e 4 4 4 .
+                                . . . f e f e e e 4 4 e .
+                                . . f f f f f f f e e f .
+                                . . f f f f f f f f f f .
+                                . . . f f f . . . f f . .
+                """)],
+            500,
+            True)
+    elif isPlayerLive:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
+
+# Cuando presionamos B
+# Si presionamos B y se cumple la condición de que estamos en el nivel del mapa
+# Miramos si abrimos el minimapa, cogemos el contrario del can_show_minimap booleano
+# por ende si lo abrimos y está en false pasa a true, y si le damos de nuevo pasa a false por ende se cierra.
+# Si podemos abrir el mapa lo enseñamos con los respectivos sprites.
+# Para casi cada sprite tiene un condicional si tenemos que enseñarlo o no segun el transcurso del juego.
+def on_b_pressed():
+    global can_show_minimap, showMinimap, is_map_showing, myMinimap
+    if is_on_map_level:
+        can_show_minimap = not (can_show_minimap)
+        if can_show_minimap:
+            showMinimap = True
+            is_map_showing = True
+            myMinimap = minimap.minimap(MinimapScale.EIGHTH, 2, 15)
+            minimap.include_sprite(myMinimap, main_character, MinimapSpriteScale.OCTUPLE)
+            minimap.include_sprite(myMinimap, npc_start, MinimapSpriteScale.QUADRUPLE)
+            if show_npc_football_map:
+                minimap.include_sprite(myMinimap, npc_football, MinimapSpriteScale.QUADRUPLE)
+            if show_npc_building:
+                minimap.include_sprite(myMinimap, npc_building, MinimapSpriteScale.QUADRUPLE)
+            if show_enemy_guard:
+                minimap.include_sprite(myMinimap, enemy_guard, MinimapSpriteScale.QUADRUPLE)
+            miniMapa.set_image(minimap.get_image(myMinimap))
+            miniMapa.set_position(scene.camera_property(CameraProperty.X),
+                scene.camera_property(CameraProperty.Y))
+            miniMapa.z = 999
+        else:
+            is_map_showing = False
+            miniMapa.set_image(img("""
+                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+                                . . . . . . . . . . . . . . . .
+            """))
+            showMinimap = False
+controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
+
+
+#Función: handle_player_npc_interaction
+#
+#Gestiona las interacciones entre el jugador y los NPCs al colisionar.
+#
+#Parámetros:
+# - sprite2: El sprite del jugador que colisiona.
+# - otherSprite2: El sprite del NPC con el que colisiona.
+#
+#Descripción:
+#- Muestra un mensaje para iniciar un diálogo al presionar "A".
+#- Ejecuta diálogos y eventos según el NPC con el que colisiona:
+#  - **Emily:** Proporciona pistas.
+# - **NPC del fútbol/Pedro:** Inicia una confrontación y registra la ubicación previa para cargar el mapa de nuevo.
+# - **Mbappez:** Desarrolla un enfrentamiento y registra la ubicación previa, revelandote el final.
+# - **Madre:** Revela la trama final y termina el juego.
+#- Si no hay eventos disponibles, muestra un mensaje indicando que no se puede interactuar.
+def handle_player_npc_interaction(sprite2, otherSprite2):
+    global is_player_talking, show_npc_football_map, prev_location_of_main_character, has_prev_location, has_completed_football, has_completed_mbappez
+    if not (showMinimap) and is_on_map_level:
+        main_character.say_text("A para hablar", 500, False)
+        if not (showMinimap) and controller.A.is_pressed():
+            is_player_talking = True
+            if otherSprite2 == npc_start and not (showMinimap):
+                story.print_character_text("Hola, sé lo que ha pasado con tu madre...", "Emily")
+                story.print_character_text("Vi a unos chavales con camisetas de futbol", "Emily")
+                story.print_character_text("Oh, muchas gracias por la información, sabes donde puedo encontrar a alguien de ellos?",
+                    main_character_name)
+                story.print_character_text("Uno debería de estar en el campo de futbol con una Camiseta del Barcelona.",
+                    "Emily")
+                story.print_character_text("De verdad, te lo agradezco", main_character_name)
+                story.print_character_text("Te he dibujado en el mapa de tu bolsillo al maleante para que lo encuentres",
+                    "Emily")
+                show_npc_football_map = True
+                story.print_dialog("Presiona B para ver el mapa!", 80, 90, 50, 150)
+                is_player_talking = False
+            elif otherSprite2 == npc_football and not (showMinimap):
+                story.print_character_text("¡Eres uno de los que irrumpió y robó a mi madre!",
+                    main_character_name)
+                story.print_character_text("¿De qué hablas? Yo estoy tranquilo aquí jugando al fútbol.",
+                    "Pedro")
+                story.print_character_text("¡No te hagas el tonto! ¡Devuélveme lo que le robaste!",
+                    main_character_name)
+                prev_location_of_main_character = main_character.tilemap_location()
+                has_prev_location = True
+                has_completed_football = True
+                start_npc_duel(npc_football)
+            elif otherSprite2 == npc_building and not (showMinimap) and has_completed_football:
+                story.print_character_text("¡Tú! ¡No te escondas, sé que estás con ellos!",
+                    main_character_name)
+                story.print_character_text("¿Qué? ¡No tengo idea de lo que hablas! Yo solo estoy de paso.",
+                    "Mbappez")
+                story.print_character_text("No me tomes por tonto. ¿Dónde guardáis lo que robáis?",
+                    main_character_name)
+                story.print_character_text(" ¿Robar? Nosotros no robamos, somos un equipo de fútbol humilde... Bueno, con algo de talento.",
+                    "Mbappez")
+                story.print_character_text("Sí, hombre. ¿Y el mapa que tienes en el bolsillo también es parte del \"equipo\"?",
+                    main_character_name)
+                story.print_character_text("¡Ah! Bueno, quizás haya... algo de información ahí, pero no es lo que crees.",
+                    "Mbappez")
+                prev_location_of_main_character = main_character.tilemap_location()
+                has_prev_location = True
+                has_completed_mbappez = True
+                start_npc_duel(npc_building)
+            elif otherSprite2 == final_mom_sprite and not (showMinimap):
+                story.print_character_text("¡Mamá, estoy aquí! ¿Estás bien?", main_character_name)
+                story.print_character_text("Oh, hijo... Estoy perfectamente. Mejor de lo que crees.",
+                    "Mamá")
+                story.print_character_text("¿Qué? Pero esos chicos... ¿Dónde están los ladrones?",
+                    main_character_name)
+                story.print_character_text("Fui yo. Todo esto lo planeé para quitarles lo poco que tenían. Pagué a Emily para que te diera esa información",
+                    "Mamá")
+                story.print_character_text("...", main_character_name)
+                story.print_character_text("¡¿Qué estás diciendo?! ¡Mamá, ellos no hicieron nada!",
+                    main_character_name)
+                story.print_character_text("Ellos no importan. Nosotros necesitábamos el dinero, y ahora lo tenemos.",
+                    "Mamá")
+                story.print_character_text("Lo hice por ti. Por nosotros.", "Mamá")
+                story.print_character_text("¡Entonces he dañado a esos pobres chavales para nada!",
+                    main_character_name)
+                story.print_character_text("Si dices algo, me perderás a mí también. ¿Estás dispuesto a tomar ese riesgo?",
+                    "Mamá")
+                carnival.custom_game_over_expanded("Terminaste el juego!",
+                    effects.confetti,
+                    music.big_crash,
+                    carnival.ScoreTypes.NONE)
+            else:
+                story.print_dialog("No puedes hablar con el/ella ahora", 80, 90, 50, 150)
+                is_player_talking = False
+sprites.on_overlap(SpriteKind.player, SpriteKind.Npc, handle_player_npc_interaction)
+
+#Función: start_npc_duel
+#Inicia un duelo con un NPC, modificando el estado del juego y configurando la escena para el enfrentamiento.
+#Parámetros:
+#- npc: El sprite del NPC con el que se inicia el duelo.
+#Descripción:
+#- Detiene cualquier animación en curso del jugador.
+#- Configura variables para indicar que el jugador está en un duelo con el NPC.
+#- Cambia el tipo de sprite del NPC a `npc_duel` y destruye otros NPCs en la escena.
+#- Asigna el NPC en duelo y establece un tiempo aleatorio para el contador.
+#- Desactiva la posibilidad de disparar para el jugador y desactiva el mapa.
+#- Si el NPC es `npc_football`, cambia la imagen de fondo de la escena a futbol.
+#- Si el NPC es `npc_building`, cambia la imagen de fondo de la escena a building.
+def start_npc_duel(npc: Sprite):
+    global is_npc_duel, can_main_character_shoot, npc_dueling, random_countdown_time, is_player_talking, is_on_map_level
     animation.stop_animation(animation.AnimationTypes.ALL, main_character)
     main_character.set_image(img("""
-        . . . . . . . . . . . . . . . . 
-                . . . . . f f f f f f . . . . . 
-                . . . f f f f f f f f f . . . . 
-                . . . f f f f f f c f f f . . . 
-                . . f f f f c f f f c f f f . . 
-                . . f c f f c c f f f c c f f . 
-                . . f c c f f f f e f f f f f . 
-                . . f f f f f f f e e f f f . . 
-                . . f f e e f b f e e f f f . . 
-                . . f f e 4 e 1 f 4 4 f f . . . 
-                . . . f f f e 4 4 4 4 f . . . . 
-                . . . 4 4 4 e 4 4 4 f f . . . . 
-                . . . e 4 4 e e e f e f . . . . 
-                . . . f e e f e e e e f f . . . 
-                . . . f f f f f f f f f f . . . 
+        . . . . . . . . . . . . . . . .
+                . . . . . f f f f f f . . . . .
+                . . . f f f f f f f f f . . . .
+                . . . f f f f f f c f f f . . .
+                . . f f f f c f f f c f f f . .
+                . . f c f f c c f f f c c f f .
+                . . f c c f f f f e f f f f f .
+                . . f f f f f f f e e f f f . .
+                . . f f e e f b f e e f f f . .
+                . . f f e 4 e 1 f 4 4 f f . . .
+                . . . f f f e 4 4 4 4 f . . . .
+                . . . 4 4 4 e 4 4 4 f f . . . .
+                . . . e 4 4 e e e f e f . . . .
+                . . . f e e f e e e e f f . . .
+                . . . f f f f f f f f f f . . .
                 . . . . f f . . . f f f . . . .
     """))
     tiles.set_current_tilemap(tilemap("""
@@ -1565,8 +1631,8 @@ def npc_duel2(npc: Sprite):
     npc.set_kind(SpriteKind.npc_duel)
     sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
     npc_dueling = npc
-    randomTime = randint(1, 10)
-    info.start_countdown(randomTime)
+    random_countdown_time = randint(1, 10)
+    info.start_countdown(random_countdown_time)
     is_player_talking = True
     is_on_map_level = False
     if npc == npc_football:
@@ -1819,119 +1885,126 @@ def npc_duel2(npc: Sprite):
         """))
         npc.set_position(120, 120)
         main_character.set_position(38, 120)
-def escena_fabrica():
-    global fabrica
-    fabrica = sprites.create(img("""
-            999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c9999999999999999999999999999
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c9999999d99999c9999999999999999999999999999
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c999999dc99999c9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c999999dc999c9c9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999dc99999c999999dccccccc9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99d9dcdddd99dcccdd9c9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99c9dccccc99dc99999c9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cd99999c99c99c999999dc99999c9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cc9996cccdcddcd99999dc9997cc9999999999999999999999999999
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999911ddddddd11119dc19999c7ccccccccccccccccccc9999999999911999999999999999
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd1d1ddd9dddddd111dc19999cd9c99c991111ccdd999c9999999999111111111111111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddd9ddddd111dc19999c9dc99c911111cc99999c9999999999911111111111111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999d99ddddddd99dddd11ddcdddddcddcddcddddddccdddddcd9999999999d1111111111111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddddddddddd999dd11dddddbdddddddbddddddddceeeeeeb999999999911111dd1111111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddddddd11ddddddddddddddddddddddceeeeeeb999999999911199991d11111111
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999911dd1ddddddddddd11ddddddddddddddddddddddceeffffb9d9999999911199999999111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddddddd11ddddddddddddddddddddddceefffb9999999999911d99999999111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddd9ddddd11dbbbbbbffffffffddfffffffffffb9999999999911999999999111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd9ddd9d9ddd1d1bffbffffffffff9bfffffffffffb9999999999ddd99d999999111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999999ddd9ddd9d9dddd11bff6ffffffffff9cffdffffffffbfd99999999d11d9ddb9999dddddd
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999d99dd99ddd9d9ddd11ddffbbfbbffbffbdccbdffffffffbf99999999991199dbe9999111111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddddddd9ddd1dddddddddddddddddddddddeeeeeeefd99999d999dddddbe999d111111
-                    9999999999999999999999999999999999999999999999999999999999999999999999999999999999991ddddddddddddddd1dddddddddddddddddddddddeeeeeeef9999999999dd4eeeecccdd11111
-                    999999999999999999999999999999999999999999999999999999999999999999999999999999999991dddddd1ddddddddd1dddddddddbdddddddddddddeeeffeef99999999991d9bbbe9991111111
-                    99999999999999999999999999999999999999999999999999999999999999999999999999999999999dddddddd1dd99ddddd9ddddddbdddddddddddddddeeeefeef99999999dddd9bbbc99d1111111
-                    999999999999999cc9999999999999999999999999999999999999999999999999991d11111119999991ddd9dddddd999ddd1dddddddddddddddddddbdddfeeefeef999999999bd19dbbc99d111111d
-                    999999999999999cc9999999999999999999999999999999d9999999999999999999ddddd1dd1ddddd111ddd9d1ddd999ddd1dd9ffff99ffffffffbcdffffffeffdf999999999cd19bbbc799d11111d
-                    9999999999ccccccccccdd119999999999999999999991dddd999999999999999999ddddd1dd1ddddd11ddd999ddddd99ddd1dddffff67ffffbbffbbbffffffefffffb9999999cd19bbbcb99911111d
-                    99999999991ddddcccdccd119999999999999999999991dddd999999999999999999dddddddd1dddddd1ddd9d99dddd9dddd1dddfffffbfffbddbf6bfffffffeff9f999999999cd19b6bcb99911111d
-                    999999999911d11ccddd11119999999999999999999991dddd111199999999999999dd9ddddd1ddddddd1dddddddddd9dddd1ddddddddddddddddbdddbdbfffeffbf999999999c119bbbc999911111d
-                    999999999911d11dc1dd11dd9999999999999999999111dddd111111111111111111dd9ddd9d1dd9dddd1dddddddd99dddddddddddddddddddddbdddddddeeeeeeeebbdddd999c119bbbc999911111d
-                    999999999d11111dc11111dd9999999999999999999ddddddd11111dd1111111d111dd99dd9d1ddd99dddddddddd9ddddddddbbdddddddddddddbdddddddeeeeeeee4eb4eeeeee444eeeccccccbbbbb
-                    999999999cccccccccccccccd199999999999999991dddddd11111dddd111111d111ddd9dd9dddddddddddddddbbbbbbbbbbbeedddddddddddddddddddddfeeefffb9bb9dbdb9c119bbbbbb6dd11ddd
-                    99999999dcdddddcccccccccd1111999999999911119dddddd1111dddd111111d111ddddddddddddddddddddbbbbbbbbbbbdbffdddddddddddddddddddddfffeffbc9779dbbd9c1d9bdbb9bdd111d1d
-                    99999999ddd11d1dcd1111dd11111d11199999911d1ddddddd11d1dddd111111d11dddddddddddddddddddddeffbfffbfffbbffbbbbbbdbfffbffbfffdfffffeff9b9db99bd99c1d9bbbb99d9dd9ddd
-                    99999999dddddd1bcd1111dd111119d111111111dd1ddddddd11d1dddd11d111d119dddddd9dddddddd9ddddfffbfffbfffbbffbfffffbfffffff6fffdfffffeffdbddb9dbd9dc999d9bb99d9b9999b
-                    99999999d1d1111dcd1111dbdddddd1dddd11111d91ddddddd11dddddd11ddddddddddddd99d1ddd9dd9ddddfffbfffbfffbbffffffbfffffffffbfffffffffeff9b9dcbd9dddc999d9bb99d9ddb99b
-                    99999999d1d1111dcddddddddddbbbbbb6d11111d91ddddddd11dddddd119ddddd91ddd99ddd1dd99dd99dddfffbfffbfffbbffbddddddbdddddddbdddbbfffeffbb99bd9999dc99999bb99d919999b
-                    99999999d1d111ddcdddddddddddddddddbdddddbbdddddddd11dddbbd119dddddd1dddddddd1dd99dddddddddddddddddddbffbdddddddddddddddddddbeeeefebbd9bdd999dc99999bb9dd9199ddb
-                    99999999dddd1dbeceeeeeeeeeeeeeeeeeefffffeedddddddd11dddcdd11ddddddddddddddddddd99dddddddbffbbbbdbffdbffbdddddddddddddddddddbeeeeeeebbbbb44444e4444eecccccccccce
-                    999999991d1d114fcfefffefffeffefffeefffffeedddddddbddb6cccddddddddddddddddddddddd9dddddddbffbfffbfffbbffbdddddbdddddddbdddddbfffeeebbddbddddddcdddddbbd9b999999b
-                    999999991d1dd14fcfefffefffeffefffeeffffeeedddddddbddcbdcddbddddddddddddddddddddd9dddddddbffbfffbfffbbffbddddbddddddddbdddddbfffeffbdddddd999db99dddbb9db999999b
-                    99999999dddddd4fcfefffefffeffefffefffffeeedddddddbddbddbddfdddddddddbdddddddddddddddddddbffbfffbfffbbffbbffffffffffbffddfffffffeffdddddddddddb9d9dfefd9d99999db
-                    ddddddddddddddeeceeeeeeeeeeeeeeeeefffeeeeedddddddbddddbbdbfdddddddddbddddddddddddddd9dddbbbbbbbdbbbdbfffbfffffbbfffffffbbffffffeffddddddddffdbdddffefbdddd9dbef
-                    dddddddddddddd4fcfefffefffeffefffefffeeeeeddddddddddddfbdbfbdddddddbcbbdddddddddd999dddddbbdddddddddbefbbffddbdbbfffffffbffffffbbbdddddddfffdbddddddfffbddbbeff
-                    ddbddddddddddd4fcfefffefffeffefffeefeeeeeeddddd1dbcdddfd1fbdbddddbbdbdddddddddddddddddddbffbfffdfffdbffbddddddbddddddddddddbfffddddbddddffffcbdddddbffffddcbeff
-                    ddbdddddddddbd4fcfefffefffeffefffeefeeeeeed11111dbcbddfbdf1ddd1bddbddbddddddddddddddddddbffbfffdfffbbffbddddddbddddddddddbdbeeebbdddddbeeeeeeccbbddbefffddcbfff
-                    eddddddddddbddeeceeeeeeeeeeeeeeeeeeeeeeeeebd1111dbffdfffbbdbdb1bddcbdcbcd1ddddddddebddddbffbbffbfffbbffbdddddddddddddddddddbeeebdddddddcfcdddbcbdddbbfffbcebeff
-                    dedddddb4dbbb4eecbddddddddd1dd1ddddeeeeeee6bd111dbffdfffbffbdebbcccddbddddddbb34442ee4cbbffbbffdbffdbffbddddddddddddbddddddbfffbbbbbbbdbbdbbdbbbbbbdfffffbffeff
-                    ddbddddb4dbbe4eecedddddbddddddddddbeeeeeee66d111dddddddbddbddefbdddbdbdbbdddbd3e44e332cdddddddddddddbffbbffffffffffffffffffffffbffbbffbffbffbfffbfcdfffffbffbff
-                    ddbddbdb4bbbe4cccc6666ff6666f6fff6eeeeeeeedd1111dbffdbfbdbfbdefbdddbddddedddebdedfedf2edbffbbffdbffbbffbbffffffffffffffffffffffbffbbffbffbffdfffbfcbfffffbffbff
-                    ddddb4bcbbbdd4cfccff6ffff6666ffffbeeeeffffbddddddbffdeffbffbdffbddbddddddddd2bbeffeff2cbbffbbffdbffdbffbbffffffffffffffffffffffbffbbffbffbccdffbbccbfffffbffbeb
-                    4bdbc4bb4bbbdbbcccfffffff6666ffffbeeeffffebddddddbffdeffdffbdffbbbdddddddddd2efeffeff2cbbffbbffdbffdbffbbffffffffffffffffffffffbbbdbffdbbdbbdbbbbbbbfffffbffbb4
-                    dbbeb4444bbbddbbccffbcffffcc66fffbeeefffeedddddd3bee4effbefbbffffbddddddddddee2eff22e2cebee4eff4eee4efffbffffffffffffffffffffffbdddbffdddddddddddddbffeeeefbd44
-                    ddddddddddbdddbbbcbbbbefffebbbbbbbbbffffbbdddddd44444efe44444eebeddddddddddd4444ff4444ee4444bff44444eeeebffffffffffffffffffffffbdddbfbddddddddddddddbbbbbbbddbb
-                    44444444444444444c444444444444444444444444444444444ddd444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
-                    44dd4444444444444c4444444444ddd4444ddd444444444444444444444444444444444ddd44444444444444444444444444444444d44444444444444444dddd44444444444444444ddd44444444444
-                    b4bb44b4dddbbbbbbcbb4bbbdbbb44bbbb4bbb4b44dddbbbbbb4bbbbbbbb4bb44ddbbbb44bb4dbbbbbb44bbbb444bb4bbbbbbbbbb44bbbbdbb44bbbbbbbbbbbbb4bbbbbb44dbb44444444bbbb4bbddb
-                    bbbbbbbbbbbbbbbbbcbeebbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbb44bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb4bbbbbbbbbbbbbbbbbbbbbbbbbbbbb4bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                    bdbbbbbbbbbbbbbbbceeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbdbbbbbbb
-                    bbbbbbbbbbdbbbbbbeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbdbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                    bbbbbbbbbbbbbbbbbbeeeeeeeeeeebbbbbbbeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                    bbbbbbbbbbbbbbbbbbeeeeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-                    111111111bbbbbb11eeeeeeeeeeeeffeeeff111111111bbbbbb111111111111bbbbbb111111111111bbbbbbb11111111111bbbbbbb111111111111bbbbbbbb11111111111bbbbbbbbb1111111111111
-                    bbbbbbbbbbbbbbbbbeeeeeeeeeeeeffeffffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeebbbbbbbbbbbbbbbbbbb
-                    bbbbbbbbbbbbbbbbbeeefeeeeeeeffefffffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbebbbbbebbbebbbbbbbbbbbbbbbbbb
-                    bbbbbbbbbbbbbbbbbeecfceeeeeeffeeefffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeeffffeeeeeeeeeebbbbbbbbbbbbbbbb
-                    bbbbbbbbbbbbbbbbbeecffeeeeeeeffeeeebbbbeecbbbbbbbbbbbbbbdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeefffffeeeeeffffeeeeeeeeeeeeebbbbbbbbbbbbb
-                    bdbbbbbddddbbbbbbbeffffeeeeeeffefeeeeeeeeebdbbbbbbbbbbbbbbbddbdddbbbbbbddbbddbbbbbbbbbbdbdddbbbbbbbbbbbbbbddbbbbdbbbeeefffffeeeefffffeeeeeeeeffeeebbeebbb4bbbbb
-                    44444dd44444444444444bfeeefeeeeeffeeffeeeffffffffffffeeeb4d4444444444444444444444444444d4d44444444444444444444444444beeefeeeeeeefffffeeeeeeeeeeeeeeeeeebb444444
-                    44444d444444444444444ddd444ffffffffffffffffffffb4dd44dd4444444dd44444444444444444444444d4444444444444444444d4444444d44ff4d4deeeefffffeeeeeeeeebfffff444dd444444
-                    4444444444d44444444444dd444444444444444444444444ddd444444444444444444444444444444444444444444444444d4444444d44444444444dd4ddfffffdffffbbbbbb4fff444444ddd444444
-                    444444444444444444444444444444444444444444d44444d44d4444444444444444444dd444444444444444444dd444444ddd444444444444d444444d4d444fffff4444444444444d444444444444d
-                    444444444444444444444444444dd444444444444444444444444444ddd44444444444dd4d4444444444444444444444444d4d44444444444d44444444444444444444d44444444444444444444444d
-                    444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
-                    444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
-        """),
-        SpriteKind.player)
-def destroy1v1():
-    sprites.destroy_all_sprites_of_kind(SpriteKind.projectile)
-    carnival.show_timer(False)
-    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)))
-    sprites.destroy(mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)))
-    info.stop_countdown()
+
+
+# Cada vez que recarga el juego
+# Si el jugador esta hablando o tiene el mapa abierto cancelamos las animaciones y el movimiento.
+# Si no es así se mueve con normalidad y sus animaciones.
+def on_on_update():
+    if is_player_talking or is_map_showing:
+        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+        controller.move_sprite(main_character, 0, 0)
+    else:
+        controller.move_sprite(main_character, 100, 100)
+game.on_update(on_on_update)
+
+# Cada vez que recarga en un intervalo de 100 ms.
+# Si cumple la condicion de que en el duelo el npc puede disparar realizamos el disparo despues de un tiempo
+# Este tiempo es para que el jugador pueda ganar el duelo con su tiempo de reacción normal y corriente.
+def on_update_interval():
+    global npc_can_shoot
+    if npc_can_shoot:
+        def on_after():
+            global npc_can_shoot, npc_bullet
+            npc_can_shoot = False
+            npc_bullet = sprites.create_projectile_from_sprite(img("""
+                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . 2 2 2 2 . . . . . . . . .
+                                    . . 2 1 1 1 1 2 2 . . . . . . .
+                                    . . 1 1 1 1 1 1 3 3 2 2 . . . .
+                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . .
+                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
+                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . .
+                                    . . 2 1 1 1 1 3 2 2 . . . . . .
+                                    . . . 2 2 2 2 . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                                    . . . . . . . . . . . . . . . .
+                """),
+                npc_dueling,
+                -50,
+                0)
+        timer.after(randint(350, 560), on_after)
+        
+        npc_can_shoot = False
+game.on_update_interval(100, on_update_interval)
+
+# Cuando se choca con el tile de las escaleras
+# Si cumple la condición de haber completado la batalla con mbappez entonces cargamos el nivel final_level
+# Si no la cumple no hace nada.
+def on_overlap_tile(sprite4, location):
+    if has_completed_mbappez:
+        final_level()
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.stair_south,
+    on_overlap_tile)
+
+# Función que configura el nivel final del juego
+# Esta función destruye sprites previos, configura el fondo, y crea los sprites de los personajes finales.
+def final_level():
+    global final_mom_sprite, final_emily_sprite
     sprites.destroy(textSprite)
+    sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
+    scene.set_background_color(13)
+    final_mom_sprite = sprites.create(img("""
+            . . . . . . . f f . . . . . . .
+                    . . . . . f f 3 3 f f . . . . .
+                    . . . . f 3 3 3 3 3 3 f . . . .
+                    . . . f 5 5 3 3 3 3 5 3 f . . .
+                    . . f 3 3 5 3 3 3 5 5 3 3 f . .
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f .
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f .
+                    . f 3 3 f f e e e e f f 3 3 f .
+                    f f 3 3 f b f e e f b f 3 3 f f
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f
+                    . f 3 3 f e e e e e e e 3 3 f .
+                    . . f e f 5 5 d d d 5 5 e f . .
+                    . . 5 e c d 5 9 9 9 5 d e 5 . .
+                    . . e f b d d d 9 d d d f e . .
+                    . . . f f 1 d d 1 d 1 f f . . .
+                    . . . . . f f f f f f . . . . .
+        """),
+        SpriteKind.Npc)
+    final_emily_sprite = sprites.create(img("""
+            . f f f . f f f f . f f f .
+                    f f f f f c 5 5 5 f f f f f
+                    f f f f b c c c c b 5 5 f f
+                    f f 5 5 3 c c c c 3 c 5 f f
+                    . f 3 3 c c c c c c 3 3 f .
+                    . f c c c c 4 4 c c c c f .
+                    . f f c c 4 4 4 4 c c f f .
+                    . f f f b f 4 4 f b f f f .
+                    . f f 4 1 f d d f 1 4 f f .
+                    . . f f d d d d d d f f . .
+                    . . e f f f 4 4 f f f e . .
+                    . e 4 f b f 5 5 f b f 4 e .
+                    . 5 d f 3 3 5 5 3 3 c d 5 .
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 .
+                    . . . . f f f f f f . . . .
+                    . . . . f f . . f f . . . .
+        """),
+        SpriteKind.Npc)
+    # Configurar el mapa y ubicar los sprites
+    tiles.set_current_tilemap(tilemap("""
+        nivel2
+    """))
+    tiles.place_on_tile(main_character, tiles.get_tile_location(11, 14))
+    tiles.place_on_tile(final_mom_sprite, tiles.get_tile_location(6, 3))
+    tiles.place_on_tile(final_emily_sprite, tiles.get_tile_location(9, 3))
 
-def on_on_overlap6(sprite3, otherSprite3):
-    cursor.say_text("A para jugar")
-    if controller.A.is_pressed():
-        TwoPlayersScreen()
-sprites.on_overlap(SpriteKind.player,
-    SpriteKind.twoPlayersButton,
-    on_on_overlap6)
-
-def destroyLevelOne():
-    tiles.destroy_sprites_of_kind(SpriteKind.mom)
-    tiles.destroy_sprites_of_kind(SpriteKind.Building)
-    tiles.destroy_sprites_of_kind(SpriteKind.Complete)
+# Variables que se usan en el juego (Esto lo realiza solo el makecode arcade)
 fabrica: Sprite = None
 npc_dueling: Sprite = None
 can_talk = False
 npc_bullet: Sprite = None
 player_1_bullet: Sprite = None
-randomTime = 0
+random_countdown_time = 0
 isDuel = False
-canShoot = False
+can_shoot = False
 two_players_button: Sprite = None
 single_player_button: Sprite = None
 has_prev_location = False
@@ -1968,66 +2041,25 @@ main_character_bullet: Sprite = None
 is_on_map_level = False
 miniMapa: Sprite = None
 isPlayerLive = False
-doMenu()
+do_menu()
 isPlayerLive = False
 miniMapa = sprites.create(img("""
-        . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.player)
 is_on_map_level = False
-
-def on_on_update():
-    if is_player_talking or is_map_showing:
-        animation.stop_animation(animation.AnimationTypes.ALL, main_character)
-        controller.move_sprite(main_character, 0, 0)
-    else:
-        controller.move_sprite(main_character, 100, 100)
-game.on_update(on_on_update)
-
-def on_update_interval():
-    global npc_can_shoot
-    if npc_can_shoot:
-        
-        def on_after():
-            global npc_can_shoot, npc_bullet
-            npc_can_shoot = False
-            npc_bullet = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . 2 1 1 1 1 2 2 . . . . . . . 
-                                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
-                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
-                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
-                                    . . 2 1 1 1 1 3 2 2 . . . . . . 
-                                    . . . 2 2 2 2 . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . . 
-                                    . . . . . . . . . . . . . . . .
-                """),
-                npc_dueling,
-                -50,
-                0)
-        timer.after(randint(550, 900), on_after)
-        
-        npc_can_shoot = False
-game.on_update_interval(200, on_update_interval)
