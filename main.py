@@ -23,17 +23,17 @@ def on_on_overlap(sprite22, otherSprite22):
         is_shoot_done = True
         sprites.destroy(otherSprite22, effects.fire, 500)
         npc_football.set_image(img("""
-            . . 4 4 e 2 2 f f f f f f . 2 2
-                        . . 4 d 4 f f e e e e e e f . 2
-                        . . f f f f e 4 4 e e e e f f .
-                        f f 8 8 8 e 4 4 f f 4 4 e e f 2
-                        f f 2 2 2 4 4 4 d f 4 4 4 e 2 2
-                        2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f
-                        2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f
-                        f f 8 5 8 4 4 4 f f e e 2 2 e f
-                        f f 2 2 2 e 4 4 d f e e 2 2 2 2
-                        2 2 f f f f e 4 4 e e 2 e 2 2 2
-                        2 2 4 d 4 f f e 4 e 2 2 f f 2 .
+            . . 4 4 e 2 2 f f f f f f . 2 2 
+                        . . 4 d 4 f f e e e e e e f . 2 
+                        . . f f f f e 4 4 e e e e f f . 
+                        f f 8 8 8 e 4 4 f f 4 4 e e f 2 
+                        f f 2 2 2 4 4 4 d f 4 4 4 e 2 2 
+                        2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f 
+                        2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f 
+                        f f 8 5 8 4 4 4 f f e e 2 2 e f 
+                        f f 2 2 2 e 4 4 d f e e 2 2 2 2 
+                        2 2 f f f f e 4 4 e e 2 e 2 2 2 
+                        2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
                         . 2 2 4 e 2 2 f e e 2 f f . 2 2
         """))
         npc_football.set_kind(SpriteKind.Complete)
@@ -60,17 +60,17 @@ def on_on_overlap(sprite22, otherSprite22):
         is_shoot_done = True
         sprites.destroy(otherSprite22, effects.fire, 500)
         npc_building.set_image(img("""
-            . . e e e . 2 f f f f f f 2 2 2
-                        . . e d e 2 2 e e e f f f f 2 2
-                        . . f f f f e e e e e f f f 2 2
-                        f f f f f e e e f f e e f f f 2
-                        2 f f f f e e e d f e e f f f f
-                        2 f f f e e 2 e e e e e f 2 f f
-                        . f 8 8 e e 2 e e e e e f 2 2 f
-                        f f 8 2 8 e e e f f e e f f 2 f
-                        f f f f f e e e d f e f f f 2 .
-                        2 2 f f f f e e e e e f f f 2 2
-                        . . e d e f f e f f f f f f 2 2
+            . . e e e . 2 f f f f f f 2 2 2 
+                        . . e d e 2 2 e e e f f f f 2 2 
+                        . . f f f f e e e e e f f f 2 2 
+                        f f f f f e e e f f e e f f f 2 
+                        2 f f f f e e e d f e e f f f f 
+                        2 f f f e e 2 e e e e e f 2 f f 
+                        . f 8 8 e e 2 e e e e e f 2 2 f 
+                        f f 8 2 8 e e e f f e e f f 2 f 
+                        f f f f f e e e d f e f f f 2 . 
+                        2 2 f f f f e e e e e f f f 2 2 
+                        . . e d e f f e f f f f f f 2 2 
                         . . e e 2 2 2 f f f f f f 2 2 2
         """))
         npc_building.set_kind(SpriteKind.Complete)
@@ -93,21 +93,21 @@ def on_on_overlap(sprite22, otherSprite22):
         sprites.destroy(otherSprite22, effects.fire, 500)
         game.splash("You win, pero a que coste?")
         final_mom_sprite.set_image(img("""
-            . . . . . 2 f f 2 2 2 2 2 . . .
-                        . . 2 2 2 f 3 f f f f 2 2 . . .
-                        2 2 e 5 f 3 3 3 3 3 3 f 2 2 . .
-                        2 f f e e 3 3 3 3 3 3 3 f 2 2 .
-                        2 f b c f f e f f e 3 3 5 f 2 2
-                        f 1 d d 5 e d f f 3 3 5 5 3 f 2
-                        f d d 5 5 e f d e 3 3 3 3 3 f 2
-                        f d d 9 d e e e e e 3 3 3 3 3 f
-                        f 1 9 9 d e e e e e 3 3 3 3 3 f
-                        f d d 9 d e d f e 3 3 5 3 3 f 2
-                        f 1 d 2 2 e f d f 3 3 5 5 3 f 2
-                        . f d 2 2 e e f f e 3 3 3 f 2 2
-                        2 f f 2 e 3 3 3 3 3 3 3 f 2 2 2
-                        2 2 e 2 2 3 3 3 3 3 3 f 2 2 2 2
-                        . . . 2 2 f 3 f f f 2 2 2 . . .
+            . . . . . 2 f f 2 2 2 2 2 . . . 
+                        . . 2 2 2 f 3 f f f f 2 2 . . . 
+                        2 2 e 5 f 3 3 3 3 3 3 f 2 2 . . 
+                        2 f f e e 3 3 3 3 3 3 3 f 2 2 . 
+                        2 f b c f f e f f e 3 3 5 f 2 2 
+                        f 1 d d 5 e d f f 3 3 5 5 3 f 2 
+                        f d d 5 5 e f d e 3 3 3 3 3 f 2 
+                        f d d 9 d e e e e e 3 3 3 3 3 f 
+                        f 1 9 9 d e e e e e 3 3 3 3 3 f 
+                        f d d 9 d e d f e 3 3 5 3 3 f 2 
+                        f 1 d 2 2 e f d f 3 3 5 5 3 f 2 
+                        . f d 2 2 e e f f e 3 3 3 f 2 2 
+                        2 f f 2 e 3 3 3 3 3 3 3 f 2 2 2 
+                        2 2 e 2 2 3 3 3 3 3 3 f 2 2 2 2 
+                        . . . 2 2 f 3 f f f 2 2 2 . . . 
                         . 2 2 2 . . f f 2 2 2 . . . . .
         """))
         is_player_talking = False
@@ -129,57 +129,57 @@ def on_up_pressed():
     if isPlayerLive and not (is_player_talking):
         animation.run_image_animation(main_character,
             [img("""
-                    . . . . f f f f . . . . .
-                                . . f f c c c c f f . . .
-                                . f f c c c c c c f f . .
-                                f f c c c c c c c c f f .
-                                f f c c f c c c c c c f .
-                                f f f f f c c c f c c f .
-                                f f f f c c c f c c f f .
-                                f f f f f f f f f f f f .
-                                f f f f f f f f f f f f .
-                                . f f f f f f f f f f . .
-                                . f f f f f f f f f f . .
-                                f e f f f f f f f f e f .
-                                e 4 f e e e e e e c 4 e .
-                                e e f f e e e e f f e e .
-                                . . . f f f f f f . . . .
+                    . . . . f f f f . . . . . 
+                                . . f f c c c c f f . . . 
+                                . f f c c c c c c f f . . 
+                                f f c c c c c c c c f f . 
+                                f f c c f c c c c c c f . 
+                                f f f f f c c c f c c f . 
+                                f f f f c c c f c c f f . 
+                                f f f f f f f f f f f f . 
+                                f f f f f f f f f f f f . 
+                                . f f f f f f f f f f . . 
+                                . f f f f f f f f f f . . 
+                                f e f f f f f f f f e f . 
+                                e 4 f e e e e e e c 4 e . 
+                                e e f f e e e e f f e e . 
+                                . . . f f f f f f . . . . 
                                 . . . f f . . f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . . f f f f . . . .
-                                . . . f f c c c c f f . .
-                                . f f f c c c c c c f f .
-                                f f c c c c c c c c c f f
-                                f c c c c f c c c c c c f
-                                . f f f f c c c c f c c f
-                                . f f f f c c f c c c f f
-                                . f f f f f f f f f f f f
-                                . f f f f f f f f f f f f
-                                . . f f f f f f f f f f .
-                                . . e f f f f f f f f f .
-                                . . e f f f f f f f f e f
-                                . . 4 c e e e e e e 4 4 e
-                                . . e f f f f f f f e e .
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f c c c c f f . . 
+                                . f f f c c c c c c f f . 
+                                f f c c c c c c c c c f f 
+                                f c c c c f c c c c c c f 
+                                . f f f f c c c c f c c f 
+                                . f f f f c c f c c c f f 
+                                . f f f f f f f f f f f f 
+                                . f f f f f f f f f f f f 
+                                . . f f f f f f f f f f . 
+                                . . e f f f f f f f f f . 
+                                . . e f f f f f f f f e f 
+                                . . 4 c e e e e e e 4 4 e 
+                                . . e f f f f f f f e e . 
                                 . . . f f f . . . . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . . f f f f . . . .
-                                . . . f f c c c c f f . .
-                                . . f f c c c c c c f f .
-                                . f f f c c c c c c c f f
-                                f f f c c c c c c c c c f
-                                f f c c c f c c c c c c f
-                                . f f f f f c c c f c f f
-                                . f f f f c c f f c f f f
-                                . . f f f f f f f f f f f
-                                . . f f f f f f f f f f .
-                                . . f f f f f f f f f e .
-                                . f e f f f f f f f f e .
-                                . e 4 4 e e e e e e c 4 .
-                                . . e e f f f f f f f e .
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f c c c c f f . . 
+                                . . f f c c c c c c f f . 
+                                . f f f c c c c c c c f f 
+                                f f f c c c c c c c c c f 
+                                f f c c c f c c c c c c f 
+                                . f f f f f c c c f c f f 
+                                . f f f f c c f f c f f f 
+                                . . f f f f f f f f f f f 
+                                . . f f f f f f f f f f . 
+                                . . f f f f f f f f f e . 
+                                . f e f f f f f f f f e . 
+                                . e 4 4 e e e e e e c 4 . 
+                                . . e e f f f f f f f e . 
                                 . . . . . . . . f f f . .
                 """)],
             500,
@@ -206,6 +206,7 @@ scene.on_overlap_tile(SpriteKind.player,
 
 def mom_death_ending():
     global mom_at_bed_sprite
+    scene.center_camera_at(0, 0)
     scene.set_background_image(img("""
         ccccccc666666666666cc6666666666666666666b6c6666666666666c66666666666666c6666666666bc6666666666666666666666666666666666666666666666c6666666666b6666666666c666666
                 fcccccbbcccb66666666666cc6666666666666666666c666666666666bc6666666666666bc66666666666c666666666666c6666666666666666b6b6666bbbbb66c666666666666666666666c6666666
@@ -331,21 +332,21 @@ def mom_death_ending():
     sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
     sprites.destroy_all_sprites_of_kind(SpriteKind.Complete)
     mom_at_bed_sprite = sprites.create(img("""
-            . . . . . . . . f f . . . . . .
-                    . . . . . f f f f 3 f . . . . .
-                    . . . . f 3 3 3 3 3 3 f e e . .
-                    . . . f 3 3 3 3 3 3 3 e e f f .
-                    . . f 3 3 3 e f f e e d d d f .
-                    . f 3 3 3 3 3 f b 1 e d d d 1 f
-                    . f 3 3 3 3 3 e f f e d d d d f
-                    f 3 3 3 3 3 e e e e e d d d 1 f
-                    f 3 3 3 3 3 e e e e e d d d d f
-                    . f 3 3 3 3 3 e f f e d d d d f
-                    . f 3 3 3 3 3 f b 1 e d d d 1 f
-                    . . f 3 3 3 e f f e f f c b f .
-                    . . . f 3 3 3 3 3 3 3 e e f f .
-                    . . . . f 3 3 3 3 3 3 f e e . .
-                    . . . . . f f f f 3 f . . . . .
+            . . . . . . . . f f . . . . . . 
+                    . . . . . f f f f 3 f . . . . . 
+                    . . . . f 3 3 3 3 3 3 f e e . . 
+                    . . . f 3 3 3 3 3 3 3 e e f f . 
+                    . . f 3 3 3 e f f e e d d d f . 
+                    . f 3 3 3 3 3 f b 1 e d d d 1 f 
+                    . f 3 3 3 3 3 e f f e d d d d f 
+                    f 3 3 3 3 3 e e e e e d d d 1 f 
+                    f 3 3 3 3 3 e e e e e d d d d f 
+                    . f 3 3 3 3 3 e f f e d d d d f 
+                    . f 3 3 3 3 3 f b 1 e d d d 1 f 
+                    . . f 3 3 3 e f f e f f c b f . 
+                    . . . f 3 3 3 3 3 3 3 e e f f . 
+                    . . . . f 3 3 3 3 3 3 f e e . . 
+                    . . . . . f f f f 3 f . . . . . 
                     . . . . . . . . f f . . . . . .
         """),
         SpriteKind.Npc)
@@ -380,21 +381,21 @@ def on_b_pressed():
         else:
             is_map_showing = False
             miniMapa.set_image(img("""
-                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
-                                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
+                                . . . . . . . . . . . . . . . . 
                                 . . . . . . . . . . . . . . . .
             """))
             showMinimap = False
@@ -408,40 +409,40 @@ def final_level():
     sprites.destroy_all_sprites_of_kind(SpriteKind.Npc)
     scene.set_background_color(13)
     final_mom_sprite = sprites.create(img("""
-            . . . . . . . f f . . . . . . .
-                    . . . . . f f 3 3 f f . . . . .
-                    . . . . f 3 3 3 3 3 3 f . . . .
-                    . . . f 5 5 3 3 3 3 5 3 f . . .
-                    . . f 3 3 5 3 3 3 5 5 3 3 f . .
-                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f .
-                    . f 3 3 e 3 3 e e 3 3 e 3 3 f .
-                    . f 3 3 f f e e e e f f 3 3 f .
-                    f f 3 3 f b f e e f b f 3 3 f f
-                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f
-                    . f 3 3 f e e e e e e e 3 3 f .
-                    . . f e f 5 5 d d d 5 5 e f . .
-                    . . 5 e c d 5 9 9 9 5 d e 5 . .
-                    . . e f b d d d 9 d d d f e . .
-                    . . . f f 1 d d 1 d 1 f f . . .
+            . . . . . . . f f . . . . . . . 
+                    . . . . . f f 3 3 f f . . . . . 
+                    . . . . f 3 3 3 3 3 3 f . . . . 
+                    . . . f 5 5 3 3 3 3 5 3 f . . . 
+                    . . f 3 3 5 3 3 3 5 5 3 3 f . . 
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
+                    . f 3 3 f f e e e e f f 3 3 f . 
+                    f f 3 3 f b f e e f b f 3 3 f f 
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
+                    . f 3 3 f e e e e e e e 3 3 f . 
+                    . . f e f 5 5 d d d 5 5 e f . . 
+                    . . 5 e c d 5 9 9 9 5 d e 5 . . 
+                    . . e f b d d d 9 d d d f e . . 
+                    . . . f f 1 d d 1 d 1 f f . . . 
                     . . . . . f f f f f f . . . . .
         """),
         SpriteKind.Npc)
     final_emily_sprite = sprites.create(img("""
-            . f f f . f f f f . f f f .
-                    f f f f f c 5 5 5 f f f f f
-                    f f f f b c c c c b 5 5 f f
-                    f f 5 5 3 c c c c 3 c 5 f f
-                    . f 3 3 c c c c c c 3 3 f .
-                    . f c c c c 4 4 c c c c f .
-                    . f f c c 4 4 4 4 c c f f .
-                    . f f f b f 4 4 f b f f f .
-                    . f f 4 1 f d d f 1 4 f f .
-                    . . f f d d d d d d f f . .
-                    . . e f f f 4 4 f f f e . .
-                    . e 4 f b f 5 5 f b f 4 e .
-                    . 5 d f 3 3 5 5 3 3 c d 5 .
-                    . 4 4 f 6 6 6 6 6 6 f 4 4 .
-                    . . . . f f f f f f . . . .
+            . f f f . f f f f . f f f . 
+                    f f f f f c 5 5 5 f f f f f 
+                    f f f f b c c c c b 5 5 f f 
+                    f f 5 5 3 c c c c 3 c 5 f f 
+                    . f 3 3 c c c c c c 3 3 f . 
+                    . f c c c c 4 4 c c c c f . 
+                    . f f c c 4 4 4 4 c c f f . 
+                    . f f f b f 4 4 f b f f f . 
+                    . f f 4 1 f d d f 1 4 f f . 
+                    . . f f d d d d d d f f . . 
+                    . . e f f f 4 4 f f f e . . 
+                    . e 4 f b f 5 5 f b f 4 e . 
+                    . 5 d f 3 3 5 5 3 3 c d 5 . 
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+                    . . . . f f f f f f . . . . 
                     . . . . f f . . f f . . . .
         """),
         SpriteKind.Npc)
@@ -467,22 +468,23 @@ def final_level():
 def start_npc_duel(npc: Sprite):
     global is_npc_duel, can_main_character_shoot, npc_dueling, random_countdown_time, is_player_talking, is_on_map_level
     animation.stop_animation(animation.AnimationTypes.ALL, main_character)
+    scene.center_camera_at(0, 0)
     main_character.set_image(img("""
-        . . . . . . . . . . . . . . . .
-                . . . . . f f f f f f . . . . .
-                . . . f f f f f f f f f . . . .
-                . . . f f f f f f c f f f . . .
-                . . f f f f c f f f c f f f . .
-                . . f c f f c c f f f c c f f .
-                . . f c c f f f f e f f f f f .
-                . . f f f f f f f e e f f f . .
-                . . f f e e f b f e e f f f . .
-                . . f f e 4 e 1 f 4 4 f f . . .
-                . . . f f f e 4 4 4 4 f . . . .
-                . . . 4 4 4 e 4 4 4 f f . . . .
-                . . . e 4 4 e e e f e f . . . .
-                . . . f e e f e e e e f f . . .
-                . . . f f f f f f f f f f . . .
+        . . . . . . . . . . . . . . . . 
+                . . . . . f f f f f f . . . . . 
+                . . . f f f f f f f f f . . . . 
+                . . . f f f f f f c f f f . . . 
+                . . f f f f c f f f c f f f . . 
+                . . f c f f c c f f f c c f f . 
+                . . f c c f f f f e f f f f f . 
+                . . f f f f f f f e e f f f . . 
+                . . f f e e f b f e e f f f . . 
+                . . f f e 4 e 1 f 4 4 f f . . . 
+                . . . f f f e 4 4 4 4 f . . . . 
+                . . . 4 4 4 e 4 4 4 f f . . . . 
+                . . . e 4 4 e e e f e f . . . . 
+                . . . f e e f e e e e f f . . . 
+                . . . f f f f f f f f f f . . . 
                 . . . . f f . . . f f f . . . .
     """))
     tiles.set_current_tilemap(tilemap("""
@@ -620,8 +622,8 @@ def start_npc_duel(npc: Sprite):
                         777777777777777777777777777777777777777117777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777771177777777777777777777777
                         777777777777777777777777777777777777771177777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777711777777777777777777777777
         """))
-        npc.set_position(120, 90)
-        main_character.set_position(40, 90)
+        npc.set_position(111, 58)
+        main_character.set_position(12, 58)
     elif npc == npc_building:
         scene.set_background_image(img("""
             999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -745,8 +747,8 @@ def start_npc_duel(npc: Sprite):
                         444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
                         444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
         """))
-        npc.set_position(120, 120)
-        main_character.set_position(38, 120)
+        npc.set_position(107, 64)
+        main_character.set_position(56, 64)
     elif npc == final_mom_sprite:
         scene.set_background_image(img("""
             ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -870,8 +872,8 @@ def start_npc_duel(npc: Sprite):
                         ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
                         ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
         """))
-        npc.set_position(132, 93)
-        main_character.set_position(38, 93)
+        npc.set_position(132, 102)
+        main_character.set_position(25, 102)
 # Cuando estemos encima de la madre del inicio
 # Si estamos encima y le damos a la A hablaremos con ella
 # Nos mostrará el juego dos opciones y según escojamos haremos una acción u otra.
@@ -1033,21 +1035,21 @@ def on_player2_button_a_pressed():
     global player_2_bullet, player_2_can_shoot
     if player_2_can_shoot:
         player_2_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . 2 2 2 2 . . . . . . . . .
-                            . . 2 1 1 1 1 2 2 . . . . . . .
-                            . . 1 1 1 1 1 1 3 3 2 2 . . . .
-                            . . 1 1 1 1 1 1 1 1 3 3 3 3 . .
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
-                            . . 1 1 1 1 1 1 1 3 2 2 3 3 . .
-                            . . 2 1 1 1 1 3 2 2 . . . . . .
-                            . . . 2 2 2 2 . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . 2 2 2 2 . . . . . . . . . 
+                            . . 2 1 1 1 1 2 2 . . . . . . . 
+                            . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                            . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                            . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                            . . 2 1 1 1 1 3 2 2 . . . . . . 
+                            . . . 2 2 2 2 . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
                             . . . . . . . . . . . . . . . .
             """),
             mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)),
@@ -1069,57 +1071,57 @@ def on_left_pressed():
     if isPlayerLive and not (is_player_talking):
         animation.run_image_animation(main_character,
             [img("""
-                    . . . . . f f f f f . . .
-                                . . . f f f f f f f f f .
-                                . . f f f c f f f f f f .
-                                . . f f c f f f c f f f f
-                                f f c c f f f c c f f c f
-                                f f f f f e f f f f c c f
-                                . f f f e e f f f f f f f
-                                . . f f e e f b f e e f f
-                                . . . f 4 4 f 1 e 4 e f .
-                                . . . f 4 4 4 4 e f f f .
-                                . . . f f e e e e e f . .
-                                . . . f e f e e e 4 e . .
-                                . . . f e e e e e 4 e . .
-                                . . . f f f f f e e f . .
-                                . . . . f f f f f f . . .
+                    . . . . . f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . . f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . . f f e e f b f e e f f 
+                                . . . f 4 4 f 1 e 4 e f . 
+                                . . . f 4 4 4 4 e f f f . 
+                                . . . f f e e e e e f . . 
+                                . . . f e f e e e 4 e . . 
+                                . . . f e e e e e 4 e . . 
+                                . . . f f f f f e e f . . 
+                                . . . . f f f f f f . . . 
                                 . . . . . . f f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . f f f f f f . . .
-                                . . . f f f f f f f f f .
-                                . . f f f c f f f f f f .
-                                . f f f c f f f c f f f f
-                                f f c c f f f c c f f c f
-                                f f f f f e f f f f c c f
-                                . f f f e e f f f f f f f
-                                . . f f e e f b f e e f f
-                                . . f f 4 4 f 1 e 4 e f .
-                                . . . f 4 4 4 e e f f f .
-                                . . . f f e e 4 4 e f . .
-                                . . . f e f e 4 4 e f . .
-                                . . f f f f f e e f f f .
-                                . . f f f f f f f f f f .
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . f f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . . f f e e f b f e e f f 
+                                . . f f 4 4 f 1 e 4 e f . 
+                                . . . f 4 4 4 e e f f f . 
+                                . . . f f e e 4 4 e f . . 
+                                . . . f e f e 4 4 e f . . 
+                                . . f f f f f e e f f f . 
+                                . . f f f f f f f f f f . 
                                 . . . f f f . . . f f . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . f f f f f f . . .
-                                . . . f f f f f f f f f .
-                                . . f f f c f f f f f f .
-                                . f f f c f f f c f f f f
-                                f f c c f f f c c f f c f
-                                f f f f f e f f f f c c f
-                                . f f f e e f f f f f f f
-                                . f f f e e f b f e e f f
-                                . . f f 4 4 f 1 e 4 e f f
-                                . . . f 4 4 4 4 e f f f .
-                                . . . f f e e e e 4 4 4 .
-                                . . . f e f e e e 4 4 e .
-                                . . f f f f f f f e e f .
-                                . . f f f f f f f f f f .
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f f f . . . 
+                                . . . f f f f f f f f f . 
+                                . . f f f c f f f f f f . 
+                                . f f f c f f f c f f f f 
+                                f f c c f f f c c f f c f 
+                                f f f f f e f f f f c c f 
+                                . f f f e e f f f f f f f 
+                                . f f f e e f b f e e f f 
+                                . . f f 4 4 f 1 e 4 e f f 
+                                . . . f 4 4 4 4 e f f f . 
+                                . . . f f e e e e 4 4 4 . 
+                                . . . f e f e e e 4 4 e . 
+                                . . f f f f f f f e e f . 
+                                . . f f f f f f f f f f . 
                                 . . . f f f . . . f f . .
                 """)],
             500,
@@ -1133,38 +1135,38 @@ def instantiate_npcs():
     global npc_football, show_npc_football_map, npc_building, show_npc_building, npc_start, enemy_guard
     if npc_football == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_football == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
         npc_football = sprites.create(img("""
-                . . . . f f f f . . . .
-                            . . f f e e e e f f . .
-                            . f f e e e e e e f f .
-                            f e e e 4 e e e e e f f
-                            f e e 4 4 4 e e e e e f
-                            f e e 4 4 4 4 e e e e e
-                            f e e f f 4 4 f f e e e
-                            f e 4 f d 4 4 f d 4 4 e
-                            f e 4 4 4 4 4 4 4 4 e f
-                            . f e 4 4 2 2 4 4 e f .
-                            . f f e 4 4 4 4 e f f .
-                            e 4 f 8 2 8 2 8 2 f 4 e
-                            4 d f 8 2 8 2 5 2 f d 4
-                            4 4 f 8 2 8 2 8 2 f 4 4
-                            . . . f f f f f f . . .
+                . . . . f f f f . . . . 
+                            . . f f e e e e f f . . 
+                            . f f e e e e e e f f . 
+                            f e e e 4 e e e e e f f 
+                            f e e 4 4 4 e e e e e f 
+                            f e e 4 4 4 4 e e e e e 
+                            f e e f f 4 4 f f e e e 
+                            f e 4 f d 4 4 f d 4 4 e 
+                            f e 4 4 4 4 4 4 4 4 e f 
+                            . f e 4 4 2 2 4 4 e f . 
+                            . f f e 4 4 4 4 e f f . 
+                            e 4 f 8 2 8 2 8 2 f 4 e 
+                            4 d f 8 2 8 2 5 2 f d 4 
+                            4 4 f 8 2 8 2 8 2 f 4 4 
+                            . . . f f f f f f . . . 
                             . . . f f . . f f . . .
             """),
             SpriteKind.Npc)
         show_npc_football_map = False
     elif npc_football.kind() == SpriteKind.Complete:
         npc_football = sprites.create(img("""
-                . . 4 4 e 2 2 f f f f f f . 2 2
-                            . . 4 d 4 f f e e e e e e f . 2
-                            . . f f f f e 4 4 e e e e f f .
-                            f f 8 8 8 e 4 4 f f 4 4 e e f 2
-                            f f 2 2 2 4 4 4 d f 4 4 4 e 2 2
-                            2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f
-                            2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f
-                            f f 8 5 8 4 4 4 f f e e 2 2 e f
-                            f f 2 2 2 e 4 4 d f e e 2 2 2 2
-                            2 2 f f f f e 4 4 e e 2 e 2 2 2
-                            2 2 4 d 4 f f e 4 e 2 2 f f 2 .
+                . . 4 4 e 2 2 f f f f f f . 2 2 
+                            . . 4 d 4 f f e e e e e e f . 2 
+                            . . f f f f e 4 4 e e e e f f . 
+                            f f 8 8 8 e 4 4 f f 4 4 e e f 2 
+                            f f 2 2 2 4 4 4 d f 4 4 4 e 2 2 
+                            2 f 8 8 8 4 2 4 4 4 4 4 2 2 2 f 
+                            2 f 2 2 2 4 2 4 4 4 4 e 2 2 e f 
+                            f f 8 5 8 4 4 4 f f e e 2 2 e f 
+                            f f 2 2 2 e 4 4 d f e e 2 2 2 2 
+                            2 2 f f f f e 4 4 e e 2 e 2 2 2 
+                            2 2 4 d 4 f f e 4 e 2 2 f f 2 . 
                             . 2 2 4 e 2 2 f e e 2 f f . 2 2
             """),
             SpriteKind.Complete)
@@ -1172,100 +1174,100 @@ def instantiate_npcs():
     tiles.place_on_tile(npc_football, tiles.get_tile_location(39, 8))
     if npc_building == spriteutils.null_consts(spriteutils.NullConsts.NULL) or npc_building == spriteutils.null_consts(spriteutils.NullConsts.UNDEFINED):
         npc_building = sprites.create(img("""
-                . . . . f f f f . . . .
-                            . . f f f f f f f f . .
-                            . f f f f f f f f f f .
-                            f f f f f f f f f f f f
-                            f f f e e e e e f f f f
-                            f f e e e e e e e e f f
-                            f e e f f e e f f e f f
-                            f e e f d e e f d e f f
-                            f e e e e e e e e e e f
-                            . f e e e 2 2 e e e f .
-                            . f f e e e e e e f f .
-                            e e f f f e e 8 f f e e
-                            e d f f f f 8 2 f f d e
-                            e e f f f f 8 8 f f e e
-                            . . . f f f f f f . . .
+                . . . . f f f f . . . . 
+                            . . f f f f f f f f . . 
+                            . f f f f f f f f f f . 
+                            f f f f f f f f f f f f 
+                            f f f e e e e e f f f f 
+                            f f e e e e e e e e f f 
+                            f e e f f e e f f e f f 
+                            f e e f d e e f d e f f 
+                            f e e e e e e e e e e f 
+                            . f e e e 2 2 e e e f . 
+                            . f f e e e e e e f f . 
+                            e e f f f e e 8 f f e e 
+                            e d f f f f 8 2 f f d e 
+                            e e f f f f 8 8 f f e e 
+                            . . . f f f f f f . . . 
                             . . . f f . . f f . . .
             """),
             SpriteKind.Npc)
         show_npc_building = False
     elif npc_building.kind() == SpriteKind.Complete:
         npc_building = sprites.create(img("""
-                . . e e e . 2 f f f f f f 2 2 2
-                            . . e d e 2 2 e e e f f f f 2 2
-                            . . f f f f e e e e e f f f 2 2
-                            f f f f f e e e f f e e f f f 2
-                            2 f f f f e e e d f e e f f f f
-                            2 f f f e e 2 e e e e e f 2 f f
-                            . f 8 8 e e 2 e e e e e f 2 2 f
-                            f f 8 2 8 e e e f f e e f f 2 f
-                            f f f f f e e e d f e f f f 2 .
-                            2 2 f f f f e e e e e f f f 2 2
-                            . . e d e f f e f f f f f f 2 2
+                . . e e e . 2 f f f f f f 2 2 2 
+                            . . e d e 2 2 e e e f f f f 2 2 
+                            . . f f f f e e e e e f f f 2 2 
+                            f f f f f e e e f f e e f f f 2 
+                            2 f f f f e e e d f e e f f f f 
+                            2 f f f e e 2 e e e e e f 2 f f 
+                            . f 8 8 e e 2 e e e e e f 2 2 f 
+                            f f 8 2 8 e e e f f e e f f 2 f 
+                            f f f f f e e e d f e f f f 2 . 
+                            2 2 f f f f e e e e e f f f 2 2 
+                            . . e d e f f e f f f f f f 2 2 
                             . . e e 2 2 2 f f f f f f 2 2 2
             """),
             SpriteKind.Complete)
         show_npc_building = True
     else:
         npc_building = sprites.create(img("""
-                . . . . f f f f . . . .
-                            . . f f f f f f f f . .
-                            . f f f f f f f f f f .
-                            f f f f f f f f f f f f
-                            f f f e e e e e f f f f
-                            f f e e e e e e e e f f
-                            f e e f f e e f f e f f
-                            f e e f d e e f d e f f
-                            f e e e e e e e e e e f
-                            . f e e e 2 2 e e e f .
-                            . f f e e e e e e f f .
-                            e e f f f e e 8 f f e e
-                            e d f f f f 8 2 f f d e
-                            e e f f f f 8 8 f f e e
-                            . . . f f f f f f . . .
+                . . . . f f f f . . . . 
+                            . . f f f f f f f f . . 
+                            . f f f f f f f f f f . 
+                            f f f f f f f f f f f f 
+                            f f f e e e e e f f f f 
+                            f f e e e e e e e e f f 
+                            f e e f f e e f f e f f 
+                            f e e f d e e f d e f f 
+                            f e e e e e e e e e e f 
+                            . f e e e 2 2 e e e f . 
+                            . f f e e e e e e f f . 
+                            e e f f f e e 8 f f e e 
+                            e d f f f f 8 2 f f d e 
+                            e e f f f f 8 8 f f e e 
+                            . . . f f f f f f . . . 
                             . . . f f . . f f . . .
             """),
             SpriteKind.Npc)
     tiles.place_on_tile(npc_building, tiles.get_tile_location(30, 40))
     npc_start = sprites.create(img("""
-            . f f f . f f f f . f f f .
-                    f f f f f c c c c f f f f f
-                    f f f f b c c c c b f f f f
-                    f f f c 3 c c c c 3 c f f f
-                    . f 3 3 c c c c c c 3 3 f .
-                    . f c c c c 4 4 c c c c f .
-                    . f f c c 4 4 4 4 c c f f .
-                    . f f f b f 4 4 f b f f f .
-                    . f f 4 1 f d d f 1 4 f f .
-                    . . f f d d d d d d f f . .
-                    . . e f e 4 4 4 4 e f e . .
-                    . e 4 f b 3 3 3 3 b f 4 e .
-                    . 4 d f 3 3 3 3 3 3 c d 4 .
-                    . 4 4 f 6 6 6 6 6 6 f 4 4 .
-                    . . . . f f f f f f . . . .
+            . f f f . f f f f . f f f . 
+                    f f f f f c c c c f f f f f 
+                    f f f f b c c c c b f f f f 
+                    f f f c 3 c c c c 3 c f f f 
+                    . f 3 3 c c c c c c 3 3 f . 
+                    . f c c c c 4 4 c c c c f . 
+                    . f f c c 4 4 4 4 c c f f . 
+                    . f f f b f 4 4 f b f f f . 
+                    . f f 4 1 f d d f 1 4 f f . 
+                    . . f f d d d d d d f f . . 
+                    . . e f e 4 4 4 4 e f e . . 
+                    . e 4 f b 3 3 3 3 b f 4 e . 
+                    . 4 d f 3 3 3 3 3 3 c d 4 . 
+                    . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+                    . . . . f f f f f f . . . . 
                     . . . . f f . . f f . . . .
         """),
         SpriteKind.Npc)
     tiles.place_on_tile(npc_start, tiles.get_tile_location(6, 7))
     if show_enemy_guard:
         enemy_guard = sprites.create(img("""
-                . . . f 2 2 2 2 2 2 2 2 f . . .
-                            . f f 2 2 2 2 2 2 2 2 2 2 f f .
-                            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f
-                            2 2 2 2 2 f f f f f f 2 2 2 2 2
-                            2 2 2 2 f f f f f f f f 2 2 2 2
-                            2 2 2 2 f f f f f f f f 2 2 2 2
-                            2 2 2 2 f f f f f f f f 2 2 2 2
-                            2 2 2 2 2 f f f f f f 2 2 2 2 2
-                            f 2 2 2 2 2 f f f f 2 2 2 2 2 f
-                            f f 2 2 2 2 2 2 2 2 2 2 2 f f .
-                            . f f 2 2 2 2 2 2 2 2 2 f f . .
-                            . . f f 2 2 2 2 2 2 2 f f . . .
-                            . . . f f 2 2 2 2 2 f f . . . .
-                            . . . . f 2 2 2 2 2 f . . . . .
-                            . . . . . f 2 2 2 f . . . . . .
+                . . . f 2 2 2 2 2 2 2 2 f . . . 
+                            . f f 2 2 2 2 2 2 2 2 2 2 f f . 
+                            f f 2 2 2 2 2 2 2 2 2 2 2 2 f f 
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 f f f f f f f f 2 2 2 2 
+                            2 2 2 2 2 f f f f f f 2 2 2 2 2 
+                            f 2 2 2 2 2 f f f f 2 2 2 2 2 f 
+                            f f 2 2 2 2 2 2 2 2 2 2 2 f f . 
+                            . f f 2 2 2 2 2 2 2 2 2 f f . . 
+                            . . f f 2 2 2 2 2 2 2 f f . . . 
+                            . . . f f 2 2 2 2 2 f f . . . . 
+                            . . . . f 2 2 2 2 2 f . . . . . 
+                            . . . . . f 2 2 2 f . . . . . . 
                             . . . . . . f 2 f . . . . . . .
             """),
             SpriteKind.marker)
@@ -1293,57 +1295,57 @@ def on_right_pressed():
     if isPlayerLive and not (is_player_talking):
         animation.run_image_animation(main_character,
             [img("""
-                    . . . . . . . . . . . . .
-                                . . . f f f f f f . . . .
-                                . f f f f f f f f f . . .
-                                . f f f f f f c f f f . .
-                                f f f f c f f f c f f f .
-                                f c f f c c f f f c c f f
-                                f c c f f f f e f f f f f
-                                f f f f f f f e e f f f .
-                                f f e e f b f e e f f f .
-                                f f e 4 e 1 f 4 4 f f . .
-                                . f f f e 4 4 4 4 f . . .
-                                . 4 4 4 e 4 4 4 f f . . .
-                                . e 4 4 e e e f e f . . .
-                                . f e e f e e e e f f . .
-                                . f f f f f f f f f f . .
+                    . . . . . . . . . . . . . 
+                                . . . f f f f f f . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f f . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f f . 
+                                f f e 4 e 1 f 4 4 f f . . 
+                                . f f f e 4 4 4 4 f . . . 
+                                . 4 4 4 e 4 4 4 f f . . . 
+                                . e 4 4 e e e f e f . . . 
+                                . f e e f e e e e f f . . 
+                                . f f f f f f f f f f . . 
                                 . . f f . . . f f f . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . f f f f f f . . . .
-                                . f f f f f f f f f . . .
-                                . f f f f f f c f f f . .
-                                f f f f c f f f c f f f .
-                                f c f f c c f f f c c f f
-                                f c c f f f f e f f f f f
-                                f f f f f f f e e f f f .
-                                f f e e f b f e e f f . .
-                                . f e 4 e 1 f 4 4 f f . .
-                                . f f f e e 4 4 4 f . . .
-                                . . f 4 4 f 4 4 f f . . .
-                                . . f 4 4 f e f e f . . .
-                                . f f f f e e e e f f . .
-                                . f f f f f f f f f f . .
+                    . . . . . . . . . . . . . 
+                                . . . f f f f f f . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f f . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f . . 
+                                . f e 4 e 1 f 4 4 f f . . 
+                                . f f f e e 4 4 4 f . . . 
+                                . . f 4 4 f 4 4 f f . . . 
+                                . . f 4 4 f e f e f . . . 
+                                . f f f f e e e e f f . . 
+                                . f f f f f f f f f f . . 
                                 . . f f . . . f f f . . .
                 """),
                 img("""
-                    . . . f f f f f . . . . .
-                                . f f f f f f f f f . . .
-                                . f f f f f f c f f f . .
-                                f f f f c f f f c f f . .
-                                f c f f c c f f f c c f f
-                                f c c f f f f e f f f f f
-                                f f f f f f f e e f f f .
-                                f f e e f b f e e f f . .
-                                . f e 4 e 1 f 4 4 f . . .
-                                . f f f e 4 4 4 4 f . . .
-                                . . f e f f e e f f . . .
-                                . . f 4 4 f e e e f . . .
-                                . . f 4 4 e e f e f . . .
-                                . . f f f f e e e f . . .
-                                . . . f f f f f f . . . .
+                    . . . f f f f f . . . . . 
+                                . f f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f c f f f c f f . . 
+                                f c f f c c f f f c c f f 
+                                f c c f f f f e f f f f f 
+                                f f f f f f f e e f f f . 
+                                f f e e f b f e e f f . . 
+                                . f e 4 e 1 f 4 4 f . . . 
+                                . f f f e 4 4 4 4 f . . . 
+                                . . f e f f e e f f . . . 
+                                . . f 4 4 f e e e f . . . 
+                                . . f 4 4 e e f e f . . . 
+                                . . f f f f e e e f . . . 
+                                . . . f f f f f f . . . . 
                                 . . . . f f f . . . . . .
                 """)],
             500,
@@ -1357,21 +1359,21 @@ def create_main_character():
     global isPlayerLive, main_character
     isPlayerLive = True
     main_character = sprites.create(img("""
-            . . . . f f f f . . . . .
-                    . . f f f f f f f f . . .
-                    . f f f f f f c f f f . .
-                    f f f f f f c c f f f c .
-                    f f f c f f f f f f f c .
-                    c c c f f f e e f f c c .
-                    f f f f f e e f f c c f .
-                    f f f b f e e f b f f f .
-                    . f e 1 f 4 4 f 1 e f . .
-                    . f e 4 4 4 4 4 4 e f . .
-                    . f f f e e e e f f f . .
-                    f f f e f e e f e f f f .
-                    e e f e e e e e e f e e .
-                    e e f e e e e e e f e e .
-                    . . . f f f f f f . . . .
+            . . . . f f f f . . . . . 
+                    . . f f f f f f f f . . . 
+                    . f f f f f f c f f f . . 
+                    f f f f f f c c f f f c . 
+                    f f f c f f f f f f f c . 
+                    c c c f f f e e f f c c . 
+                    f f f f f e e f f c c f . 
+                    f f f b f e e f b f f f . 
+                    . f e 1 f 4 4 f 1 e f . . 
+                    . f e 4 4 4 4 4 4 e f . . 
+                    . f f f e e e e f f f . . 
+                    f f f e f e e f e f f f . 
+                    e e f e e e e e e f e e . 
+                    e e f e e e e e e f e e . 
+                    . . . f f f f f f . . . . 
                     . . . f f . . f f . . . .
         """),
         SpriteKind.player)
@@ -1574,13 +1576,13 @@ def do_menu():
     single_player_button.set_scale(1.5, ScaleAnchor.BOTTOM_LEFT)
     single_player_button.set_position(130, 90)
 # Función: handle_player_npc_interaction
-#
+# 
 # Gestiona las interacciones entre el jugador y los NPCs al colisionar.
-#
+# 
 # Parámetros:
 # - sprite2: El sprite del jugador que colisiona.
 # - otherSprite2: El sprite del NPC con el que colisiona.
-#
+# 
 # Descripción:
 # - Muestra un mensaje para iniciar un diálogo al presionar "A".
 # - Ejecuta diálogos y eventos según el NPC con el que colisiona:
@@ -1664,19 +1666,21 @@ def on_on_overlap3(sprite2, otherSprite2):
                         carnival.ScoreTypes.NONE)
                 else:
                     start_npc_duel(final_mom_sprite)
-            elif otherSprite2 == mom_at_bed_sprite and not (showMinimap):
-                story.print_character_text("Mamá, me da mucha pena verte así", main_character_name)
-                story.print_character_text("Me lo he buscado hijo, estaba cegada por el dinero, perdoname",
-                    "Mamá")
-                story.print_character_text("Te quiero mucho, en nada te darán el alta",
-                    main_character_name)
-                carnival.custom_game_over_expanded("Terminaste el juego!",
-                    effects.confetti,
-                    music.big_crash,
-                    carnival.ScoreTypes.NONE)
             else:
                 story.print_dialog("No puedes hablar con el/ella ahora", 80, 90, 50, 150)
                 is_player_talking = False
+    if otherSprite2 == mom_at_bed_sprite and not (showMinimap):
+        is_player_talking = True
+        main_character.z = 0
+        story.print_character_text("Mamá, me da mucha pena verte así", main_character_name)
+        story.print_character_text("Me lo he buscado hijo, estaba cegada por el dinero, perdoname",
+            "Mamá")
+        story.print_character_text("Te quiero mucho, en nada te darán el alta",
+            main_character_name)
+        carnival.custom_game_over_expanded("Terminaste el juego!",
+            effects.confetti,
+            music.big_crash,
+            carnival.ScoreTypes.NONE)
 sprites.on_overlap(SpriteKind.player, SpriteKind.Npc, on_on_overlap3)
 
 # Si escoge el modo dos jugadores realiza lo siguiente:
@@ -1805,41 +1809,41 @@ def two_players_screen():
     sprites.destroy(cursor)
     mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.ONE),
         sprites.create(img("""
-                . . . . . . . . . . . . . . . .
-                        . . . . . f f f f f f . . . . .
-                        . . . f f e e e e f 2 f . . . .
-                        . . f f e e e e f 2 2 2 f . . .
-                        . . f e e e f f e e e e f . . .
-                        . . f f f f e e 2 2 2 2 e f . .
-                        . . f e 2 2 2 f f f f e 2 f . .
-                        . f f f f f f f e e e f f f . .
-                        . f f e 4 4 e b f 4 4 e e f . .
-                        . f e e 4 d 4 1 f d d e f f . .
-                        . . f e e e 4 d d d d f d d f .
-                        . . . . f e e 4 e e e f b b f .
-                        . . . . f 2 2 2 4 d d e b b f .
-                        . . . f f 4 4 4 e d d e b f . .
-                        . . . f f f f f f e e f f . . .
+                . . . . . . . . . . . . . . . . 
+                        . . . . . f f f f f f . . . . . 
+                        . . . f f e e e e f 2 f . . . . 
+                        . . f f e e e e f 2 2 2 f . . . 
+                        . . f e e e f f e e e e f . . . 
+                        . . f f f f e e 2 2 2 2 e f . . 
+                        . . f e 2 2 2 f f f f e 2 f . . 
+                        . f f f f f f f e e e f f f . . 
+                        . f f e 4 4 e b f 4 4 e e f . . 
+                        . f e e 4 d 4 1 f d d e f f . . 
+                        . . f e e e 4 d d d d f d d f . 
+                        . . . . f e e 4 e e e f b b f . 
+                        . . . . f 2 2 2 4 d d e b b f . 
+                        . . . f f 4 4 4 e d d e b f . . 
+                        . . . f f f f f f e e f f . . . 
                         . . . . f f . . . f f f . . . .
             """),
             SpriteKind.player))
     mp.set_player_sprite(mp.player_selector(mp.PlayerNumber.TWO),
         sprites.create(img("""
-                . . . . . f f f f f . . . .
-                        . . . . f e e e e e f f . .
-                        . . . f e e e e e e e f f .
-                        . . f e e e e e e e f f f f
-                        . . f e e 4 e e e f f f f f
-                        . . f e e 4 4 e e e f f f f
-                        . . f f e 4 4 4 4 4 f f f f
-                        . . f f e 4 4 f f 4 e 4 f f
-                        . . . f f d d d d 4 d 4 f .
-                        . . . . f b b d d 4 f f f .
-                        . . . . f e 4 4 4 e e f . .
-                        f f f d d 1 1 1 e d d 4 . .
-                        . . f . f 1 1 1 e d d e . .
-                        . . . . f 6 6 6 f e e f . .
-                        . . . . . f f f f f f . . .
+                . . . . . f f f f f . . . . 
+                        . . . . f e e e e e f f . . 
+                        . . . f e e e e e e e f f . 
+                        . . f e e e e e e e f f f f 
+                        . . f e e 4 e e e f f f f f 
+                        . . f e e 4 4 e e e f f f f 
+                        . . f f e 4 4 4 4 4 f f f f 
+                        . . f f e 4 4 f f 4 e 4 f f 
+                        . . . f f d d d d 4 d 4 f . 
+                        . . . . f b b d d 4 f f f . 
+                        . . . . f e 4 4 4 e e f . . 
+                        f f f d d 1 1 1 e d d 4 . . 
+                        . . f . f 1 1 1 e d d e . . 
+                        . . . . f 6 6 6 f e e f . . 
+                        . . . . . f f f f f f . . . 
                         . . . . . . . f f f . . . .
             """),
             SpriteKind.player))
@@ -1851,57 +1855,57 @@ def on_down_pressed():
     if isPlayerLive and not (is_player_talking):
         animation.run_image_animation(main_character,
             [img("""
-                    . . . . f f f f . . . . .
-                                . . f f f f f f f f . . .
-                                . f f f f f f c f f f . .
-                                f f f f f f c c f f f c .
-                                f f f c f f f f f f f c .
-                                c c c f f f e e f f c c .
-                                f f f f f e e f f c c f .
-                                f f f b f e e f b f f f .
-                                . f 4 1 f 4 4 f 1 4 f . .
-                                . f e 4 4 4 4 4 4 e f . .
-                                . f f f e e e e f f f . .
-                                f e f e f e e f e f e f .
-                                e 4 f e e e e e e f 4 e .
-                                e e f f f f f f f f e e .
-                                . . . f f f f f f . . . .
+                    . . . . f f f f . . . . . 
+                                . . f f f f f f f f . . . 
+                                . f f f f f f c f f f . . 
+                                f f f f f f c c f f f c . 
+                                f f f c f f f f f f f c . 
+                                c c c f f f e e f f c c . 
+                                f f f f f e e f f c c f . 
+                                f f f b f e e f b f f f . 
+                                . f 4 1 f 4 4 f 1 4 f . . 
+                                . f e 4 4 4 4 4 4 e f . . 
+                                . f f f e e e e f f f . . 
+                                f e f e f e e f e f e f . 
+                                e 4 f e e e e e e f 4 e . 
+                                e e f f f f f f f f e e . 
+                                . . . f f f f f f . . . . 
                                 . . . f f . . f f . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . . f f f f . . . .
-                                . . . f f f f f f f f . .
-                                . . f f f f f f c f f f .
-                                f f f f f f f c c f f f c
-                                f f f f c f f f f f f f c
-                                . c c c f f f e e f f c c
-                                . f f f f f e e f f c c f
-                                . f f f b f e e f b f f f
-                                . f f 4 1 f 4 4 f 1 4 f f
-                                . . f e 4 4 4 4 4 e e f e
-                                . f e f e f e e f 4 4 4 e
-                                . e 4 f e e e e e 4 4 e .
-                                . . . f f f f f f e e . .
-                                . . . f f f f f f f . . .
+                    . . . . . . . . . . . . . 
+                                . . . . . f f f f . . . . 
+                                . . . f f f f f f f f . . 
+                                . . f f f f f f c f f f . 
+                                f f f f f f f c c f f f c 
+                                f f f f c f f f f f f f c 
+                                . c c c f f f e e f f c c 
+                                . f f f f f e e f f c c f 
+                                . f f f b f e e f b f f f 
+                                . f f 4 1 f 4 4 f 1 4 f f 
+                                . . f e 4 4 4 4 4 e e f e 
+                                . f e f e f e e f 4 4 4 e 
+                                . e 4 f e e e e e 4 4 e . 
+                                . . . f f f f f f e e . . 
+                                . . . f f f f f f f . . . 
                                 . . . f f f . . . . . . .
                 """),
                 img("""
-                    . . . . . . . . . . . . .
-                                . . . . f f f f . . . . .
-                                . . f f f f f f f f . . .
-                                . f f f c f f f f f f . .
-                                c f f f c c f f f f f f f
-                                c f f f f f f f c f f f f
-                                c c f f e e f f f c c c .
-                                f c c f f e e f f f f f .
-                                f f f b f e e f b f f f .
-                                f f 4 1 f 4 4 f 1 4 f f .
-                                e f e e 4 4 4 4 4 e f . .
-                                e 4 4 4 f e e f e f e f .
-                                . e 4 4 e e e e e f 4 e .
-                                . . e e f f f f f f . . .
-                                . . . f f f f f f f . . .
+                    . . . . . . . . . . . . . 
+                                . . . . f f f f . . . . . 
+                                . . f f f f f f f f . . . 
+                                . f f f c f f f f f f . . 
+                                c f f f c c f f f f f f f 
+                                c f f f f f f f c f f f f 
+                                c c f f e e f f f c c c . 
+                                f c c f f e e f f f f f . 
+                                f f f b f e e f b f f f . 
+                                f f 4 1 f 4 4 f 1 4 f f . 
+                                e f e e 4 4 4 4 4 e f . . 
+                                e 4 4 4 f e e f e f e f . 
+                                . e 4 4 e e e e e f 4 e . 
+                                . . e e f f f f f f . . . 
+                                . . . f f f f f f f . . . 
                                 . . . . . . . f f f . . .
                 """)],
             500,
@@ -1934,21 +1938,21 @@ def on_on_overlap4(sprite223, otherSprite223):
         is_shoot_done = True
         sprites.destroy(otherSprite223, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)).set_image(img("""
-            . . . . . . . . . . . . . . . .
-                        . . . . 2 2 2 2 2 . f f f . . .
-                        . . 2 2 2 f f f f f d b b f . .
-                        . 2 2 f f e 2 f e f d b b b f .
-                        2 2 f 2 e 2 e f e e f f e e f f
-                        2 f 2 2 e 2 f e 4 d d e d d e f
-                        2 f f 2 e 2 f e 4 d d e d d e f
-                        2 f f 2 2 2 f e f 4 f e 4 e f 2
-                        2 f 2 2 2 2 f f 4 f d 4 2 4 f 2
-                        2 f e 2 2 2 2 f f 4 f e 2 4 f 2
-                        2 f 2 2 e f 2 f 4 4 e e 2 4 f f
-                        2 2 2 e e f 2 f 4 4 4 f f f f f
-                        2 2 f f e f e f e e f f 2 f f 2
-                        2 2 2 f f 2 2 f f e f 2 2 2 2 2
-                        2 . . 2 2 2 2 f f f 2 2 2 2 2 .
+            . . . . . . . . . . . . . . . . 
+                        . . . . 2 2 2 2 2 . f f f . . . 
+                        . . 2 2 2 f f f f f d b b f . . 
+                        . 2 2 f f e 2 f e f d b b b f . 
+                        2 2 f 2 e 2 e f e e f f e e f f 
+                        2 f 2 2 e 2 f e 4 d d e d d e f 
+                        2 f f 2 e 2 f e 4 d d e d d e f 
+                        2 f f 2 2 2 f e f 4 f e 4 e f 2 
+                        2 f 2 2 2 2 f f 4 f d 4 2 4 f 2 
+                        2 f e 2 2 2 2 f f 4 f e 2 4 f 2 
+                        2 f 2 2 e f 2 f 4 4 e e 2 4 f f 
+                        2 2 2 e e f 2 f 4 4 4 f f f f f 
+                        2 2 f f e f e f e e f f 2 f f 2 
+                        2 2 2 f f 2 2 f f e f 2 2 2 2 2 
+                        2 . . 2 2 2 2 f f f 2 2 2 2 2 . 
                         2 . 2 2 2 2 2 2 2 2 2 . 2 2 . .
         """))
         game.splash("Player 2 Wins!")
@@ -1963,19 +1967,19 @@ def on_on_overlap4(sprite223, otherSprite223):
         is_shoot_done = True
         sprites.destroy(otherSprite223, effects.fire, 500)
         mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.TWO)).set_image(img("""
-            . . . . f . . . . . . . . . . .
-                        . . . . f . . . . 2 2 2 2 . . .
-                        . . . f f . . 2 f f f f f 2 2 .
-                        . . . . d 2 2 f f f e e e f 2 .
-                        . . f f d f f f e e e e e e f 2
-                        2 2 6 1 1 e b d 4 4 4 4 e e e 2
-                        2 f 6 1 1 4 b f 4 f 4 e e 2 e f
-                        f f 6 1 1 4 d d f 4 e e e 2 2 f
-                        f f f e e 4 d f 4 f e e 2 2 2 f
-                        f f e d d e 4 4 4 4 e f 2 2 2 f
-                        2 f e d d e f d e f f 2 2 e 2 .
-                        2 2 f e 4 f f 4 4 f f 2 f f 2 2
-                        2 2 2 2 2 2 f f f f 2 2 f f . 2
+            . . . . f . . . . . . . . . . . 
+                        . . . . f . . . . 2 2 2 2 . . . 
+                        . . . f f . . 2 f f f f f 2 2 . 
+                        . . . . d 2 2 f f f e e e f 2 . 
+                        . . f f d f f f e e e e e e f 2 
+                        2 2 6 1 1 e b d 4 4 4 4 e e e 2 
+                        2 f 6 1 1 4 b f 4 f 4 e e 2 e f 
+                        f f 6 1 1 4 d d f 4 e e e 2 2 f 
+                        f f f e e 4 d f 4 f e e 2 2 2 f 
+                        f f e d d e 4 4 4 4 e f 2 2 2 f 
+                        2 f e d d e f d e f f 2 2 e 2 . 
+                        2 2 f e 4 f f 4 4 f f 2 f f 2 2 
+                        2 2 2 2 2 2 f f f f 2 2 f f . 2 
                         . . 2 2 2 . . . f f 2 f f . . 2
         """))
         game.splash("Player 1 Wins!")
@@ -1990,21 +1994,21 @@ def on_on_overlap4(sprite223, otherSprite223):
         is_shoot_done = True
         sprites.destroy(otherSprite223, effects.fire, 500)
         main_character.set_image(img("""
-            . . . . . . . . . . . 2 2 . . 2
-                        . 2 2 2 2 2 2 2 2 2 2 . . 2 2 .
-                        2 2 2 2 2 2 f f f 2 2 2 2 . . 2
-                        2 2 2 f f c f f f f 2 2 2 f f 2
-                        2 2 2 2 f c f f f f f f f f f f
-                        2 2 f f c f f e e 4 4 f e e f f
-                        2 f f c f f e e e 4 4 4 f e f f
-                        2 f 2 2 f f f f f f 4 4 e e f 2
-                        2 f 2 2 f c f f b 1 4 4 e e f 2
-                        2 2 f 2 2 c f f f e e e e f f 2
-                        . 2 2 2 f f f f e 4 f 4 4 e f f
-                        . 2 2 f f f c f e e f 4 4 e f f
-                        2 2 2 f f c c f f f f 4 e f f 2
-                        2 . 2 2 f f f f f f 2 2 2 2 2 2
-                        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 .
+            . . . . . . . . . . . 2 2 . . 2 
+                        . 2 2 2 2 2 2 2 2 2 2 . . 2 2 . 
+                        2 2 2 2 2 2 f f f 2 2 2 2 . . 2 
+                        2 2 2 f f c f f f f 2 2 2 f f 2 
+                        2 2 2 2 f c f f f f f f f f f f 
+                        2 2 f f c f f e e 4 4 f e e f f 
+                        2 f f c f f e e e 4 4 4 f e f f 
+                        2 f 2 2 f f f f f f 4 4 e e f 2 
+                        2 f 2 2 f c f f b 1 4 4 e e f 2 
+                        2 2 f 2 2 c f f f e e e e f f 2 
+                        . 2 2 2 f f f f e 4 f 4 4 e f f 
+                        . 2 2 f f f c f e e f 4 4 e f f 
+                        2 2 2 f f c c f f f f 4 e f f 2 
+                        2 . 2 2 f f f f f f 2 2 2 2 2 2 
+                        2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
                         . . . 2 2 2 2 2 2 2 2 2 . . . .
         """))
         story.sprite_say_text(main_character, "X.X")
@@ -2146,21 +2150,21 @@ def story_mode():
     """))
     tiles.place_on_tile(main_character, tiles.get_tile_location(7, 12))
     mom2 = sprites.create(img("""
-            . . . . . . . f f . . . . . . .
-                    . . . . . f f 3 3 f f . . . . .
-                    . . . . f 3 3 3 3 3 3 f . . . .
-                    . . . f 3 3 3 3 3 3 3 3 f . . .
-                    . . f 3 3 3 3 3 3 3 3 3 3 f . .
-                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f .
-                    . f 3 3 e 3 3 e e 3 3 e 3 3 f .
-                    . f 3 3 f f e e e e f f 3 3 f .
-                    f f 3 3 f b f e e f b f 3 3 f f
-                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f
-                    . f 3 3 f e e e e e e e 3 3 f .
-                    . . f e f d d d d d d d e f . .
-                    . . e e c d d d d d d d e e . .
-                    . . e f b d d d d d d d f e . .
-                    . . . f f 1 d d 1 d 1 f f . . .
+            . . . . . . . f f . . . . . . . 
+                    . . . . . f f 3 3 f f . . . . . 
+                    . . . . f 3 3 3 3 3 3 f . . . . 
+                    . . . f 3 3 3 3 3 3 3 3 f . . . 
+                    . . f 3 3 3 3 3 3 3 3 3 3 f . . 
+                    . f 3 3 3 3 3 3 3 3 3 3 3 3 f . 
+                    . f 3 3 e 3 3 e e 3 3 e 3 3 f . 
+                    . f 3 3 f f e e e e f f 3 3 f . 
+                    f f 3 3 f b f e e f b f 3 3 f f 
+                    f 3 3 3 e 1 f e e f 1 e 3 3 3 f 
+                    . f 3 3 f e e e e e e e 3 3 f . 
+                    . . f e f d d d d d d d e f . . 
+                    . . e e c d d d d d d d e e . . 
+                    . . e f b d d d d d d d f e . . 
+                    . . . f f 1 d d 1 d 1 f f . . . 
                     . . . . . f f f f f f . . . . .
         """),
         SpriteKind.mom)
@@ -2175,21 +2179,21 @@ def on_player1_button_a_pressed():
     global player_1_bullet, player_1_can_shoot, main_character_bullet, can_main_character_shoot
     if player_1_can_shoot and not (is_npc_duel):
         player_1_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . 2 2 2 2 . . .
-                            . . . . . . . 2 2 1 1 1 1 2 . .
-                            . . . . 2 2 3 3 1 1 1 1 1 1 . .
-                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . .
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
-                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . .
-                            . . . . . . 2 2 3 1 1 1 1 2 . .
-                            . . . . . . . . . 2 2 2 2 . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . 2 2 1 1 1 1 2 . . 
+                            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                            . . . . . . 2 2 3 1 1 1 1 2 . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
                             . . . . . . . . . . . . . . . .
             """),
             mp.get_player_sprite(mp.player_selector(mp.PlayerNumber.ONE)),
@@ -2198,21 +2202,21 @@ def on_player1_button_a_pressed():
         player_1_can_shoot = False
     elif can_main_character_shoot and is_npc_duel:
         main_character_bullet = sprites.create_projectile_from_sprite(img("""
-                . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . 2 2 2 2 . . .
-                            . . . . . . . 2 2 1 1 1 1 2 . .
-                            . . . . 2 2 3 3 1 1 1 1 1 1 . .
-                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . .
-                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
-                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . .
-                            . . . . . . 2 2 3 1 1 1 1 2 . .
-                            . . . . . . . . . 2 2 2 2 . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
-                            . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . 2 2 1 1 1 1 2 . . 
+                            . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+                            . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+                            . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                            . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+                            . . . . . . 2 2 3 1 1 1 1 2 . . 
+                            . . . . . . . . . 2 2 2 2 . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
+                            . . . . . . . . . . . . . . . . 
                             . . . . . . . . . . . . . . . .
             """),
             main_character,
@@ -2310,21 +2314,21 @@ fabrica = None
 do_menu()
 isPlayerLive = False
 miniMapa = sprites.create(img("""
-        . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
-            . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.player)
@@ -2353,21 +2357,21 @@ def on_update_interval():
             global npc_can_shoot, npc_bullet
             npc_can_shoot = False
             npc_bullet = sprites.create_projectile_from_sprite(img("""
-                    . . . . . . . . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
-                                    . . . 2 2 2 2 . . . . . . . . .
-                                    . . 2 1 1 1 1 2 2 . . . . . . .
-                                    . . 1 1 1 1 1 1 3 3 2 2 . . . .
-                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . .
-                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . .
-                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . .
-                                    . . 2 1 1 1 1 3 2 2 . . . . . .
-                                    . . . 2 2 2 2 . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
-                                    . . . . . . . . . . . . . . . .
+                    . . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
+                                    . . . 2 2 2 2 . . . . . . . . . 
+                                    . . 2 1 1 1 1 2 2 . . . . . . . 
+                                    . . 1 1 1 1 1 1 3 3 2 2 . . . . 
+                                    . . 1 1 1 1 1 1 1 1 3 3 3 3 . . 
+                                    . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+                                    . . 1 1 1 1 1 1 1 3 2 2 3 3 . . 
+                                    . . 2 1 1 1 1 3 2 2 . . . . . . 
+                                    . . . 2 2 2 2 . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
+                                    . . . . . . . . . . . . . . . . 
                                     . . . . . . . . . . . . . . . .
                 """),
                 npc_dueling,
