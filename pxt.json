@@ -1,6 +1,6 @@
 {
     "name": "The Bronx Story",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "",
     "dependencies": {
         "device": "*",
